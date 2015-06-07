@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f4db50f6680f4762bd4206fe727b25a4" Name="Diagram1">
+        <EntityTypeShape EntityType="BP.ORM.DbModel.Filter" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BP.ORM.DbModel.Role" Width="1.5" PointX="5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BP.ORM.DbModel.Skill" Width="1.5" PointX="7.125" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BP.ORM.DbModel.UserInfo" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BP.ORM.DbModel.User" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BP.ORM.DbModel.UserSkill" Width="1.5" PointX="5" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="BP.ORM.DbModel.FK_Filters_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BP.ORM.DbModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="BP.ORM.DbModel.FK_UserSkills_Skills" ManuallyRouted="false" />
+        <AssociationConnector Association="BP.ORM.DbModel.FK_UserInfo_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BP.ORM.DbModel.FK_UserSkills_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
