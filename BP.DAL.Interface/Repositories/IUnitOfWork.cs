@@ -10,10 +10,7 @@ namespace BP.DAL.Interface.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<DalUser> UserRepository { get; }
-        IRepository<DalRole> RoleRepository { get; }
-        IRepository<DalSkill> SkillRepository { get; }
-
+        IRepository<T> GetRepository<T>();
         void Save();
     }
 }

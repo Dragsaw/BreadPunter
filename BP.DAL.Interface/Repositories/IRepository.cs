@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BP.DAL.Interface.Repositories
 {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : class
     {
         T GetById(int id);
         IEnumerable<T> GetAll();
