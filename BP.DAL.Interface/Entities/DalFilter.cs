@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BP.DAL.Interface.Entities
 {
-    public class DalFilter
+    public class DalFilter: IEntity
     {
         public int Id { get; set; }
         public IDictionary<DalSkill, int> Skills { get; set; }

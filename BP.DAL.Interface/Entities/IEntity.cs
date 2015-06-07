@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BP.DAL.Interface.Entities
 {
-    public class DalSkill : IEntity
+    public interface IEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        int Id { get; }
     }
 }

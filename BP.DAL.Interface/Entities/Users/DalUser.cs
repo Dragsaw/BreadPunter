@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BP.DAL.Interface.Entities.Users
 {
-    public class DalUser
+    public class DalUser: IEntity
     {
         public int Id { get; set; }
         public string Email { get; set; }
