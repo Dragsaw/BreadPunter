@@ -1,53 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>309787b7-80fb-4e8f-9569-53c759b0c066</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>BP.DependencyResolver</RootNamespace>
-		<AssemblyName>BP.DependencyResolver</AssemblyName>
-		<TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>bin\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
- 		<Optimize>true</Optimize>
-		<OutputPath>bin\Release\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="System"/>
-		
-		<Reference Include="System.Core"/>
-		<Reference Include="System.Xml.Linq"/>
-		<Reference Include="System.Data.DataSetExtensions"/>
-		
-		
-		<Reference Include="Microsoft.CSharp"/>
- 		
-		<Reference Include="System.Data"/>
-		<Reference Include="System.Xml"/>
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="Class1.cs" />
-
-		<Compile Include="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3A9E7CF4-07AB-451E-BF24-FC22682D6180}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BP.DependencyResolver</RootNamespace>
+    <AssemblyName>BP.DependencyResolver</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolverSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BP.DAL.Interface\BP.DAL.Interface.csproj">
+      <Project>{2da46cee-a1da-482f-a76e-ebe8aae0cc72}</Project>
+      <Name>BP.DAL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BP.DAL\BP.DAL.csproj">
+      <Project>{a318df75-cb39-4515-8204-27ae27e0606d}</Project>
+      <Name>BP.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BP.ORM\BP.ORM.csproj">
+      <Project>{e4be4d62-bc18-48a0-bb4a-a7568f20e676}</Project>
+      <Name>BP.ORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BP.WebUI\BP.WebUI.csproj">
+      <Project>{fe510015-801e-4261-90e7-d3643161acc7}</Project>
+      <Name>BP.WebUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -55,5 +75,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
- </Project>
+</Project>
