@@ -10,6 +10,6 @@ namespace BP.DAL.Interface.Entities
     {
         public int Id { get; set; }
         public IDictionary<DalSkill, int> Skills { get; set; }
-        public DateTime LastViewed { get; set; }
+        public DateTime? LastViewed { get; set; }
     }
 }
