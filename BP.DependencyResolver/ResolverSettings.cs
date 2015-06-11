@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BP.ORM;
+using BP.DAL.Concrete.Repositories;
+using System.Data.Entity;
 
 namespace BP.DependencyResolver
 {
@@ -15,9 +18,9 @@ namespace BP.DependencyResolver
     {
         public static void Configure(this IKernel kernel)
         {
-            kernel.Bind<IRepository<DalUser>>().To<Repository<DalUser>>();
-            kernel.Bind<IRepository<DalSkill>>().To<Repository<DalSkill>>();
-            kernel.Bind<IRepository<DalFilter>>().To<Repository<DalFilter>>();
+            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
+            kernel.Bind<IRepository<DalSkill>>().To<SkillRepository>();
+            kernel.Bind<DbContext>().To<DatabaseEntities>();
             kernel.Bind<IKernel>().ToConstant(kernel);
         }
     }
