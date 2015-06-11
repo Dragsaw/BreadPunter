@@ -40,7 +40,7 @@ namespace BP.DAL.Concrete.Repositories
             if (map == null)
                 InitializeMap();
 
-            return set.Select(map.MapExpression);
+            return set.Where(map.MapExpression(predicate)).Select(e => e.ToDal());
         }
 
         public void Create(DalUser entity)

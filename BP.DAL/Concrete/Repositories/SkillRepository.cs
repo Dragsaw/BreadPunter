@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BP.DAL.Mappers;
+using System.Linq.Expressions;
+using BP.DAL.Interface.Mappers;
 
 namespace BP.DAL.Concrete.Repositories
 {
@@ -15,6 +17,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<Skill> set;
+        private IPropertyMap<Skill, DalSkill> map;
 
         public SkillRepository(DbContext context)
         {
@@ -32,9 +35,19 @@ namespace BP.DAL.Concrete.Repositories
             return set.Select(s => s.ToDal());
         }
 
-        public IEnumerable<DalSkill> Get(System.Linq.Expressions.Expression<Func<DalSkill, bool>> predicate)
+        public IEnumerable<DalSkill> Get(Expression<Func<DalSkill, bool>> predicate)
         {
-            throw new NotImplementedException();
+            if (map == null)
+                InitializeMap();
+
+            return set.Where(map.MapExpression(predicate)).Select(e => e.ToDal());
+        }
+
+        private void InitializeMap()
+        {
+            map = new PropertyMap<Skill, DalSkill>();
+            map.Map(d => d.Id, e => e.Id)
+                .Map(d => d.Name, e => e.Name);
         }
 
         public void Create(DalSkill entity)
