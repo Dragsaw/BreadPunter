@@ -5,7 +5,6 @@ namespace BP.DAL.Interface.Entities.Users
 {
     public class DalProgrammer : DalUser
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public byte[] Photo { get; set; }
         public string About { get; set; }

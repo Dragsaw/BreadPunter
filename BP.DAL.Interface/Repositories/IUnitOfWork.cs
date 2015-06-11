@@ -10,7 +10,7 @@ namespace BP.DAL.Interface.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<T> GetRepository<T>();
+        IRepository<T> GetRepository<T>() where T : class, IEntity;
         void Save();
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BP.DAL.Interface.Entities
 {
+    [Serializable]
     public class DalSkill : IEntity
     {
         public int Id { get; set; }
