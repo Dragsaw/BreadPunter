@@ -16,6 +16,7 @@ namespace BP.DAL.Interface.Mappers
             Expression<Func<TTarget, TProperty>> targetProp,
             Expression<Func<TSource, TProperty>> sourceProp);
 
-        public Expression<Func<TSource, TTarget>> MapExpression { get; }
+        Expression<Func<TSource, bool>> MapExpression(
+            Expression<Func<TTarget, bool>> sourceExpression);
     }
 }

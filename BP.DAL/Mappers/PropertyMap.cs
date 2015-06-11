@@ -11,74 +11,56 @@ using BP.DAL.Helpers;
 
 namespace BP.DAL.Mappers
 {
-    public class PropertyMap<TSource, TTarget> : IPropertyMap<TSource, TTarget>
+    public class PropertyMap<TSource, TTarget> : ExpressionVisitor, IPropertyMap<TSource, TTarget>
         where TSource : class
         where TTarget : class, IEntity
     {
         private readonly string paramName = "x";
-        private readonly List<MemberAssignment> memberAssignments;
+        private readonly Dictionary<MemberInfo, MemberInfo> mapDictionary;
         private readonly ParameterExpression paramExpr;
-        private Expression<Func<TSource, TTarget>> mapExpression;
-
-        public Expression<Func<TSource, TTarget>> MapExpression
-        {
-            get
-            {
-                return mapExpression ?? (mapExpression = CreateMapExpression());
-            }
-        }
 
         public PropertyMap()
         {
-            memberAssignments = new List<MemberAssignment>();
+            mapDictionary = new Dictionary<MemberInfo, MemberInfo>();
             paramExpr = Expression.Parameter(typeof(TSource), paramName);
         }
 
+        public Expression<Func<TSource, bool>> MapExpression(
+            Expression<Func<TTarget, bool>> sourceExpression)
+        {
+            return Expression.Lambda<Func<TSource, bool>>(Visit(sourceExpression.Body), paramExpr);
+        }
+
         public IPropertyMap<TSource, TTarget> Map<TProperty>(
-            Expression<Func<TTarget, TProperty>> targetProp, 
+            Expression<Func<TTarget, TProperty>> targetProp,
             Expression<Func<TSource, TProperty>> sourceProp)
         {
-            MemberExpression expr = CreatePropertyMemberExpression((MemberExpression)targetProp.Body);
-            MemberAssignment propInit = Expression.Bind(targetProp.GetPropertyInfo(), expr);
-            memberAssignments.Add(propInit);
+            mapDictionary.Add(targetProp.GetPropertyInfo(), sourceProp.GetPropertyInfo());
 
             return this;
         }
 
-        private MemberExpression CreatePropertyMemberExpression(MemberExpression expression, 
-            IList<PropertyInfo> properties = null)
+        protected override Expression VisitMember(MemberExpression node)
         {
-            if (properties == null)
-                properties = new List<PropertyInfo>();
-
-            if (expression.Expression.NodeType == ExpressionType.Parameter)
+            if (IsParameterProperty(node))
             {
-                properties.Add((PropertyInfo)expression.Member);
-                return CreatePropertyMemberExpressionFromList(properties);
+                return Expression.MakeMemberAccess(paramExpr, mapDictionary[node.Member]);
             }
-            if (expression.Expression.NodeType != ExpressionType.MemberAccess)
-                throw new NotSupportedException();
-
-            properties.Add((PropertyInfo)expression.Member);
-
-            return CreatePropertyMemberExpression((MemberExpression)expression.Expression, properties);
+            else return node;
         }
 
-        private MemberExpression CreatePropertyMemberExpressionFromList(IList<PropertyInfo> properties)
+        private bool IsParameterProperty(MemberExpression node)
         {
-            Expression result = paramExpr;
+            if (node.Expression == null)
+                return false;
 
-            foreach (var item in properties.Reverse())
-            {
-                result = Expression.MakeMemberAccess(result, item);
-            }
+            if (node.Expression.NodeType == ExpressionType.Parameter)
+                return true;
 
-            return (MemberExpression)result;
-        }
+            if (node.Expression.NodeType != ExpressionType.MemberAccess)
+                return false;
 
-        private Expression<Func<TSource, TTarget>> CreateMapExpression()
-        {
-            throw new NotImplementedException();
+            return IsParameterProperty((MemberExpression)node.Expression);
         }
     }
 }
