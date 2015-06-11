@@ -9,16 +9,14 @@ using BP.DAL.Interface.Entities;
 using BP.ORM;
 using System.Data.Entity;
 using Ninject;
+using Ninject.Parameters;
 
 namespace BP.DAL.Concrete
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext context;
-        private IRepository<DalUser> userRepository;
-        private IRepository<DalRole> roleRepository;
-        private IRepository<DalSkill> skillRepository;
-        private IRepository<DalFilter> filterRepository;
+        private Dictionary<Type, object> repos;
         private IKernel kernel;
         private bool disposed;
 
@@ -26,11 +24,17 @@ namespace BP.DAL.Concrete
         {
             this.context = context;
             this.kernel = kernel;
+            repos = new Dictionary<Type, object>();
         }
 
-        public IRepository<T> GetRepository<T>() where T : class
+        public IRepository<T> GetRepository<T>() where T : class, IEntity
         {
-            return GetExistingRepository(typeof(T)) as IRepository<T> ?? kernel.Get<IRepository<T>>();
+            object repo;
+            if (repos.TryGetValue(typeof(T), out repo))
+                repos.Add(typeof(T), repo = kernel.Get<IRepository<T>>(
+                    new Parameter("context", context, true)));
+
+            return repo as IRepository<T>;
         }
 
         public void Save()
@@ -52,17 +56,6 @@ namespace BP.DAL.Concrete
                     context.Dispose();
             }
             disposed = true;
-        }
-
-        private object GetExistingRepository(Type type)
-        {
-            if (type == typeof(DalUser))
-                return userRepository;
-            else if (type == typeof(DalRole))
-                return roleRepository;
-            else if (type == typeof(DalSkill))
-                return skillRepository;
-            else return filterRepository;
         }
     }
 }
