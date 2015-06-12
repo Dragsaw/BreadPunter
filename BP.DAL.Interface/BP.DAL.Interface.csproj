@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Entities\DalFilter.cs" />
     <Compile Include="Entities\DalSkill.cs" />
+    <Compile Include="Entities\DalUserSkill.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Users\DalAdmin.cs" />
     <Compile Include="Entities\Users\DalManager.cs" />

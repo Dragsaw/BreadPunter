@@ -62,6 +62,16 @@ namespace BP.DAL.Mappers
                 Name = role.Name
             };
         }
+
+        public static DalUserSkill ToDal(this UserSkill userSkill)
+        {
+            return new DalUserSkill
+            {
+                Level = userSkill.Level,
+                Skill = userSkill.Skill.ToDal(),
+                User = (DalProgrammer)userSkill.User.ToDal()
+            };
+        }
         #endregion
 
         #region Mappers for DAL to ORM entities
@@ -104,6 +114,16 @@ namespace BP.DAL.Mappers
             {
                 Id = role.Id,
                 Name = role.Name
+            };
+        }
+
+        public static UserSkill ToDb(this DalUserSkill userSkill)
+        {
+            return new UserSkill
+            {
+                UserId = userSkill.User.Id,
+                SkillId = userSkill.Skill.Id,
+                Level = userSkill.Level
             };
         }
         #endregion

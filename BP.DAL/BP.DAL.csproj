@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Concrete\Repositories\SkillRepository.cs" />
     <Compile Include="Concrete\Repositories\UserRepository.cs" />
+    <Compile Include="Concrete\Repositories\UserSkillRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Mappers\Mappers.cs" />
