@@ -3,14 +3,13 @@ using BP.DAL.Interface.Entities;
 using BP.DAL.Interface.Entities.Users;
 using BP.DAL.Interface.Repositories;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BP.ORM;
 using BP.DAL.Concrete.Repositories;
 using System.Data.Entity;
+using BP.BLL.Concrete;
+using BP.BLL.Interface.Services;
+using BP.BLL.Interface.Entities.Users;
+using Ninject.Web.Common;
 
 namespace BP.DependencyResolver
 {
@@ -18,10 +17,13 @@ namespace BP.DependencyResolver
     {
         public static void Configure(this IKernel kernel)
         {
-            kernel.Bind<IRepository<DalUser>>().To<UserRepository>();
-            kernel.Bind<IRepository<DalSkill>>().To<SkillRepository>();
-            kernel.Bind<DbContext>().To<DatabaseEntities>();
-            kernel.Bind<IKernel>().ToConstant(kernel);
+            kernel.Bind<IRepository<DalUser>>().To<UserRepository>().InRequestScope();
+            kernel.Bind<IRepository<DalSkill>>().To<SkillRepository>().InRequestScope();
+            kernel.Bind<IRepository<DalUserSkill>>().To<UserSkillRepository>().InRequestScope();
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
+            kernel.Bind<DbContext>().To<DatabaseEntities>().InRequestScope();
+            //kernel.Bind<IKernel>().ToConstant(kernel).InRequestScope();
+            kernel.Bind<IService<BalUser>>().To<UserService>().InRequestScope();
         }
     }
 }
