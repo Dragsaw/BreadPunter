@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.DAL.Interface", "BP.DAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.DependencyResolver", "BP.DependencyResolver\BP.DependencyResolver.csproj", "{3A9E7CF4-07AB-451E-BF24-FC22682D6180}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.BLL.Interface", "BP.BLL.Interface\BP.BLL.Interface.csproj", "{99C044AF-11A8-4423-98E2-9CE3C05F236D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3A9E7CF4-07AB-451E-BF24-FC22682D6180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A9E7CF4-07AB-451E-BF24-FC22682D6180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A9E7CF4-07AB-451E-BF24-FC22682D6180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99C044AF-11A8-4423-98E2-9CE3C05F236D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C044AF-11A8-4423-98E2-9CE3C05F236D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C044AF-11A8-4423-98E2-9CE3C05F236D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C044AF-11A8-4423-98E2-9CE3C05F236D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
