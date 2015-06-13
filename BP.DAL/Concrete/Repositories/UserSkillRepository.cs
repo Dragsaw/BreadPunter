@@ -34,14 +34,14 @@ namespace BP.DAL.Concrete.Repositories
 
         public IEnumerable<DalUserSkill> GetAll()
         {
-            return set.Select(e => e.ToDal());
+            return set.AsEnumerable().Select(e => e.ToDal());
         }
 
         public IEnumerable<DalUserSkill> Get(Expression<Func<DalUserSkill, bool>> predicate)
         {
             if (map == null)
                 InitializeMap();
-            return set.Where(map.MapExpression(predicate)).Select(e => e.ToDal());
+            return set.Where(map.MapExpression(predicate)).AsEnumerable().Select(e => e.ToDal());
         }
 
         public void Create(DalUserSkill entity)

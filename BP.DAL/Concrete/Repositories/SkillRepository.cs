@@ -32,7 +32,7 @@ namespace BP.DAL.Concrete.Repositories
 
         public IEnumerable<DalSkill> GetAll()
         {
-            return set.Select(s => s.ToDal());
+            return set.AsEnumerable().Select(s => s.ToDal());
         }
 
         public IEnumerable<DalSkill> Get(Expression<Func<DalSkill, bool>> predicate)
@@ -40,7 +40,7 @@ namespace BP.DAL.Concrete.Repositories
             if (map == null)
                 InitializeMap();
 
-            return set.Where(map.MapExpression(predicate)).Select(e => e.ToDal());
+            return set.Where(map.MapExpression(predicate)).AsEnumerable().Select(e => e.ToDal());
         }
 
         private void InitializeMap()

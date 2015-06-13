@@ -17,7 +17,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<User> set;
-        private readonly IPropertyMap<User, DalUser> map;
+        private IPropertyMap<User, DalUser> map;
 
         public UserRepository(DbContext context)
         {
@@ -32,7 +32,7 @@ namespace BP.DAL.Concrete.Repositories
 
         public IEnumerable<DalUser> GetAll()
         {
-            return set.AsQueryable().Select(e => e.ToDal());
+            return set.AsEnumerable().Select(e => e.ToDal());
         }
 
         public IEnumerable<DalUser> Get(Expression<Func<DalUser, bool>> predicate)
@@ -40,7 +40,7 @@ namespace BP.DAL.Concrete.Repositories
             if (map == null)
                 InitializeMap();
 
-            return set.Where(map.MapExpression(predicate)).Select(e => e.ToDal());
+            return set.Where(map.MapExpression(predicate)).AsEnumerable().Select(e => e.ToDal());
         }
 
         public void Create(DalUser entity)
@@ -112,6 +112,7 @@ namespace BP.DAL.Concrete.Repositories
 
         private void InitializeMap()
         {
+            map = new PropertyMap<User, DalUser>();
             map.Map(d => d.Id, e => e.Id)
                 .Map(d => d.Email, e => e.Email)
                 .Map(d => d.Password, e => e.Password)

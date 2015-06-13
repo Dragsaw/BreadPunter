@@ -30,7 +30,7 @@ namespace BP.DAL.Concrete
         public IRepository<T> GetRepository<T>() where T : class, IEntity
         {
             object repo;
-            if (repos.TryGetValue(typeof(T), out repo))
+            if (!repos.TryGetValue(typeof(T), out repo))
                 repos.Add(typeof(T), repo = kernel.Get<IRepository<T>>(
                     new Parameter("context", context, true)));
 
