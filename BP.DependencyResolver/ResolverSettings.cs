@@ -22,8 +22,8 @@ namespace BP.DependencyResolver
             kernel.Bind<IRepository<DalUserSkill>>().To<UserSkillRepository>().InRequestScope();
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
             kernel.Bind<DbContext>().To<DatabaseEntities>().InRequestScope();
-            //kernel.Bind<IKernel>().ToConstant(kernel).InRequestScope();
             kernel.Bind<IService<BalUser>>().To<UserService>().InRequestScope();
+            kernel.Bind<IUserService>().To<UserService>().InRequestScope();
         }
     }
 }

@@ -23,14 +23,15 @@ namespace BP.BLL.Concrete
             this.userRepo = uow.GetRepository<DalUser>();
         }
 
-        public BalUser Get(int id)
+        public BalUser Find(int id)
         {
-            return userRepo.GetById(id).ToBal();
+            return userRepo.Find(id).ToBal();
         }
 
-        public IEnumerable<BalUser> Get(string name)
+        public BalUser Find(string email)
         {
-            throw new NotImplementedException();
+            DalUser user = userRepo.Find(u => u.Email == email);
+            return user == null ? null : user.ToBal();
         }
 
         public IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills)

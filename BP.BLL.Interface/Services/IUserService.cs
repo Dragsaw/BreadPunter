@@ -11,6 +11,6 @@ namespace BP.BLL.Interface.Services
     public interface IUserService : IService<BalUser>
     {
         IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills);
-        IEnumerable<BalUser> Get(string name);
+        BalUser Find(string email);
     }
 }

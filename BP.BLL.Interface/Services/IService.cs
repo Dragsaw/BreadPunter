@@ -9,7 +9,7 @@ namespace BP.BLL.Interface.Services
 {
     public interface IService<T> where T : class, IBalEntity
     {
-        T Get(int id);
+        T Find(int id);
         IEnumerable<T> GetAll();
         void Create(T entity);
         void Update(T entity);
