@@ -25,9 +25,17 @@ namespace BP.DAL.Concrete.Repositories
             set = context.Set<User>();
         }
 
-        public DalUser GetById(int id)
+        public DalUser Find(int id)
         {
             return set.Find(id).ToDal();
+        }
+
+        public DalUser Find(Expression<Func<DalUser, bool>> predicate)
+        {
+            if (map == null)
+                InitializeMap();
+            User user = set.FirstOrDefault(map.MapExpression(predicate));
+            return user == null ? null : user.ToDal();
         }
 
         public IEnumerable<DalUser> GetAll()

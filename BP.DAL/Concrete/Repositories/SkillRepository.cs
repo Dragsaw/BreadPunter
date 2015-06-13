@@ -25,9 +25,14 @@ namespace BP.DAL.Concrete.Repositories
             set = context.Set<Skill>();
         }
 
-        public DalSkill GetById(int id)
+        public DalSkill Find(int id)
         {
             return set.Find(id).ToDal();
+        }
+
+        public DalSkill Find(Expression<Func<DalSkill, bool>> predicate)
+        {
+            return set.FirstOrDefault(map.MapExpression(predicate)).ToDal();
         }
 
         public IEnumerable<DalSkill> GetAll()

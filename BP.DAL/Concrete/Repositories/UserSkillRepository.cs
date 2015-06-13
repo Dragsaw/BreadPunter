@@ -25,11 +25,16 @@ namespace BP.DAL.Concrete.Repositories
             set = context.Set<UserSkill>();
         }
 
-        public DalUserSkill GetById(int id)
+        public DalUserSkill Find(int id)
         {
             int userId = int.Parse(id.ToString().Substring(0, 5));
             int skillId = int.Parse(id.ToString().Substring(5));
             return set.Find(userId, skillId).ToDal();
+        }
+
+        public DalUserSkill Find(Expression<Func<DalUserSkill, bool>> predicate)
+        {
+            return set.FirstOrDefault(map.MapExpression(predicate)).ToDal();
         }
 
         public IEnumerable<DalUserSkill> GetAll()
@@ -58,7 +63,7 @@ namespace BP.DAL.Concrete.Repositories
 
         public void Delete(int id)
         {
-            Delete(GetById(id));
+            Delete(Find(id));
         }
 
         public void Delete(DalUserSkill entity)

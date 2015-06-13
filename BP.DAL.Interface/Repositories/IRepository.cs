@@ -10,7 +10,8 @@ namespace BP.DAL.Interface.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        T GetById(int id);
+        T Find(int id);
+        T Find(Expression<Func<T, bool>> predicate);
         IEnumerable<T> GetAll();
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         void Create(T entity);
