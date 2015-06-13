@@ -21,7 +21,7 @@ namespace BP.DAL.Mappers
             binaryFormatter = new BinaryFormatter();
         }
 
-        #region Mappers for ORM to DAL entities
+        #region ORM to DAL mappers
         public static DalUser ToDal(this User user)
         {
             DalUser dalUser = InitializeDalUserProperties(user);
@@ -74,7 +74,7 @@ namespace BP.DAL.Mappers
         }
         #endregion
 
-        #region Mappers for DAL to ORM entities
+        #region DAL to ORM mappers
         public static User ToDb(this DalUser user)
         {
             User dbUser = InitializeUserProperties(user);
