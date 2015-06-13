@@ -171,17 +171,10 @@ namespace BP.DAL.Mappers
         private static User InitializeUserProperties(DalUser user)
         {
             User dbUser = new User();
-            switch (user.Role.Name)
-            {
-                case ("Programmer"):
-                    dbUser.UserInfo = ((DalProgrammer)user).GetUserInfo();
-                    break;
-                case ("Manager"):
-                    dbUser.Filters = ((DalManager)user).Filters.Select(f => f.ToDb(user.Id)).ToList();
-                    break;
-                default:
-                    break;
-            }
+            if (user is DalProgrammer)
+                dbUser.UserInfo = ((DalProgrammer)user).GetUserInfo();
+            if (user is DalManager)
+                dbUser.Filters = ((DalManager)user).Filters.Select(f => f.ToDb(user.Id)).ToList();
             return dbUser;
         }
         #endregion
