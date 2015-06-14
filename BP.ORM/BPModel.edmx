@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BP.ORM.DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BP.ORM.DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Filters">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,7 +57,9 @@
           <Property Name="Level" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Filters_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Filters" Type="Self.Filters" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -69,7 +71,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserInfo_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -93,7 +97,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserSkills_Skills">
-          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserSkills" Type="Self.UserSkills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
@@ -105,7 +111,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserSkills_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserSkills" Type="Self.UserSkills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -144,8 +152,7 @@
             <End Role="UserSkills" EntitySet="UserSkills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BP.ORM.DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
