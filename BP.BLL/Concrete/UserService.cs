@@ -8,11 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BP.BLL.Mappers;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace BP.BLL.Concrete
 {
     public class UserService : IUserService
     {
+        private static readonly int saltValueSize = 7;
         private readonly IRepository<DalUser> userRepo;
         private readonly IUnitOfWork uow;
         private IRepository<DalUserSkill> userSkillRepo;
@@ -28,9 +31,12 @@ namespace BP.BLL.Concrete
             return userRepo.Find(id).ToBal();
         }
 
-        public BalUser Find(string email)
+        public BalUser Find(string uniqueKey)
         {
-            DalUser user = userRepo.Find(u => u.Email == email);
+            if (uniqueKey == null)
+                return null;
+
+            DalUser user = userRepo.Find(u => u.Email == uniqueKey);
             return user == null ? null : user.ToBal();
         }
 
@@ -41,11 +47,11 @@ namespace BP.BLL.Concrete
                 userSkillRepo = uow.GetRepository<DalUserSkill>();
 
             List<DalUserSkill> userSkills = new List<DalUserSkill>();
-            foreach (var item in skills)
+            foreach (var item in skills.Where(s => s != null))
             {
                 userSkills.AddRange(userSkillRepo.Get(s => s.Skill.Id == item.Id && s.Level >= item.Level));
             }
-            
+
             return userSkills.GroupBy(k => k.User).Where(d => d.Count() == skills.Count()).Select(d => d.Key.ToBal());
         }
 
@@ -60,16 +66,69 @@ namespace BP.BLL.Concrete
             uow.Save();
         }
 
+        public void Create(string email, string password, BalRole role)
+        {
+            Create(new BalUser { Email = email, Password = password, Role = role });
+        }
+
         public void Update(BalUser entity)
         {
             userRepo.Update(entity.ToDal());
             uow.Save();
         }
 
-        public void Remove(BalUser entity)
+        public bool Remove(int id)
         {
-            userRepo.Delete(entity.ToDal());
+            BalUser user = Find(id);
+            if (user == null)
+                return false;
+            userRepo.Remove(user.Id);
             uow.Save();
+            return true;
+        }
+
+        public bool Remove(BalUser entity)
+        {
+            if (entity != null)
+                return Remove(entity.Id);
+            else return false;
+        }
+
+        public bool Remove(string uniqueKey)
+        {
+            return Remove(Find(uniqueKey));
+        }
+
+
+        public bool Exists(string email, string password)
+        {
+            BalUser user = Find(email);
+            if (user == null)
+                return false;
+            string userPassword = user.Password.Remove(0, saltValueSize);
+            if (GetPasswordHash(password.Remove(0, saltValueSize)) == userPassword)
+                return true;
+            return false;
+        }
+
+        public string GetPasswordHash(string password)
+        {
+            UnicodeEncoding encoding = new UnicodeEncoding();
+            byte[] saltValue = GenerateSalt();
+            byte[] buffer = GenerateSalt().Concat(encoding.GetBytes(password)).ToArray();
+            byte[] passwordHash = new SHA256Managed().ComputeHash(buffer);
+            
+            return encoding.GetString(passwordHash);
+        }
+
+        private static byte[] GenerateSalt()
+        {
+            UnicodeEncoding encoding = new UnicodeEncoding();
+
+            Random random = new Random((int)DateTime.Now.Ticks);
+            byte[] saltValue = new byte[saltValueSize];
+            random.NextBytes(saltValue);
+            return saltValue;
         }
     }
 }

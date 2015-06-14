@@ -10,6 +10,7 @@ using BP.BLL.Concrete;
 using BP.BLL.Interface.Services;
 using BP.BLL.Interface.Entities.Users;
 using Ninject.Web.Common;
+using BP.BLL.Interface.Entities;
 
 namespace BP.DependencyResolver
 {
@@ -19,11 +20,14 @@ namespace BP.DependencyResolver
         {
             kernel.Bind<IRepository<DalUser>>().To<UserRepository>().InRequestScope();
             kernel.Bind<IRepository<DalSkill>>().To<SkillRepository>().InRequestScope();
+            kernel.Bind<IRepository<DalRole>>().To<RoleRepository>().InRequestScope();
             kernel.Bind<IRepository<DalUserSkill>>().To<UserSkillRepository>().InRequestScope();
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
             kernel.Bind<DbContext>().To<DatabaseEntities>().InRequestScope();
             kernel.Bind<IService<BalUser>>().To<UserService>().InRequestScope();
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
+            kernel.Bind<IService<BalRole>>().To<RoleService>().InRequestScope();
+            kernel.Bind<IRoleService>().To<RoleService>().InRequestScope();
         }
     }
 }

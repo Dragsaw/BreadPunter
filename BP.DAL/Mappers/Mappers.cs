@@ -145,10 +145,10 @@ namespace BP.DAL.Mappers
             DalUser dalUser;
             switch (user.Role.Name)
             {
-                case ("Admin"):
+                case ("admin"):
                     dalUser = new DalAdmin();
                     break;
-                case ("Programmer"):
+                case ("programmer"):
                     DalProgrammer programmer = new DalProgrammer();
                     programmer.Name = user.UserInfo.Name;
                     programmer.About = user.UserInfo.About;
@@ -157,7 +157,7 @@ namespace BP.DAL.Mappers
                     programmer.Skills = user.UserSkills.ToDictionary(x => x.Skill.ToDal(), x => x.Level);
                     dalUser = programmer;
                     break;
-                case ("Manager"):
+                case ("manager"):
                     dalUser = new DalManager();
                     ((DalManager)dalUser).Filters = user.Filters.Select(f => f.ToDal());
                     break;
