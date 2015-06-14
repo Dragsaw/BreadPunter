@@ -10,9 +10,12 @@ namespace BP.BLL.Interface.Services
     public interface IService<T> where T : class, IBalEntity
     {
         T Find(int id);
+        T Find(string uniqueKey);
         IEnumerable<T> GetAll();
         void Create(T entity);
         void Update(T entity);
-        void Remove(T entity);
+        bool Remove(int id);
+        bool Remove(T entity);
+        bool Remove(string uniqueKey);
     }
 }
