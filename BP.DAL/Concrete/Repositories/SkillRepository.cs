@@ -67,12 +67,12 @@ namespace BP.DAL.Concrete.Repositories
             context.Entry<Skill>(skill).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(DalSkill entity)
+        public void Remove(DalSkill entity)
         {
             throw new NotImplementedException();
         }

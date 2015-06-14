@@ -61,12 +61,12 @@ namespace BP.DAL.Concrete.Repositories
             context.Entry(dbEntity).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
-            Delete(Find(id));
+            Remove(Find(id));
         }
 
-        public void Delete(DalUserSkill entity)
+        public void Remove(DalUserSkill entity)
         {
             set.Remove(entity.ToDb());
         }

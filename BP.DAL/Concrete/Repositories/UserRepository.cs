@@ -75,19 +75,15 @@ namespace BP.DAL.Concrete.Repositories
                 UpdateFilters((DalManager)entity);
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
-            Delete(set.Find(id));
+            User user = set.Find(id);
+            set.Remove(user);
         }
 
-        public void Delete(DalUser entity)
+        public void Remove(DalUser entity)
         {
-            Delete(entity.ToDb());
-        }
-
-        private void Delete(User entity)
-        {
-            set.Remove(entity);
+            Remove(entity.Id);
         }
 
         private void UpdateSkills(DalProgrammer user)

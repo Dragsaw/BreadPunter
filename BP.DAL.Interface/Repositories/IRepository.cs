@@ -16,7 +16,7 @@ namespace BP.DAL.Interface.Repositories
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         void Create(T entity);
         void Update(T entity);
-        void Delete(int id);
-        void Delete(T entity);
+        void Remove(int id);
+        void Remove(T entity);
     }
 }
