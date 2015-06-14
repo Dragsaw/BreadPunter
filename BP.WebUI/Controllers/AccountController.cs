@@ -1,6 +1,7 @@
 ﻿using BP.BLL.Interface.Entities;
 using BP.BLL.Interface.Services;
 using BP.WebUI.Infrastructure.Filters;
+using BP.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,17 +30,15 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password, bool remember, string returnUrl)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && userService.Exists(email, password))
             {
-                if (userService.Exists(email, password))
-                {
-                    FormsAuthentication.SetAuthCookie(email, remember);
-                    if (Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
-                    else return RedirectToAction("Index", "Home");
-                }
+                FormsAuthentication.SetAuthCookie(email, remember);
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                else return RedirectToAction("Index", "Home");
             }
             else ModelState.AddModelError("", Resources.Resource.WrongEmailOrPassword);
 
@@ -67,18 +66,18 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string email, string password, string role)
+        public ActionResult Register(RegisterUserModel model)
         {
             if (ModelState.IsValid)
             {
-                if (userService.Find(email) == null)
+                if (userService.Find(model.Email) == null)
                 {
-                    userService.Create(email, userService.GetPasswordHash(password), roleService.Find(role));
+                    userService.Create(model.Email, model.Password, roleService.Find(model.Role));
                     return View("RegistrationSuccess");
                 }
-                else ModelState.AddModelError("", string.Format(Resources.Resource.UserAlreadyExists, email));
+                else ModelState.AddModelError("", string.Format(Resources.Resource.UserAlreadyExists, model.Email));
             }
-            return View();
+            return View(model);
         }
     }
 }

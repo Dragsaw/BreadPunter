@@ -1,6 +1,26 @@
-﻿@{
-    ViewBag.Title = "Register";
+﻿@model BP.WebUI.Models.RegisterUserModel
+
+@{
+    ViewBag.Title = Resources.Resource.PageRegister;
 }
 
-<h2>Register</h2>
+<h2>@Resources.Resource.Register</h2>
 
+@using (Html.BeginForm())
+{
+    <h4 class="text-danger">@Html.ValidationSummary()</h4>
+    <div class="form-group">
+        <label>@Resources.Resource.Email</label>
+        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>@Resources.Resource.Password</label>
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>@Resources.Resource.RepeatPassword</label>
+        @Html.PasswordFor(x => x.RepeatPassword, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(x => x.Role);
+    <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+}

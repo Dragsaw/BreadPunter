@@ -22,7 +22,7 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BP.WebUI.Resources.Resource", typeof(Resource).Assembly);
@@ -51,7 +51,7 @@ namespace Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,153 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create manager account.
+        /// </summary>
+        public static string ButtonManagerRegister {
+            get {
+                return ResourceManager.GetString("ButtonManagerRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create programmer account.
+        /// </summary>
+        public static string ButtonProgrammerRegister {
+            get {
+                return ResourceManager.GetString("ButtonProgrammerRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string ButtonSignIn {
+            get {
+                return ResourceManager.GetString("ButtonSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string ButtonSubmit {
+            get {
+                return ResourceManager.GetString("ButtonSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have account yet? Sign up for free!.
+        /// </summary>
+        public static string DontHaveAccount {
+            get {
+                return ResourceManager.GetString("DontHaveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mail.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must not contain white spaces..
+        /// </summary>
+        public static string NoWhiteSpaces {
+            get {
+                return ResourceManager.GetString("NoWhiteSpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration.
+        /// </summary>
+        public static string PageRegister {
+            get {
+                return ResourceManager.GetString("PageRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be at least 5 chracters long..
+        /// </summary>
+        public static string PasswordMinimalLength {
+            get {
+                return ResourceManager.GetString("PasswordMinimalLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match..
+        /// </summary>
+        public static string PasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat password.
+        /// </summary>
+        public static string RepeatPassword {
+            get {
+                return ResourceManager.GetString("RepeatPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email field is required..
+        /// </summary>
+        public static string RequiredEmail {
+            get {
+                return ResourceManager.GetString("RequiredEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password field is required..
+        /// </summary>
+        public static string RequiredPassword {
+            get {
+                return ResourceManager.GetString("RequiredPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with email {0} already exists..
         /// </summary>
-        internal static string UserAlreadyExists {
+        public static string UserAlreadyExists {
             get {
                 return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
             }
@@ -72,7 +216,7 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Wrong email or password..
         /// </summary>
-        internal static string WrongEmailOrPassword {
+        public static string WrongEmailOrPassword {
             get {
                 return ResourceManager.GetString("WrongEmailOrPassword", resourceCulture);
             }
