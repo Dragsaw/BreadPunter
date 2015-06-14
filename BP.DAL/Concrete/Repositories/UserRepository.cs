@@ -17,7 +17,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<User> set;
-        private IPropertyMap<User, DalUser> map;
+        private static IPropertyMap<User, DalUser> map;
 
         public UserRepository(DbContext context)
         {
@@ -114,7 +114,7 @@ namespace BP.DAL.Concrete.Repositories
             }
         }
 
-        private void InitializeMap()
+        private static void InitializeMap()
         {
             map = new PropertyMap<User, DalUser>();
             map.Map(d => d.Id, e => e.Id)

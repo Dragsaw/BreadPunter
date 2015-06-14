@@ -17,7 +17,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<UserSkill> set;
-        private IPropertyMap<UserSkill, DalUserSkill> map;
+        private static IPropertyMap<UserSkill, DalUserSkill> map;
 
         public UserSkillRepository(DbContext context)
         {
@@ -71,7 +71,7 @@ namespace BP.DAL.Concrete.Repositories
             set.Remove(entity.ToDb());
         }
 
-        private void InitializeMap()
+        private static void InitializeMap()
         {
             map = new PropertyMap<UserSkill, DalUserSkill>();
             map.Map(d => d.User.Id, e => e.UserId)

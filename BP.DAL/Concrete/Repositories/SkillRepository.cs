@@ -17,7 +17,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<Skill> set;
-        private IPropertyMap<Skill, DalSkill> map;
+        private static IPropertyMap<Skill, DalSkill> map;
 
         public SkillRepository(DbContext context)
         {
@@ -48,13 +48,6 @@ namespace BP.DAL.Concrete.Repositories
             return set.Where(map.MapExpression(predicate)).AsEnumerable().Select(e => e.ToDal());
         }
 
-        private void InitializeMap()
-        {
-            map = new PropertyMap<Skill, DalSkill>();
-            map.Map(d => d.Id, e => e.Id)
-                .Map(d => d.Name, e => e.Name);
-        }
-
         public void Create(DalSkill entity)
         {
             set.Add(entity.ToDb());
@@ -75,6 +68,13 @@ namespace BP.DAL.Concrete.Repositories
         public void Remove(DalSkill entity)
         {
             throw new NotImplementedException();
+        }
+
+        private static void InitializeMap()
+        {
+            map = new PropertyMap<Skill, DalSkill>();
+            map.Map(d => d.Id, e => e.Id)
+                .Map(d => d.Name, e => e.Name);
         }
     }
 }

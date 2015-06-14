@@ -16,7 +16,7 @@ namespace BP.DAL.Concrete.Repositories
     {
         private readonly DbContext context;
         private readonly DbSet<Role> set;
-        private IPropertyMap<Role, DalRole> map;
+        private static IPropertyMap<Role, DalRole> map;
 
         public RoleRepository(DbContext context)
         {
@@ -80,7 +80,7 @@ namespace BP.DAL.Concrete.Repositories
                 set.Remove(role);
         }
 
-        private void InitializeMap()
+        private static void InitializeMap()
         {
             map = new PropertyMap<Role, DalRole>();
             map.Map(d => d.Id, e => e.Id)
