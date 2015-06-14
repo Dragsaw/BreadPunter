@@ -10,6 +10,8 @@ using System.Linq;
 using BP.BLL.Mappers;
 using System.Text;
 using System.Security.Cryptography;
+using System.Globalization;
+using System.Web.Helpers;
 
 namespace BP.BLL.Concrete
 {
@@ -62,6 +64,7 @@ namespace BP.BLL.Concrete
 
         public void Create(BalUser entity)
         {
+            entity.Password = Crypto.HashPassword(entity.Password);
             userRepo.Create(entity.ToDal());
             uow.Save();
         }
@@ -99,36 +102,13 @@ namespace BP.BLL.Concrete
             return Remove(Find(uniqueKey));
         }
 
-
         public bool Exists(string email, string password)
         {
             BalUser user = Find(email);
             if (user == null)
                 return false;
-            string userPassword = user.Password.Remove(0, saltValueSize);
-            if (GetPasswordHash(password.Remove(0, saltValueSize)) == userPassword)
-                return true;
-            return false;
-        }
 
-        public string GetPasswordHash(string password)
-        {
-            UnicodeEncoding encoding = new UnicodeEncoding();
-            byte[] saltValue = GenerateSalt();
-            byte[] buffer = GenerateSalt().Concat(encoding.GetBytes(password)).ToArray();
-            byte[] passwordHash = new SHA256Managed().ComputeHash(buffer);
-            
-            return encoding.GetString(passwordHash);
-        }
-
-        private static byte[] GenerateSalt()
-        {
-            UnicodeEncoding encoding = new UnicodeEncoding();
-
-            Random random = new Random((int)DateTime.Now.Ticks);
-            byte[] saltValue = new byte[saltValueSize];
-            random.NextBytes(saltValue);
-            return saltValue;
+            return Crypto.VerifyHashedPassword(user.Password, password);
         }
     }
 }

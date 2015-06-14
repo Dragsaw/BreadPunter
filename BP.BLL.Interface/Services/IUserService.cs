@@ -13,6 +13,5 @@ namespace BP.BLL.Interface.Services
         IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills);
         void Create(string email, string password, BalRole role);
         bool Exists(string email, string password);
-        string GetPasswordHash(string password);
     }
 }
