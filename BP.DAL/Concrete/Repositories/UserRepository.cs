@@ -60,14 +60,14 @@ namespace BP.DAL.Concrete.Repositories
         public void Update(DalUser entity)
         {
             User user = entity.ToDb();
-            set.Attach(user);
-            context.Entry(user).State = EntityState.Modified;
+            //set.Attach(user);
+            //context.Entry(user).State = EntityState.Modified;
 
             if (entity is DalProgrammer)
             {
                 UserInfo ui = ((DalProgrammer)entity).GetUserInfo();
-                context.Set<UserInfo>().Attach(ui);
-                context.Entry(ui).State = EntityState.Modified;
+                //context.Set<UserInfo>().Attach(ui);
+                //context.Entry(ui).State = EntityState.Modified;
 
                 UpdateSkills((DalProgrammer)entity);
             }
