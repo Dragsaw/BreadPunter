@@ -48,7 +48,7 @@ namespace BP.WebUI.Controllers
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register(string role)

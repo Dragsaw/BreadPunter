@@ -7,15 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.Mvc;
 
 namespace BP.WebUI.Infrastructure.Providers
 {
     public class BpRoleProvider : RoleProvider
     {
-        [Inject]
-        private IRoleService roleService { get; set; }
-        [Inject]
-        private IUserService userService { get; set; }
+        private IRoleService roleService;
+        private IUserService userService;
+
+        public BpRoleProvider()
+        {
+            this.roleService = System.Web.Mvc.DependencyResolver.Current.GetService<IRoleService>();
+            this.userService = System.Web.Mvc.DependencyResolver.Current.GetService<IUserService>();
+        }
 
         public override void CreateRole(string roleName)
         {
