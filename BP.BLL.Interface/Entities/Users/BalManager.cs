@@ -8,6 +8,6 @@ namespace BP.BLL.Interface.Entities.Users
 {
     public class BalManager : BalUser
     {
-        public IEnumerable<BalFilter> Filters { get; set; }
+        public List<BalFilter> Filters { get; set; }
     }
 }

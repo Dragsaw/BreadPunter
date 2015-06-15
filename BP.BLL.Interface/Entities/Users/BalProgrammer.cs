@@ -10,6 +10,7 @@ namespace BP.BLL.Interface.Entities.Users
     {
         public string Name { get; set; }
         public byte[] Photo { get; set; }
+        public string ImageType { get; set; }
         public string About { get; set; }
         public IDictionary<BalSkill, int> Skills { get; set; }
         public DateTime? BirthDate { get; set; }

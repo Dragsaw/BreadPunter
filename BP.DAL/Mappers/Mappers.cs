@@ -97,15 +97,18 @@ namespace BP.DAL.Mappers
 
         public static Filter ToDb(this DalFilter filter, int userId)
         {
-            Filter f = new Filter
+            using (MemoryStream stream = new MemoryStream())
             {
-                Id = filter.Id,
-                UserId = userId,
-                LastViewed = filter.LastViewed,
-            };
-            using (MemoryStream stream = new MemoryStream(f.Skills))
                 binaryFormatter.Serialize(stream, filter.Skills);
-            return f;
+                Filter f = new Filter
+                {
+                    Id = filter.Id,
+                    UserId = userId,
+                    LastViewed = filter.LastViewed,
+                    Skills = stream.ToArray()
+                };
+                return f;
+            }
         }
 
         public static Role ToDb(this DalRole role)
@@ -136,7 +139,8 @@ namespace BP.DAL.Mappers
                 About = programmer.About,
                 BirthDate = programmer.BirthDate,
                 Name = programmer.Name,
-                Photo = programmer.Photo
+                Photo = programmer.Photo,
+                ImageType = programmer.ImapeType
             };
         }
 
@@ -145,19 +149,20 @@ namespace BP.DAL.Mappers
             DalUser dalUser;
             switch (user.Role.Name)
             {
-                case ("admin"):
+                case ("Admin"):
                     dalUser = new DalAdmin();
                     break;
-                case ("programmer"):
+                case ("Programmer"):
                     DalProgrammer programmer = new DalProgrammer();
                     programmer.Name = user.UserInfo.Name;
                     programmer.About = user.UserInfo.About;
                     programmer.BirthDate = user.UserInfo.BirthDate;
+                    programmer.ImapeType = user.UserInfo.ImageType;
                     programmer.Photo = user.UserInfo.Photo;
                     programmer.Skills = user.UserSkills.ToDictionary(x => x.Skill.ToDal(), x => x.Level);
                     dalUser = programmer;
                     break;
-                case ("manager"):
+                case ("Manager"):
                     dalUser = new DalManager();
                     ((DalManager)dalUser).Filters = user.Filters.Select(f => f.ToDal());
                     break;

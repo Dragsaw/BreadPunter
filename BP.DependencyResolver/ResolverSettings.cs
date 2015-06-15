@@ -27,6 +27,7 @@ namespace BP.DependencyResolver
             kernel.Bind<IService<BalUser>>().To<UserService>().InRequestScope();
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<IService<BalRole>>().To<RoleService>().InRequestScope();
+            kernel.Bind<IService<BalSkill>>().To<SkillService>().InRequestScope();
             kernel.Bind<IRoleService>().To<RoleService>().InRequestScope();
         }
     }

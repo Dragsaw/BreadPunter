@@ -146,13 +146,14 @@ namespace BP.BLL.Mappers
                     About = dalProgrammer.About,
                     BirthDate = dalProgrammer.BirthDate,
                     Photo = dalProgrammer.Photo,
+                    ImageType = dalProgrammer.ImapeType,
                     Skills = dalProgrammer.Skills.ToDictionary(k => k.Key.ToBal(), v => v.Value)
                 };
             }
             else if (user is DalManager)
                 balUser = new BalManager
                 {
-                    Filters = ((DalManager)user).Filters.Select(f => f.ToBal())
+                    Filters = ((DalManager)user).Filters.Select(f => f.ToBal()).ToList()
                 };
             else balUser = new BalUser();
 
@@ -173,6 +174,7 @@ namespace BP.BLL.Mappers
                     About = programmer.About,
                     BirthDate = programmer.BirthDate,
                     Photo = programmer.Photo,
+                    ImapeType = programmer.ImageType,
                     Skills = programmer.Skills.ToDictionary(k => k.Key.ToDal(), v => v.Value)
                 };
             }

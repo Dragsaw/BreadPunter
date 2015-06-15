@@ -19,6 +19,7 @@ namespace BP.ORM
         public byte[] Photo { get; set; }
         public string About { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
+        public string ImageType { get; set; }
     
         public virtual User User { get; set; }
     }

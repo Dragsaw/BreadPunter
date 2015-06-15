@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concrete\RoleService.cs" />
+    <Compile Include="Concrete\SkillService.cs" />
     <Compile Include="Concrete\UserService.cs" />
     <Compile Include="Mappers\Mappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

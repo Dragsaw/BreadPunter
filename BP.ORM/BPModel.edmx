@@ -37,6 +37,7 @@
           <Property Name="Photo" Type="varbinary(max)" />
           <Property Name="About" Type="text" />
           <Property Name="BirthDate" Type="date" />
+          <Property Name="ImageType" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -192,6 +193,7 @@
           <Property Name="About" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserInfo_Users" FromRole="UserInfo" ToRole="Users" />
+          <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -340,6 +342,7 @@
           <EntitySetMapping Name="UserInfoes">
             <EntityTypeMapping TypeName="BP.ORM.DbModel.UserInfo">
               <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />

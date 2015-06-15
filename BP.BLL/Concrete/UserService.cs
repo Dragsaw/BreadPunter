@@ -17,7 +17,6 @@ namespace BP.BLL.Concrete
 {
     public class UserService : IUserService
     {
-        private static readonly int saltValueSize = 7;
         private readonly IRepository<DalUser> userRepo;
         private readonly IUnitOfWork uow;
         private IRepository<DalUserSkill> userSkillRepo;
