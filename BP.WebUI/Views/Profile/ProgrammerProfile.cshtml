@@ -1,0 +1,40 @@
+﻿@model BP.BLL.Interface.Entities.Users.BalProgrammer
+
+@{
+    ViewBag.Title = Resources.Resource.Profile;
+}
+
+<h2>Profile</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">@Model.Name</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Url.Action("GetPhoto", new { photo = Model.Photo, imageType = Model.ImageType })" alt="" style="max-width: 100%;"/>
+            </div>
+            <div class="col-md-8">
+                <h3>@Model.Name</h3>
+                <h4>@Resources.Resource.Birthday:</h4>
+                <p class="text-left">@(Model.BirthDate.HasValue ? ((DateTime)Model.BirthDate).ToShortDateString() : Resources.Resource.NotSpecified)</p>
+                <h4>@Resources.Resource.AboutMe:</h4>
+                <p class="text-left">@(Model.About ?? Resources.Resource.NotSpecified)</p>
+            </div>
+        </div>
+        <h3 style="display : inline">@Resources.Resource.Skills </h3><span>[@Html.ActionLink(Resources.Resource.ButtonEdit, "Edit")]</span>
+        <hr />
+        <div class="row">
+            @foreach (var skill in Model.Skills)
+            {
+                <div class="col-md-4">
+                    <h4>@skill.Key.Name</h4>
+                    <h4>@skill.Value</h4>
+                </div>
+            }
+            @if (Model.Skills.Count == null)
+            {
+                @Resources.Resource.NoSkills
+            }
+        </div>
+    </div>
+</div>

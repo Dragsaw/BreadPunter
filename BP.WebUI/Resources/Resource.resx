@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutMe" xml:space="preserve">
+    <value>About me</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
   <data name="ButtonManagerRegister" xml:space="preserve">
     <value>Create manager account</value>
   </data>
@@ -126,6 +132,9 @@
   <data name="ButtonSignIn" xml:space="preserve">
     <value>Sign In</value>
   </data>
+  <data name="ButtonSignOut" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
   <data name="ButtonSubmit" xml:space="preserve">
     <value>Submit</value>
   </data>
@@ -134,6 +143,9 @@
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
+  </data>
+  <data name="NotSpecified" xml:space="preserve">
+    <value>Not specified</value>
   </data>
   <data name="NoWhiteSpaces" xml:space="preserve">
     <value>Password must not contain white spaces.</value>
@@ -149,6 +161,9 @@
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
     <value>Passwords do not match.</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
@@ -170,5 +185,32 @@
   </data>
   <data name="WrongEmailOrPassword" xml:space="preserve">
     <value>Wrong email or password.</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>Skills</value>
+  </data>
+  <data name="ButtonCreateFilter" xml:space="preserve">
+    <value>Create filter</value>
+  </data>
+  <data name="ButtonDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ButtonEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ButtonView" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="FilterCreation" xml:space="preserve">
+    <value>Filter creation</value>
+  </data>
+  <data name="LastViewed" xml:space="preserve">
+    <value>Last viewed</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>never</value>
+  </data>
+  <data name="NoSkills" xml:space="preserve">
+    <value>There's no skills to show.</value>
   </data>
 </root>

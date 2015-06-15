@@ -1,0 +1,41 @@
+﻿@model BP.BLL.Interface.Entities.Users.BalManager
+
+@{
+    ViewBag.Title = "ManagerProfile";
+}
+
+<h2>@Resources.Resource.Profile</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">@Model.Email</div>
+    <div class="panel-body">
+        @foreach (var filter in Model.Filters)
+        {
+            using (Html.BeginForm("DeleteFilter", "Profile"))
+            {
+                <div class="container">
+                    <h3>
+                        @Resources.Resource.LastViewed:
+                        @(filter.LastViewed != null ? ((DateTime)filter.LastViewed).ToString()
+                    : Resources.Resource.Never)
+                    </h3>
+                    @foreach (var skill in filter.Skills)
+                    {
+                        <div class="col-sm-3">
+                            <p>@skill.Key.Name</p>
+                            <p>@skill.Value</p>
+                        </div>
+                    }
+                    <div class="btn-group pull-right">
+                        @Html.ActionLink(Resources.Resource.ButtonView, "Search", new { filterId = filter.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink(Resources.Resource.ButtonEdit, "EditFilter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
+                        <button type="submit" class="btn btn-danger">@Resources.Resource.ButtonDelete</button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Resource.ButtonCreateFilter, "CreateFilter", "Profile", null, new { @class = "btn btn-success" })
+    </div>
+</div>
