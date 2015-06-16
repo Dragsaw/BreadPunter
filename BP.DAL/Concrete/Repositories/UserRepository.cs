@@ -89,28 +89,54 @@ namespace BP.DAL.Concrete.Repositories
         private void UpdateSkills(DalProgrammer user)
         {
             DbSet<UserSkill> skillSet = context.Set<UserSkill>();
-            skillSet.RemoveRange(set.Find(user.Id).UserSkills);
-
-            foreach (var item in user.Skills)
+            var userSkills = user.Skills.Select(x => new UserSkill
             {
-                UserSkill skill = new UserSkill
+                UserId = user.Id,
+                SkillId = x.Key.Id,
+                Level = x.Value
+            });
+            var skillsToAdd = user.Skills.Where(x => !userSkills.Any(y => y.SkillId == x.Key.Id));
+            var skillsInDb = skillSet.Where(x => x.UserId == user.Id);
+
+            foreach (var skill in userSkills)
+            {
+                var skillInDb = skillsInDb.FirstOrDefault(x => x.SkillId == skill.SkillId);
+                if (skillInDb == null)
                 {
-                    UserId = user.Id,
-                    SkillId = item.Key.Id,
-                    Level = item.Value
-                };
-                skillSet.Add(skill);
+                    skillSet.Add(skill);
+                }
+                else skillInDb.Level = skill.Level;
+            }
+
+            foreach (var skill in skillsInDb)
+            {
+                if (!userSkills.Any(x => x.SkillId == skill.SkillId))
+                    skillSet.Remove(skill);
             }
         }
 
         private void UpdateFilters(DalManager dalManager)
         {
             DbSet<Filter> filterSet = context.Set<Filter>();
-            filterSet.RemoveRange(set.Find(dalManager.Id).Filters);
+            var userFilters = dalManager.Filters.Select(x => x.ToDb(dalManager.Id));
+            var filtersInDb = filterSet.Where(x => x.UserId == dalManager.Id);
 
-            foreach (var item in ((DalManager)dalManager).Filters.Select(f => f.ToDb(dalManager.Id)))
+            foreach (var filter in userFilters)
             {
-                filterSet.Add(item);
+                var filterInDb = filtersInDb.FirstOrDefault(x => x.Id == filter.Id);
+                if (filterInDb == null)
+                    filterSet.Add(filter);
+                else
+                {
+                    filterInDb.LastViewed = filter.LastViewed;
+                    filterInDb.Skills = filter.Skills;
+                }
+            }
+
+            foreach (var filter in filtersInDb)
+            {
+                if (!userFilters.Any(x => x.Id == filter.Id))
+                    filterSet.Remove(filter);
             }
         }
 

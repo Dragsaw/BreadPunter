@@ -1,7 +1,7 @@
 ﻿@model BP.BLL.Interface.Entities.Users.BalManager
 
 @{
-    ViewBag.Title = "ManagerProfile";
+    ViewBag.Title = Resources.Resource.Profile;
 }
 
 <h2>@Resources.Resource.Profile</h2>
@@ -14,6 +14,7 @@
             using (Html.BeginForm("DeleteFilter", "Profile"))
             {
                 <div class="container">
+                    @Html.Hidden("filterId", filter.Id)
                     <h3>
                         @Resources.Resource.LastViewed:
                         @(filter.LastViewed != null ? ((DateTime)filter.LastViewed).ToString()
@@ -36,6 +37,6 @@
         }
     </div>
     <div class="panel-footer">
-        @Html.ActionLink(Resources.Resource.ButtonCreateFilter, "CreateFilter", "Profile", null, new { @class = "btn btn-success" })
+        @Html.ActionLink(Resources.Resource.ButtonCreateFilter, "Filter", "Profile", null, new { @class = "btn btn-success" })
     </div>
 </div>

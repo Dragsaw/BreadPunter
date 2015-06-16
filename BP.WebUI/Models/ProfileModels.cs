@@ -15,6 +15,7 @@ namespace BP.WebUI.Models
 
     public class CreateFilterViewModel
     {
+        public int Id { get; set; }
         public List<FilterSkillViewModel> Skills { get; set; }
     }
 

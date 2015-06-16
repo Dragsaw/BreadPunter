@@ -168,7 +168,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Profile\ProgrammerProfile.cshtml" />
     <Content Include="Views\Profile\ManagerProfile.cshtml" />
-    <Content Include="Views\Profile\CreateFilter.cshtml" />
+    <Content Include="Views\Profile\Filter.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,0 +1,30 @@
+﻿@model BP.WebUI.Models.CreateFilterViewModel
+
+@{
+    ViewBag.Title = "CreateFilter";
+}
+
+<h2>@Resources.Resource.FilterCreation</h2>
+
+@using (Html.BeginForm("Filter", "Profile"))
+{
+    <div class="row">
+        @for (int i = 0; i < Model.Skills.Count; i++)
+        {
+            <div class="col-md-4">
+                @Html.HiddenFor(x => x.Id)
+                <div class="form-group">
+                    <label>
+                        @Html.CheckBoxFor(x => x.Skills[i].Include)
+                        @Model.Skills[i].Skill.Skill.Name
+                    </label>
+                    <br />
+                    @Html.TextBoxFor(x => x.Skills[i].Skill.Level, new { @class = "from-control" })
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Id)
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Name)
+                </div>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+}
