@@ -11,9 +11,9 @@ using BP.DAL.Helpers;
 
 namespace BP.DAL.Mappers
 {
-    public class PropertyMap<TSource, TTarget> : ExpressionVisitor, IPropertyMap<TSource, TTarget>
-        where TSource : class
-        where TTarget : class, IEntity
+    public class PropertyMap<TEntity, TDal> : ExpressionVisitor, IPropertyMap<TEntity, TDal>
+        where TEntity : class
+        where TDal : class, IEntity
     {
         private readonly string paramName = "x";
         private readonly Dictionary<MemberInfo, MemberInfo> mapDictionary;
@@ -22,18 +22,18 @@ namespace BP.DAL.Mappers
         public PropertyMap()
         {
             mapDictionary = new Dictionary<MemberInfo, MemberInfo>();
-            paramExpr = Expression.Parameter(typeof(TSource), paramName);
+            paramExpr = Expression.Parameter(typeof(TEntity), paramName);
         }
 
-        public Expression<Func<TSource, bool>> MapExpression(
-            Expression<Func<TTarget, bool>> sourceExpression)
+        public Expression<Func<TEntity, bool>> MapExpression(
+            Expression<Func<TDal, bool>> sourceExpression)
         {
-            return Expression.Lambda<Func<TSource, bool>>(Visit(sourceExpression.Body), paramExpr);
+            return Expression.Lambda<Func<TEntity, bool>>(Visit(sourceExpression.Body), paramExpr);
         }
 
-        public IPropertyMap<TSource, TTarget> Map<TProperty>(
-            Expression<Func<TTarget, TProperty>> targetProp,
-            Expression<Func<TSource, TProperty>> sourceProp)
+        public IPropertyMap<TEntity, TDal> Map<TProperty>(
+            Expression<Func<TDal, TProperty>> targetProp,
+            Expression<Func<TEntity, TProperty>> sourceProp)
         {
             mapDictionary.Add(targetProp.GetPropertyInfo(), sourceProp.GetPropertyInfo());
 

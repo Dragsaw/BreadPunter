@@ -9,179 +9,230 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
+using BP.DAL.Interface.Mappers;
+using System.Linq.Expressions;
 
 namespace BP.DAL.Mappers
 {
-    public static class Mappers
+    public class UserMapper : IMapper<User, DalUser>
+    {
+        private static readonly PropertyMap<User, DalUser> propertyMap;
+
+        static UserMapper()
+        {
+            propertyMap = new PropertyMap<User, DalUser>();
+            propertyMap.Map(d => d.Id, e => e.Id)
+                .Map(d => d.Email, e => e.Email)
+                .Map(d => d.Password, e => e.Password)
+                .Map(d => d.Role.Id, e => e.RoleId)
+                .Map(d => d.Role.Name, e => e.Role.Name);
+        }
+
+        public User ToDb(DalUser obj)
+        {
+            User dbUser = new User();
+            dbUser.Id = obj.Id;
+            dbUser.Email = obj.Email;
+            dbUser.Password = obj.Password;
+            dbUser.RoleId = obj.Role.Id;
+
+            if (obj is DalProgrammer)
+            {
+                DalProgrammer programmer = (DalProgrammer)obj;
+                if (dbUser.UserInfo == null)
+                    dbUser.UserInfo = new UserInfo();
+
+                dbUser.UserInfo.About = programmer.About;
+                dbUser.UserInfo.BirthDate = programmer.BirthDate;
+                dbUser.UserInfo.Id = programmer.Id;
+                dbUser.UserInfo.ImageType = programmer.ImapeType;
+                dbUser.UserInfo.Name = programmer.Name;
+                dbUser.UserInfo.Photo = programmer.Photo;
+            }
+
+            return dbUser;
+        }
+
+        public DalUser ToDal(User entity)
+        {
+            DalUser user = new DalUser();
+            string role = entity.Role.Name;
+
+            if (role == "Admin")
+                user = new DalAdmin();
+            else if (role == "Manager")
+                user = new DalManager();
+            else if (role == "Programmer")
+            {
+                DalProgrammer programmer = new DalProgrammer();
+                if (entity.UserInfo != null)
+                {
+                    programmer.About = entity.UserInfo.About;
+                    programmer.BirthDate = entity.UserInfo.BirthDate;
+                    programmer.ImapeType = entity.UserInfo.ImageType;
+                    programmer.Name = entity.UserInfo.Name;
+                    programmer.Photo = entity.UserInfo.Photo;
+                }
+                user = programmer;
+            }
+
+            user.Id = entity.Id;
+            user.Email = entity.Email;
+            user.Password = entity.Password;
+            user.Role = new DalRole { Id = entity.RoleId, Name = role };
+
+            return user;
+        }
+
+        public Expression<Func<User, bool>> MapExpression(Expression<Func<DalUser, bool>> sourceExpression)
+        {
+            return propertyMap.MapExpression(sourceExpression);
+        }
+    }
+
+    public class SkillMapper : IMapper<Skill, DalSkill>
+    {
+        private static readonly PropertyMap<Skill, DalSkill> propertyMap;
+
+        static SkillMapper()
+        {
+            propertyMap = new PropertyMap<Skill, DalSkill>();
+            propertyMap.Map(d => d.Id, e => e.Id)
+                .Map(d => d.Name, e => e.Name);
+        }
+
+        public Skill ToDb(DalSkill obj)
+        {
+            return new Skill { Id = obj.Id, Name = obj.Name };
+        }
+
+        public DalSkill ToDal(Skill entity)
+        {
+            return new DalSkill { Id = entity.Id, Name = entity.Name };
+        }
+
+        public Expression<Func<Skill, bool>> MapExpression(Expression<Func<DalSkill, bool>> sourceExpression)
+        {
+            return propertyMap.MapExpression(sourceExpression);
+        }
+    }
+
+    public class FilterMapper : IMapper<Filter, DalFilter>
     {
         private static readonly BinaryFormatter binaryFormatter;
+        private static readonly PropertyMap<Filter, DalFilter> propertyMap;
 
-        static Mappers()
+        static FilterMapper()
         {
             binaryFormatter = new BinaryFormatter();
+            propertyMap = new PropertyMap<Filter, DalFilter>();
+            propertyMap.Map(d => d.Id, e => e.Id)
+                .Map(d => d.LastViewed, e => e.LastViewed)
+                .Map(d => d.UserId, e => e.UserId);
         }
 
-        #region ORM to DAL mappers
-        public static DalUser ToDal(this User user)
+        public Filter ToDb(DalFilter obj)
         {
-            DalUser dalUser = InitializeDalUserProperties(user);
-            dalUser.Id = user.Id;
-            dalUser.Email = user.Email;
-            dalUser.Password = user.Password;
-            dalUser.Role = user.Role.ToDal();
-            return dalUser;
-        }
-
-        public static DalSkill ToDal(this Skill skill)
-        {
-            return new DalSkill
+            using (MemoryStream stream = new MemoryStream())
             {
-                Id = skill.Id,
-                Name = skill.Name
-            };
+                binaryFormatter.Serialize(stream, obj.Skills);
+                Filter filter = new Filter
+                {
+                    Id = obj.Id,
+                    UserId = obj.UserId,
+                    LastViewed = obj.LastViewed,
+                    Skills = stream.ToArray()
+                };
+                return filter;
+            }
         }
 
-        public static DalFilter ToDal(this Filter filter)
+        public DalFilter ToDal(Filter entity)
         {
-            using (Stream stream = new MemoryStream(filter.Skills))
+            using (Stream stream = new MemoryStream(entity.Skills))
             {
                 return new DalFilter
                 {
-                    Id = filter.Id,
-                    LastViewed = filter.LastViewed,
+                    Id = entity.Id,
+                    UserId = entity.UserId,
+                    LastViewed = entity.LastViewed,
                     Skills = (IDictionary<DalSkill, int>)binaryFormatter.Deserialize(stream)
                 };
             }
         }
 
-        public static DalRole ToDal(this Role role)
+        public Expression<Func<Filter, bool>> MapExpression(Expression<Func<DalFilter, bool>> sourceExpression)
         {
-            return new DalRole
-            {
-                Id = role.Id,
-                Name = role.Name
-            };
+            return propertyMap.MapExpression(sourceExpression);
+        }
+    }
+
+    public class RoleMapper : IMapper<Role, DalRole>
+    {
+        private static readonly PropertyMap<Role, DalRole> propertyMap;
+
+        static RoleMapper()
+        {
+            propertyMap = new PropertyMap<Role, DalRole>();
+            propertyMap.Map(d => d.Id, e => e.Id)
+                .Map(d => d.Name, e => e.Name);
         }
 
-        public static DalUserSkill ToDal(this UserSkill userSkill)
+        public Role ToDb(DalRole obj)
         {
-            return new DalUserSkill
-            {
-                Level = userSkill.Level,
-                Skill = userSkill.Skill.ToDal(),
-                User = (DalProgrammer)userSkill.User.ToDal()
-            };
-        }
-        #endregion
-
-        #region DAL to ORM mappers
-        public static User ToDb(this DalUser user)
-        {
-            User dbUser = InitializeUserProperties(user);
-            dbUser.Id = user.Id;
-            dbUser.Email = user.Email;
-            dbUser.Password = user.Password;
-            dbUser.RoleId = user.Role.Id;
-
-            return dbUser;
+            return new Role { Id = obj.Id, Name = obj.Name };
         }
 
-        public static Skill ToDb(this DalSkill skill)
+        public DalRole ToDal(Role entity)
         {
-            return new Skill
-            {
-                Id = skill.Id,
-                Name = skill.Name
-            };
+            return new DalRole { Id = entity.Id, Name = entity.Name };
         }
 
-        public static Filter ToDb(this DalFilter filter, int userId)
+        public Expression<Func<Role, bool>> MapExpression(Expression<Func<DalRole, bool>> sourceExpression)
         {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                binaryFormatter.Serialize(stream, filter.Skills);
-                Filter f = new Filter
-                {
-                    Id = filter.Id,
-                    UserId = userId,
-                    LastViewed = filter.LastViewed,
-                    Skills = stream.ToArray()
-                };
-                return f;
-            }
+            return propertyMap.MapExpression(sourceExpression);
+        }
+    }
+
+    public class UserSkillMapper : IMapper<UserSkill, DalUserSkill>
+    {
+        private static readonly PropertyMap<UserSkill, DalUserSkill> propertyMap;
+        private static readonly SkillMapper skillMapper;
+        private static readonly UserMapper userMapper;
+
+        static UserSkillMapper()
+        {
+            propertyMap = new PropertyMap<UserSkill, DalUserSkill>();
+            propertyMap.Map(d => d.User.Id, e => e.UserId)
+                .Map(d => d.Skill.Id, e => e.SkillId)
+                .Map(d => d.Level, e => e.Level);
+            skillMapper = new SkillMapper();
+            userMapper = new UserMapper();
         }
 
-        public static Role ToDb(this DalRole role)
-        {
-            return new Role
-            {
-                Id = role.Id,
-                Name = role.Name
-            };
-        }
-
-        public static UserSkill ToDb(this DalUserSkill userSkill)
+        public UserSkill ToDb(DalUserSkill obj)
         {
             return new UserSkill
             {
-                UserId = userSkill.User.Id,
-                SkillId = userSkill.Skill.Id,
-                Level = userSkill.Level
-            };
-        }
-        #endregion
-
-        #region Additional methods
-        public static UserInfo GetUserInfo(this DalProgrammer programmer)
-        {
-            return new UserInfo
-            {
-                About = programmer.About,
-                BirthDate = programmer.BirthDate,
-                Name = programmer.Name,
-                Photo = programmer.Photo,
-                ImageType = programmer.ImapeType
+                UserId = obj.User.Id,
+                SkillId = obj.Skill.Id,
+                Level = obj.Level
             };
         }
 
-        private static DalUser InitializeDalUserProperties(User user)
+        public DalUserSkill ToDal(UserSkill entity)
         {
-            DalUser dalUser;
-            switch (user.Role.Name)
+            return new DalUserSkill
             {
-                case ("Admin"):
-                    dalUser = new DalAdmin();
-                    break;
-                case ("Programmer"):
-                    DalProgrammer programmer = new DalProgrammer();
-                    programmer.Name = user.UserInfo.Name;
-                    programmer.About = user.UserInfo.About;
-                    programmer.BirthDate = user.UserInfo.BirthDate;
-                    programmer.ImapeType = user.UserInfo.ImageType;
-                    programmer.Photo = user.UserInfo.Photo;
-                    programmer.Skills = user.UserSkills.ToDictionary(x => x.Skill.ToDal(), x => x.Level);
-                    dalUser = programmer;
-                    break;
-                case ("Manager"):
-                    dalUser = new DalManager();
-                    ((DalManager)dalUser).Filters = user.Filters.Select(f => f.ToDal());
-                    break;
-                default:
-                    dalUser = new DalUser();
-                    break;
-            }
-            return dalUser;
+                Level = entity.Level,
+                Skill = skillMapper.ToDal(entity.Skill),
+                User = (DalProgrammer)userMapper.ToDal(entity.User)
+            };
         }
 
-        private static User InitializeUserProperties(DalUser user)
+        public Expression<Func<UserSkill, bool>> MapExpression(Expression<Func<DalUserSkill, bool>> sourceExpression)
         {
-            User dbUser = new User();
-            if (user is DalProgrammer)
-                dbUser.UserInfo = ((DalProgrammer)user).GetUserInfo();
-            if (user is DalManager)
-                dbUser.Filters = ((DalManager)user).Filters.Select(f => f.ToDb(user.Id)).ToList();
-            return dbUser;
+            return propertyMap.MapExpression(sourceExpression);
         }
-        #endregion
     }
 }

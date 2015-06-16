@@ -9,7 +9,7 @@ namespace BP.DAL.Interface.Entities.Users
         public byte[] Photo { get; set; }
         public string ImapeType { get; set; }
         public string About { get; set; }
-        public IDictionary<DalSkill, int> Skills { get; set; }
+        public IEnumerable<DalUserSkill> Skills { get; set; }
         public DateTime? BirthDate { get; set; }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Entities\Users\DalProgrammer.cs" />
     <Compile Include="Entities\Users\DalUser.cs" />
     <Compile Include="Entities\DalRole.cs" />
+    <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\IPropertyMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
