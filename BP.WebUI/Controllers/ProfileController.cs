@@ -41,14 +41,39 @@ namespace BP.WebUI.Controllers
             else return RedirectToAction("Index", "Home");
         }
 
-        public FileResult GetPhoto(byte[] photo, string imageType)
+        public FileResult GetPhoto(int id)
         {
-            if (imageType != null && photo != null)
-                return File(photo, imageType);
+            BalProgrammer user = (BalProgrammer)userService.Find(id);
+            if ( user.Photo != null && user.ImageType != null)
+                return File(user.Photo, user.ImageType);
             else return File(Server.MapPath(defaultImagePath), defaultImageType);
         }
 
-        public ActionResult Edit()
+        public ActionResult EditInfo()
+        {
+            BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
+            UserInfoViewModel ui = new UserInfoViewModel();
+            ui.GetInfo(user);
+            return View(ui);
+        }
+
+        [HttpPost]
+        public ActionResult EditInfo(UserInfoViewModel userInfo)
+        {
+            BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
+            userInfo.SetUserInfo(user);
+            if (userInfo.Image != null)
+            {
+                user.ImageType = userInfo.Image.ContentType;
+                user.Photo = new byte[userInfo.Image.ContentLength];
+                userInfo.Image.InputStream.Read(user.Photo, 0, userInfo.Image.ContentLength);
+            }
+
+            userService.Update(user);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EditSkills()
         {
             BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
 
@@ -62,7 +87,7 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(EditUserSkillsViewModel model)
+        public ActionResult EditSkills(EditUserSkillsViewModel model)
         {
             BalProgrammer user = (BalProgrammer)userService.Find(model.Id);
             user.Skills = model.Skills
