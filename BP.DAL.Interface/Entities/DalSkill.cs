@@ -11,5 +11,10 @@ namespace BP.DAL.Interface.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public object[] GetId()
+        {
+            return new object[] { Id };
+        }
     }
 }

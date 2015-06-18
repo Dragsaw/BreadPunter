@@ -8,6 +8,6 @@ namespace BP.DAL.Interface.Entities
 {
     public interface IEntity
     {
-        int Id { get; }
+        object[] GetId();
     }
 }
