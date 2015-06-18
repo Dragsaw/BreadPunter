@@ -55,10 +55,10 @@ namespace BP.BLL.Concrete
 
             foreach (var item in skills.Where(s => s != null))
             {
-                userSkills.AddRange(userSkillRepo.Get(s => s.Skill.Id == item.Id && s.Level >= item.Level));
+                userSkills.AddRange(userSkillRepo.Get(s => s.Skill.Id == item.Skill.Id && s.Level >= item.Level));
             }
 
-            return userSkills.GroupBy(k => k.User).Where(d => d.Count() == skills.Count()).Select(d => d.Key.ToBal());
+            return userSkills.GroupBy(k => k.User.Id).Where(d => d.Count() == skills.Count()).Select(d => Find(d.Key));
         }
 
         public IEnumerable<BalUser> GetAll()

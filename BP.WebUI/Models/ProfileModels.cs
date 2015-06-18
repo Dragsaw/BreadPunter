@@ -14,10 +14,11 @@ namespace BP.WebUI.Models
         public bool Include { get; set; }
     }
 
-    public class CreateFilterViewModel
+    public class FilterViewModel
     {
         public int Id { get; set; }
         public List<FilterSkillViewModel> Skills { get; set; }
+        public DateTime? LastViewed { get; set; }
     }
 
     public class UserSkillViewModel
@@ -58,5 +59,11 @@ namespace BP.WebUI.Models
             if (BirthDate != null)
                 user.BirthDate = DateTime.Parse(BirthDate);
         }
+    }
+
+    public class BrowseViewModel
+    {
+        public FilterViewModel Filter { get; set; }
+        public List<BalProgrammer> Users { get; set; }
     }
 }

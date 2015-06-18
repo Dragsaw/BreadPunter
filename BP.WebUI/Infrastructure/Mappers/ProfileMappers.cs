@@ -18,12 +18,12 @@ namespace BP.WebUI.Infrastructure.Mappers
             };
         }
 
-        public static BalFilter ToBal(this CreateFilterViewModel filter)
+        public static BalFilter ToBal(this FilterViewModel filter)
         {
             return new BalFilter
             {
                 Id = filter.Id,
-                LastViewed = null,
+                LastViewed = filter.LastViewed,
                 Skills = filter.Skills.Where(x => x.Include).ToDictionary(k => k.Skill.Skill, v => v.Skill.Level)
             };
         }

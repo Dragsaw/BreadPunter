@@ -171,6 +171,8 @@
     <Content Include="Views\Profile\Filter.cshtml" />
     <Content Include="Views\Profile\EditSkills.cshtml" />
     <Content Include="Views\Profile\EditInfo.cshtml" />
+    <Content Include="Views\Profile\Browse.cshtml" />
+    <Content Include="Views\Profile\_UserSkillsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,7 +28,7 @@
                         </div>
                     }
                     <div class="btn-group pull-right">
-                        @Html.ActionLink(Resources.Resource.ButtonView, "Search", new { filterId = filter.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink(Resources.Resource.ButtonView, "Browse", new { filterId = filter.Id }, new { @class = "btn btn-primary" })
                         @Html.ActionLink(Resources.Resource.ButtonEdit, "EditFilter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
                         <button type="submit" class="btn btn-danger">@Resources.Resource.ButtonDelete</button>
                     </div>
