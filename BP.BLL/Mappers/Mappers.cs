@@ -51,7 +51,7 @@ namespace BP.BLL.Mappers
             };
         }
 
-        public static DalFilter ToDal(this BalFilter filter)
+        public static DalFilter ToDal(this BalFilter filter, int userId)
         {
             if (filter == null)
                 return null;
@@ -59,6 +59,7 @@ namespace BP.BLL.Mappers
             return new DalFilter
             {
                 Id = filter.Id,
+                UserId = userId,
                 Skills = filter.Skills.ToDictionary(k => k.Key.ToDal(), v => v.Value),
                 LastViewed = filter.LastViewed
             };
@@ -186,7 +187,7 @@ namespace BP.BLL.Mappers
             else if (user is BalManager)
                 dalUser = new DalManager()
                 {
-                    Filters = ((BalManager)user).Filters.Select(f => f.ToDal())
+                    Filters = ((BalManager)user).Filters.Select(f => f.ToDal(user.Id))
                 };
             else dalUser = new DalUser();
 

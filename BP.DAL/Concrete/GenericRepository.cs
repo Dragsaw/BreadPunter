@@ -56,7 +56,7 @@ namespace BP.DAL.Concrete
         public void Update(TDal entity)
         {
             TEntity entityToUpdate = set.Find(entity.GetId());
-            entityToUpdate = mapper.ToDb(entity);
+            mapper.CopyFields(entity, entityToUpdate);
         }
 
         public void Remove(int id)

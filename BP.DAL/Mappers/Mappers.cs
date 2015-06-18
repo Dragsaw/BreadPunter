@@ -14,13 +14,41 @@ using System.Linq.Expressions;
 
 namespace BP.DAL.Mappers
 {
-    public class UserMapper : IMapper<User, DalUser>
+    public abstract class MapperBase<TEntity, TDal> : IMapper<TEntity, TDal>
+        where TEntity : class, new()
+        where TDal : class, IEntity
     {
-        private readonly PropertyMap<User, DalUser> propertyMap;
+        protected readonly PropertyMap<TEntity, TDal> propertyMap;
 
+        protected MapperBase()
+        {
+            propertyMap = new PropertyMap<TEntity, TDal>();
+        }
+
+        public virtual TEntity ToDb(TDal obj)
+        {
+            if (obj == null)
+                return null;
+
+            TEntity entity = new TEntity();
+            CopyFields(obj, entity);
+            return entity;
+        }
+
+        public abstract void CopyFields(TDal obj, TEntity entity);
+
+        public abstract TDal ToDal(TEntity entity);
+
+        public virtual Expression<Func<TEntity, bool>> MapExpression(Expression<Func<TDal, bool>> sourceExpression)
+        {
+            return propertyMap.MapExpression(sourceExpression);
+        }
+    }
+
+    public class UserMapper : MapperBase<User, DalUser>
+    {
         public UserMapper()
         {
-            propertyMap = new PropertyMap<User, DalUser>();
             propertyMap.Map(d => d.Id, e => e.Id)
                 .Map(d => d.Email, e => e.Email)
                 .Map(d => d.Password, e => e.Password)
@@ -28,33 +56,36 @@ namespace BP.DAL.Mappers
                 .Map(d => d.Role.Name, e => e.Role.Name);
         }
 
-        public User ToDb(DalUser obj)
+        public override void CopyFields(DalUser dalFrom, User dbTo)
         {
-            User dbUser = new User();
-            dbUser.Id = obj.Id;
-            dbUser.Email = obj.Email;
-            dbUser.Password = obj.Password;
-            dbUser.RoleId = obj.Role.Id;
+            if (dbTo == null || dalFrom == null)
+                return;
 
-            if (obj is DalProgrammer)
+            dbTo.Id = dalFrom.Id;
+            dbTo.Email = dalFrom.Email;
+            dbTo.Password = dalFrom.Password;
+            dbTo.RoleId = dalFrom.Role.Id;
+
+            if (dalFrom is DalProgrammer)
             {
-                DalProgrammer programmer = (DalProgrammer)obj;
-                if (dbUser.UserInfo == null)
-                    dbUser.UserInfo = new UserInfo();
+                DalProgrammer programmer = (DalProgrammer)dalFrom;
+                if (dbTo.UserInfo == null)
+                    dbTo.UserInfo = new UserInfo();
 
-                dbUser.UserInfo.About = programmer.About;
-                dbUser.UserInfo.BirthDate = programmer.BirthDate;
-                dbUser.UserInfo.Id = programmer.Id;
-                dbUser.UserInfo.ImageType = programmer.ImapeType;
-                dbUser.UserInfo.Name = programmer.Name;
-                dbUser.UserInfo.Photo = programmer.Photo;
+                dbTo.UserInfo.About = programmer.About;
+                dbTo.UserInfo.BirthDate = programmer.BirthDate;
+                dbTo.UserInfo.Id = programmer.Id;
+                dbTo.UserInfo.ImageType = programmer.ImapeType;
+                dbTo.UserInfo.Name = programmer.Name;
+                dbTo.UserInfo.Photo = programmer.Photo;
             }
-
-            return dbUser;
         }
 
-        public DalUser ToDal(User entity)
+        public override DalUser ToDal(User entity)
         {
+            if (entity == null)
+                return null;
+
             DalUser user = new DalUser();
             string role = entity.Role.Name;
 
@@ -83,72 +114,66 @@ namespace BP.DAL.Mappers
 
             return user;
         }
-
-        public Expression<Func<User, bool>> MapExpression(Expression<Func<DalUser, bool>> sourceExpression)
-        {
-            return propertyMap.MapExpression(sourceExpression);
-        }
     }
 
-    public class SkillMapper : IMapper<Skill, DalSkill>
+    public class SkillMapper : MapperBase<Skill, DalSkill>
     {
-        private readonly PropertyMap<Skill, DalSkill> propertyMap;
-
         public SkillMapper()
         {
-            propertyMap = new PropertyMap<Skill, DalSkill>();
             propertyMap.Map(d => d.Id, e => e.Id)
                 .Map(d => d.Name, e => e.Name);
         }
 
-        public Skill ToDb(DalSkill obj)
+        public override void CopyFields(DalSkill dalFrom, Skill dbTo)
         {
-            return new Skill { Id = obj.Id, Name = obj.Name };
+            if (dbTo == null || dalFrom == null)
+                return;
+
+            dbTo.Id = dalFrom.Id;
+            dbTo.Name = dalFrom.Name;
         }
 
-        public DalSkill ToDal(Skill entity)
+        public override DalSkill ToDal(Skill entity)
         {
+            if (entity == null)
+                return null;
+
             return new DalSkill { Id = entity.Id, Name = entity.Name };
-        }
-
-        public Expression<Func<Skill, bool>> MapExpression(Expression<Func<DalSkill, bool>> sourceExpression)
-        {
-            return propertyMap.MapExpression(sourceExpression);
         }
     }
 
-    public class FilterMapper : IMapper<Filter, DalFilter>
+    public class FilterMapper : MapperBase<Filter, DalFilter>
     {
         private readonly BinaryFormatter binaryFormatter;
-        private readonly PropertyMap<Filter, DalFilter> propertyMap;
 
         public FilterMapper()
         {
             binaryFormatter = new BinaryFormatter();
-            propertyMap = new PropertyMap<Filter, DalFilter>();
             propertyMap.Map(d => d.Id, e => e.Id)
                 .Map(d => d.LastViewed, e => e.LastViewed)
                 .Map(d => d.UserId, e => e.UserId);
         }
 
-        public Filter ToDb(DalFilter obj)
+        public override void CopyFields(DalFilter dalFrom, Filter dbTo)
         {
+            if (dbTo == null || dalFrom == null)
+                return;
+
             using (MemoryStream stream = new MemoryStream())
             {
-                binaryFormatter.Serialize(stream, obj.Skills);
-                Filter filter = new Filter
-                {
-                    Id = obj.Id,
-                    UserId = obj.UserId,
-                    LastViewed = obj.LastViewed,
-                    Skills = stream.ToArray()
-                };
-                return filter;
+                binaryFormatter.Serialize(stream, dalFrom.Skills);
+                dbTo.Id = dalFrom.Id;
+                dbTo.UserId = dalFrom.UserId;
+                dbTo.LastViewed = dalFrom.LastViewed;
+                dbTo.Skills = stream.ToArray();
             }
         }
 
-        public DalFilter ToDal(Filter entity)
+        public override DalFilter ToDal(Filter entity)
         {
+            if (entity == null)
+                return null;
+
             using (Stream stream = new MemoryStream(entity.Skills))
             {
                 return new DalFilter
@@ -160,49 +185,40 @@ namespace BP.DAL.Mappers
                 };
             }
         }
-
-        public Expression<Func<Filter, bool>> MapExpression(Expression<Func<DalFilter, bool>> sourceExpression)
-        {
-            return propertyMap.MapExpression(sourceExpression);
-        }
     }
 
-    public class RoleMapper : IMapper<Role, DalRole>
+    public class RoleMapper : MapperBase<Role, DalRole>
     {
-        private readonly PropertyMap<Role, DalRole> propertyMap;
-
         public RoleMapper()
         {
-            propertyMap = new PropertyMap<Role, DalRole>();
             propertyMap.Map(d => d.Id, e => e.Id)
                 .Map(d => d.Name, e => e.Name);
         }
 
-        public Role ToDb(DalRole obj)
+        public override void CopyFields(DalRole dalFrom, Role dbTo)
         {
-            return new Role { Id = obj.Id, Name = obj.Name };
+            if (dbTo == null || dalFrom == null)
+                return;
+
+            dbTo.Id = dalFrom.Id;
+            dbTo.Name = dalFrom.Name;
         }
 
-        public DalRole ToDal(Role entity)
+        public override DalRole ToDal(Role entity)
         {
+            if (entity == null)
+                return null;
             return new DalRole { Id = entity.Id, Name = entity.Name };
-        }
-
-        public Expression<Func<Role, bool>> MapExpression(Expression<Func<DalRole, bool>> sourceExpression)
-        {
-            return propertyMap.MapExpression(sourceExpression);
         }
     }
 
-    public class UserSkillMapper : IMapper<UserSkill, DalUserSkill>
+    public class UserSkillMapper : MapperBase<UserSkill, DalUserSkill>
     {
-        private readonly PropertyMap<UserSkill, DalUserSkill> propertyMap;
         private readonly IMapper<Skill, DalSkill> skillMapper;
         private readonly IMapper<User, DalUser> userMapper;
 
         public UserSkillMapper(IMapper<Skill, DalSkill> skillMapper, IMapper<User, DalUser> userMapper)
         {
-            propertyMap = new PropertyMap<UserSkill, DalUserSkill>();
             propertyMap.Map(d => d.User.Id, e => e.UserId)
                 .Map(d => d.Skill.Id, e => e.SkillId)
                 .Map(d => d.Level, e => e.Level);
@@ -210,29 +226,27 @@ namespace BP.DAL.Mappers
             this.userMapper = userMapper;
         }
 
-        public UserSkill ToDb(DalUserSkill obj)
+        public override void CopyFields(DalUserSkill dalFrom, UserSkill dbTo)
         {
-            return new UserSkill
-            {
-                UserId = obj.User.Id,
-                SkillId = obj.Skill.Id,
-                Level = obj.Level
-            };
+            if (dbTo == null || dalFrom == null)
+                return;
+
+            dbTo.UserId = dalFrom.User.Id;
+            dbTo.SkillId = dalFrom.Skill.Id;
+            dbTo.Level = dalFrom.Level;
         }
 
-        public DalUserSkill ToDal(UserSkill entity)
+        public override DalUserSkill ToDal(UserSkill entity)
         {
+            if (entity == null)
+                return null;
+
             return new DalUserSkill
             {
                 Level = entity.Level,
                 Skill = skillMapper.ToDal(entity.Skill),
                 User = (DalProgrammer)userMapper.ToDal(entity.User)
             };
-        }
-
-        public Expression<Func<UserSkill, bool>> MapExpression(Expression<Func<DalUserSkill, bool>> sourceExpression)
-        {
-            return propertyMap.MapExpression(sourceExpression);
         }
     }
 }

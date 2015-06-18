@@ -82,33 +82,11 @@ namespace BP.BLL.Concrete
         {
             if (entity is BalProgrammer)
             {
-                var dbUserSkills = userSkillRepo.Get(x => x.User.Id == entity.Id);
-                foreach (var skill in ((BalProgrammer)entity).Skills)
-                {
-                    DalUserSkill dalUserSkill = new DalUserSkill
-                    {
-                        User = (DalProgrammer)entity.ToDal(),
-                        Skill = skill.Key.ToDal(),
-                        Level = skill.Value
-                    };
-
-                    if (dbUserSkills.Any(x => x.Skill.Id == skill.Key.Id))
-                        userSkillRepo.Update(dalUserSkill);
-                    else userSkillRepo.Create(dalUserSkill);
-                }
-
-                foreach (var skill in dbUserSkills)
-                {
-                    if (!((BalProgrammer)entity).Skills.Any(x => x.Key.Id == skill.Skill.Id))
-                    {
-                        userSkillRepo.Remove(skill);
-                    }
-                }
+                UpdateUserSkills((BalProgrammer)entity);
             }
             else if (entity is BalManager)
             {
-                foreach (var filter in ((BalManager)entity).Filters)
-                    filterRepo.Update(filter.ToDal());
+                UpdateFilters((BalManager)entity);
             }
 
             userRepo.Update(entity.ToDal());
@@ -155,6 +133,49 @@ namespace BP.BLL.Concrete
             else if (user as DalManager != null)
             {
                 ((DalManager)user).Filters = filterRepo.Get(x => x.UserId == user.Id);
+            }
+        }
+
+        private void UpdateFilters(BalManager balManager)
+        {
+            var dbFilters = filterRepo.Get(x => x.UserId == balManager.Id);
+            foreach (var filter in balManager.Filters)
+            {
+                if (dbFilters.Any(x => x.Id == filter.Id))
+                    filterRepo.Update(filter.ToDal(balManager.Id));
+                else filterRepo.Create(filter.ToDal(balManager.Id));
+            }
+
+            foreach (var filter in dbFilters)
+            {
+                if (!balManager.Filters.Any(x => x.Id == filter.Id))
+                    filterRepo.Remove(filter.Id);
+            }
+        }
+
+        private void UpdateUserSkills(BalProgrammer balProgrammer)
+        {
+            var dbUserSkills = userSkillRepo.Get(x => x.User.Id == balProgrammer.Id);
+            foreach (var skill in balProgrammer.Skills)
+            {
+                DalUserSkill dalUserSkill = new DalUserSkill
+                {
+                    User = (DalProgrammer)balProgrammer.ToDal(),
+                    Skill = skill.Key.ToDal(),
+                    Level = skill.Value
+                };
+
+                if (dbUserSkills.Any(x => x.Skill.Id == skill.Key.Id))
+                    userSkillRepo.Update(dalUserSkill);
+                else userSkillRepo.Create(dalUserSkill);
+            }
+
+            foreach (var skill in dbUserSkills)
+            {
+                if (!balProgrammer.Skills.Any(x => x.Key.Id == skill.Skill.Id))
+                {
+                    userSkillRepo.Remove(skill);
+                }
             }
         }
     }
