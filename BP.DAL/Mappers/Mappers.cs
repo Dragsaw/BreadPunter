@@ -16,9 +16,9 @@ namespace BP.DAL.Mappers
 {
     public class UserMapper : IMapper<User, DalUser>
     {
-        private static readonly PropertyMap<User, DalUser> propertyMap;
+        private readonly PropertyMap<User, DalUser> propertyMap;
 
-        static UserMapper()
+        public UserMapper()
         {
             propertyMap = new PropertyMap<User, DalUser>();
             propertyMap.Map(d => d.Id, e => e.Id)
@@ -92,9 +92,9 @@ namespace BP.DAL.Mappers
 
     public class SkillMapper : IMapper<Skill, DalSkill>
     {
-        private static readonly PropertyMap<Skill, DalSkill> propertyMap;
+        private readonly PropertyMap<Skill, DalSkill> propertyMap;
 
-        static SkillMapper()
+        public SkillMapper()
         {
             propertyMap = new PropertyMap<Skill, DalSkill>();
             propertyMap.Map(d => d.Id, e => e.Id)
@@ -119,10 +119,10 @@ namespace BP.DAL.Mappers
 
     public class FilterMapper : IMapper<Filter, DalFilter>
     {
-        private static readonly BinaryFormatter binaryFormatter;
-        private static readonly PropertyMap<Filter, DalFilter> propertyMap;
+        private readonly BinaryFormatter binaryFormatter;
+        private readonly PropertyMap<Filter, DalFilter> propertyMap;
 
-        static FilterMapper()
+        public FilterMapper()
         {
             binaryFormatter = new BinaryFormatter();
             propertyMap = new PropertyMap<Filter, DalFilter>();
@@ -169,9 +169,9 @@ namespace BP.DAL.Mappers
 
     public class RoleMapper : IMapper<Role, DalRole>
     {
-        private static readonly PropertyMap<Role, DalRole> propertyMap;
+        private readonly PropertyMap<Role, DalRole> propertyMap;
 
-        static RoleMapper()
+        public RoleMapper()
         {
             propertyMap = new PropertyMap<Role, DalRole>();
             propertyMap.Map(d => d.Id, e => e.Id)
@@ -196,18 +196,18 @@ namespace BP.DAL.Mappers
 
     public class UserSkillMapper : IMapper<UserSkill, DalUserSkill>
     {
-        private static readonly PropertyMap<UserSkill, DalUserSkill> propertyMap;
-        private static readonly SkillMapper skillMapper;
-        private static readonly UserMapper userMapper;
+        private readonly PropertyMap<UserSkill, DalUserSkill> propertyMap;
+        private readonly IMapper<Skill, DalSkill> skillMapper;
+        private readonly IMapper<User, DalUser> userMapper;
 
-        static UserSkillMapper()
+        public UserSkillMapper(IMapper<Skill, DalSkill> skillMapper, IMapper<User, DalUser> userMapper)
         {
             propertyMap = new PropertyMap<UserSkill, DalUserSkill>();
             propertyMap.Map(d => d.User.Id, e => e.UserId)
                 .Map(d => d.Skill.Id, e => e.SkillId)
                 .Map(d => d.Level, e => e.Level);
-            skillMapper = new SkillMapper();
-            userMapper = new UserMapper();
+            this.skillMapper = skillMapper;
+            this.userMapper = userMapper;
         }
 
         public UserSkill ToDb(DalUserSkill obj)

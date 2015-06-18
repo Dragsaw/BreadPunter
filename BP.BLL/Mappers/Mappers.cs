@@ -89,7 +89,7 @@ namespace BP.BLL.Mappers
             balUser.Email = user.Email;
             balUser.Password = user.Password;
             balUser.Role = user.Role.ToBal();
-            
+
             return balUser;
         }
 
@@ -140,6 +140,7 @@ namespace BP.BLL.Mappers
             else if (user is DalProgrammer)
             {
                 DalProgrammer dalProgrammer = (DalProgrammer)user;
+                var skillsDict = dalProgrammer.Skills.ToDictionary(k => k.Skill.ToBal(), v => v.Level);
                 balUser = new BalProgrammer()
                 {
                     Name = dalProgrammer.Name,
@@ -147,7 +148,7 @@ namespace BP.BLL.Mappers
                     BirthDate = dalProgrammer.BirthDate,
                     Photo = dalProgrammer.Photo,
                     ImageType = dalProgrammer.ImapeType,
-                    Skills = dalProgrammer.Skills.ToDictionary(k => k.Key.ToBal(), v => v.Value)
+                    Skills = skillsDict
                 };
             }
             else if (user is DalManager)
@@ -168,15 +169,19 @@ namespace BP.BLL.Mappers
             else if (user is BalProgrammer)
             {
                 BalProgrammer programmer = (BalProgrammer)user;
-                dalUser = new DalProgrammer()
+                DalProgrammer dalProgrammer = new DalProgrammer();
+                dalProgrammer.Name = programmer.Name;
+                dalProgrammer.About = programmer.About;
+                dalProgrammer.BirthDate = programmer.BirthDate;
+                dalProgrammer.Photo = programmer.Photo;
+                dalProgrammer.ImapeType = programmer.ImageType;
+                dalProgrammer.Skills = programmer.Skills.Select(x => new DalUserSkill
                 {
-                    Name = programmer.Name,
-                    About = programmer.About,
-                    BirthDate = programmer.BirthDate,
-                    Photo = programmer.Photo,
-                    ImapeType = programmer.ImageType,
-                    Skills = programmer.Skills.ToDictionary(k => k.Key.ToDal(), v => v.Value)
-                };
+                    User = dalProgrammer,
+                    Level = x.Value,
+                    Skill = x.Key.ToDal()
+                });
+                dalUser = dalProgrammer;
             }
             else if (user is BalManager)
                 dalUser = new DalManager()

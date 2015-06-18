@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BP.DAL.Concrete.Repositories
+namespace BP.DAL.Concrete
 {
     public class GenericRepository<TEntity, TDal> : IRepository<TDal>
         where TEntity : class
@@ -38,12 +38,13 @@ namespace BP.DAL.Concrete.Repositories
 
         public IEnumerable<TDal> GetAll()
         {
-            return set.Select(x => mapper.ToDal(x));
+            return set.AsEnumerable().Select(x => mapper.ToDal(x));
         }
 
         public IEnumerable<TDal> Get(Expression<Func<TDal, bool>> predicate)
         {
             return set.Where(mapper.MapExpression(predicate))
+                .AsEnumerable()
                 .Select(x => mapper.ToDal(x));
         }
 
@@ -54,7 +55,7 @@ namespace BP.DAL.Concrete.Repositories
 
         public void Update(TDal entity)
         {
-            TEntity entityToUpdate = set.Find(entity.Id);
+            TEntity entityToUpdate = set.Find(entity.GetId());
             entityToUpdate = mapper.ToDb(entity);
         }
 
@@ -67,7 +68,8 @@ namespace BP.DAL.Concrete.Repositories
 
         public void Remove(TDal entity)
         {
-            set.Remove(mapper.ToDb(entity));
+            TEntity entityToDelete = set.Find(entity.GetId());
+            set.Remove(entityToDelete);
         }
     }
 }

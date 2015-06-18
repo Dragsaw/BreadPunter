@@ -17,19 +17,24 @@ namespace BP.BLL.Concrete
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<DalUser> userRepo;
         private readonly IUnitOfWork uow;
-        private IRepository<DalUserSkill> userSkillRepo;
+        private readonly IRepository<DalUser> userRepo;
+        private readonly IRepository<DalUserSkill> userSkillRepo;
+        private readonly IRepository<DalFilter> filterRepo;
 
         public UserService(IUnitOfWork uow)
         {
             this.uow = uow;
             this.userRepo = uow.GetRepository<DalUser>();
+            this.userSkillRepo = uow.GetRepository<DalUserSkill>();
+            this.filterRepo = uow.GetRepository<DalFilter>();
         }
 
         public BalUser Find(int id)
         {
-            return userRepo.Find(id).ToBal();
+            DalUser user = userRepo.Find(id);
+            FillAdditionalProperties(user);
+            return user.ToBal();
         }
 
         public BalUser Find(string uniqueKey)
@@ -38,16 +43,16 @@ namespace BP.BLL.Concrete
                 return null;
 
             DalUser user = userRepo.Find(u => u.Email == uniqueKey);
-            return user == null ? null : user.ToBal();
+            FillAdditionalProperties(user);
+            return user.ToBal();
         }
 
         public IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills)
         {
             List<BalUser> result = new List<BalUser>();
-            if (userSkillRepo == null)
-                userSkillRepo = uow.GetRepository<DalUserSkill>();
 
             List<DalUserSkill> userSkills = new List<DalUserSkill>();
+
             foreach (var item in skills.Where(s => s != null))
             {
                 userSkills.AddRange(userSkillRepo.Get(s => s.Skill.Id == item.Id && s.Level >= item.Level));
@@ -75,6 +80,37 @@ namespace BP.BLL.Concrete
 
         public void Update(BalUser entity)
         {
+            if (entity is BalProgrammer)
+            {
+                var dbUserSkills = userSkillRepo.Get(x => x.User.Id == entity.Id);
+                foreach (var skill in ((BalProgrammer)entity).Skills)
+                {
+                    DalUserSkill dalUserSkill = new DalUserSkill
+                    {
+                        User = (DalProgrammer)entity.ToDal(),
+                        Skill = skill.Key.ToDal(),
+                        Level = skill.Value
+                    };
+
+                    if (dbUserSkills.Any(x => x.Skill.Id == skill.Key.Id))
+                        userSkillRepo.Update(dalUserSkill);
+                    else userSkillRepo.Create(dalUserSkill);
+                }
+
+                foreach (var skill in dbUserSkills)
+                {
+                    if (!((BalProgrammer)entity).Skills.Any(x => x.Key.Id == skill.Skill.Id))
+                    {
+                        userSkillRepo.Remove(skill);
+                    }
+                }
+            }
+            else if (entity is BalManager)
+            {
+                foreach (var filter in ((BalManager)entity).Filters)
+                    filterRepo.Update(filter.ToDal());
+            }
+
             userRepo.Update(entity.ToDal());
             uow.Save();
         }
@@ -108,6 +144,18 @@ namespace BP.BLL.Concrete
                 return false;
 
             return Crypto.VerifyHashedPassword(user.Password, password);
+        }
+
+        private void FillAdditionalProperties(DalUser user)
+        {
+            if (user as DalProgrammer != null)
+            {
+                ((DalProgrammer)user).Skills = userSkillRepo.Get(x => x.User.Id == user.Id);
+            }
+            else if (user as DalManager != null)
+            {
+                ((DalManager)user).Filters = filterRepo.Get(x => x.UserId == user.Id);
+            }
         }
     }
 }

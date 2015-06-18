@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\Repositories\GenericRepository.cs" />
+    <Compile Include="Concrete\GenericRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Mappers\Mappers.cs" />
