@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BP.BLL.Interface.Entities
 {
-    public class BalUserSkill : IBalEntity
+    public class BllUserSkill : IBllEntity
     {
         public int Id { get; set; }
-        public BalProgrammer User { get; set; }
-        public BalSkill Skill { get; set; }
+        public BllProgrammer User { get; set; }
+        public BllSkill Skill { get; set; }
         public int Level { get; set; }
     }
 }

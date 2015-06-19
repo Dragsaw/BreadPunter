@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BP.BLL.Interface.Entities.Users
+namespace BP.BLL.Interface
 {
-    public class BalManager : BalUser
+    public interface IBllEntity
     {
-        public List<BalFilter> Filters { get; set; }
+        int Id { get; }
     }
 }

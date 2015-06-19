@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BP.BLL.Interface.Services
 {
-    public interface IUserService : IService<BalUser>
+    public interface IUserService : IService<BllUser>
     {
-        IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills);
-        void Create(string email, string password, BalRole role);
+        IEnumerable<BllUser> Get(IEnumerable<BllUserSkill> skills);
+        void Create(string email, string password, BllRole role);
         bool Exists(string email, string password);
     }
 }

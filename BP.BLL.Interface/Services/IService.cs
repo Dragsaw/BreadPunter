@@ -7,7 +7,7 @@ using BP.BLL.Interface.Entities;
 
 namespace BP.BLL.Interface.Services
 {
-    public interface IService<T> : IDisposable where T : class, IBalEntity
+    public interface IService<T> : IDisposable where T : class, IBllEntity
     {
         T Find(int id);
         T Find(string uniqueKey);

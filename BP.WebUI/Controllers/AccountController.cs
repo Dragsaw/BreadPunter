@@ -55,7 +55,7 @@ namespace BP.WebUI.Controllers
         {
             if (role != null)
             {
-                BalRole roleEntity = roleService.Find(role.ToLower());
+                BllRole roleEntity = roleService.Find(role.ToLower());
                 if (roleEntity != null && roleEntity.Name != "admin")
                 {
                     ViewBag.Role = role;

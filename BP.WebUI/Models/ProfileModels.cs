@@ -23,7 +23,7 @@ namespace BP.WebUI.Models
 
     public class UserSkillViewModel
     {
-        public BalSkill Skill { get; set; }
+        public BllSkill Skill { get; set; }
         [Range(0, 5)]
         public int Level { get; set; }
     }
@@ -43,7 +43,7 @@ namespace BP.WebUI.Models
         public HttpPostedFileBase Image { get; set; }
         public string BirthDate { get; set; }
 
-        public void GetInfo(BalProgrammer user)
+        public void GetInfo(BllProgrammer user)
         {
             Name = user.Name;
             About = user.About;
@@ -52,18 +52,24 @@ namespace BP.WebUI.Models
                 BirthDate = ((DateTime)user.BirthDate).ToShortDateString();
         }
 
-        public void SetUserInfo(BalProgrammer user)
+        public void SetUserInfo(BllProgrammer user)
         {
             user.Name = Name;
             user.About = About;
             if (BirthDate != null)
                 user.BirthDate = DateTime.Parse(BirthDate);
+            if (Image != null)
+            {
+                user.ImageType = Image.ContentType;
+                user.Photo = new byte[Image.ContentLength];
+                Image.InputStream.Read(user.Photo, 0, Image.ContentLength);
+            }
         }
     }
 
     public class BrowseViewModel
     {
         public FilterViewModel Filter { get; set; }
-        public List<BalProgrammer> Users { get; set; }
+        public List<BllProgrammer> Users { get; set; }
     }
 }

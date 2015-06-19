@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BP.BLL.Interface.Entities.Users
 {
-    public class BalAdmin : BalUser
+    public class BllManager : BllUser
     {
+        public List<BllFilter> Filters { get; set; }
     }
 }

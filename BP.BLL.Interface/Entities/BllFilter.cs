@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BP.BLL.Interface.Entities
 {
-    public class BalFilter : IBalEntity
+    public class BllFilter : IBllEntity
     {
         public int Id { get; set; }
-        public IDictionary<BalSkill, int> Skills { get; set; }
+        public IDictionary<BllSkill, int> Skills { get; set; }
         public DateTime? LastViewed { get; set; }
     }
 }

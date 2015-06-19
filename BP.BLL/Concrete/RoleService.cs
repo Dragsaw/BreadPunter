@@ -23,24 +23,24 @@ namespace BP.BLL.Concrete
             roleRepo = uow.GetRepository<DalRole>();
         }
 
-        public BalRole Find(int id)
+        public BllRole Find(int id)
         {
             return roleRepo.Find(id).ToBal();
         }
 
-        public BalRole Find(string uniqueKey)
+        public BllRole Find(string uniqueKey)
         {
             if (uniqueKey == null)
                 return null;
             return roleRepo.Find(x => x.Name == uniqueKey).ToBal();
         }
 
-        public IEnumerable<BalRole> GetAll()
+        public IEnumerable<BllRole> GetAll()
         {
             return roleRepo.GetAll().Select(x => x.ToBal());
         }
 
-        public void Create(BalRole entity)
+        public void Create(BllRole entity)
         {
             roleRepo.Create(entity.ToDal());
             uow.Save();
@@ -48,10 +48,10 @@ namespace BP.BLL.Concrete
 
         public void Create(string name)
         {
-            Create(new BalRole { Name = name });
+            Create(new BllRole { Name = name });
         }
 
-        public void Update(BalRole entity)
+        public void Update(BllRole entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -70,7 +70,7 @@ namespace BP.BLL.Concrete
             return true;
         }
 
-        public bool Remove(BalRole entity)
+        public bool Remove(BllRole entity)
         {
             if (entity != null)
                 return Remove(entity.Id);

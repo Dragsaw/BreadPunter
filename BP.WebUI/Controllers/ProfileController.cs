@@ -17,12 +17,12 @@ namespace BP.WebUI.Controllers
     public class ProfileController : Controller
     {
         private int usersPerPage = 15;
-        private IService<BalSkill> skillService;
+        private IService<BllSkill> skillService;
         private readonly IUserService userService;
         private readonly string defaultImagePath = @"~/Content/Images/User.png";
         private readonly string defaultImageType = ".png";
 
-        public ProfileController(IUserService userService, IService<BalSkill> skillService)
+        public ProfileController(IUserService userService, IService<BllSkill> skillService)
         {
             this.userService = userService;
             this.skillService = skillService;
@@ -30,21 +30,21 @@ namespace BP.WebUI.Controllers
 
         public ActionResult Index(int? id = null)
         {
-            BalUser user;
+            BllUser user;
             if (id != null)
                 user = userService.Find((int)id);
             else user = userService.Find(User.Identity.Name);
 
-            if (user is BalProgrammer)
-                return View("ProgrammerProfile", (BalProgrammer)user);
-            else if (user is BalManager)
-                return View("ManagerProfile", (BalManager)user);
+            if (user is BllProgrammer)
+                return View("ProgrammerProfile", (BllProgrammer)user);
+            else if (user is BllManager)
+                return View("ManagerProfile", (BllManager)user);
             else return RedirectToAction("Index", "Home");
         }
 
         public FileResult GetPhoto(int id)
         {
-            BalProgrammer user = (BalProgrammer)userService.Find(id);
+            BllProgrammer user = (BllProgrammer)userService.Find(id);
             if (user.Photo != null && user.ImageType != null)
                 return File(user.Photo, user.ImageType);
             else return File(Server.MapPath(defaultImagePath), defaultImageType);
@@ -53,7 +53,7 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles="Programmer")]
         public ActionResult EditInfo()
         {
-            BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
+            BllProgrammer user = (BllProgrammer)userService.Find(User.Identity.Name);
             UserInfoViewModel ui = new UserInfoViewModel();
             ui.GetInfo(user);
             return View(ui);
@@ -63,23 +63,17 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Programmer")]
         public ActionResult EditInfo(UserInfoViewModel userInfo)
         {
-            BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
+            BllProgrammer user = (BllProgrammer)userService.Find(User.Identity.Name);
             userInfo.SetUserInfo(user);
-            if (userInfo.Image != null)
-            {
-                user.ImageType = userInfo.Image.ContentType;
-                user.Photo = new byte[userInfo.Image.ContentLength];
-                userInfo.Image.InputStream.Read(user.Photo, 0, userInfo.Image.ContentLength);
-            }
-
             userService.Update(user);
+
             return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Programmer")]
         public ActionResult EditSkills()
         {
-            BalProgrammer user = (BalProgrammer)userService.Find(User.Identity.Name);
+            BllProgrammer user = (BllProgrammer)userService.Find(User.Identity.Name);
 
             var skills = skillService.GetAll().Select(x => new UserSkillViewModel { Skill = x }).ToList();
             foreach (var skill in user.Skills)
@@ -94,7 +88,7 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Programmer")]
         public ActionResult EditSkills(EditUserSkillsViewModel model)
         {
-            BalProgrammer user = (BalProgrammer)userService.Find(model.Id);
+            BllProgrammer user = (BllProgrammer)userService.Find(model.Id);
             user.Skills = model.Skills
                 .Where(x => x.Level != 0)
                 .ToDictionary(k => k.Skill, v => v.Level);
@@ -125,8 +119,8 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Manager")]
         public ActionResult EditFilter(int filterID)
         {
-            BalManager user = (BalManager)userService.Find(User.Identity.Name);
-            BalFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterID);
+            BllManager user = (BllManager)userService.Find(User.Identity.Name);
+            BllFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterID);
 
             if (filter != null)
             {
@@ -140,8 +134,8 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Manager")]
         public ActionResult DeleteFilter(int filterId)
         {
-            BalManager user = (BalManager)userService.Find(User.Identity.Name);
-            BalFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterId);
+            BllManager user = (BllManager)userService.Find(User.Identity.Name);
+            BllFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterId);
             if (filter == null)
                 return HttpNotFound();
 
@@ -153,13 +147,13 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Manager")]
         public ActionResult Browse(int filterId = 0)
         {
-            BalFilter filter;
+            BllFilter filter;
             if (filterId != 0)
             {
-                BalManager manager = (BalManager)userService.Find(User.Identity.Name);
+                BllManager manager = (BllManager)userService.Find(User.Identity.Name);
                 filter = manager.Filters.FirstOrDefault(x => x.Id == filterId);
             }
-            else filter = new BalFilter();
+            else filter = new BllFilter();
             FilterViewModel filterViewModel = ExtractSkills(filter);
             filterViewModel.LastViewed = DateTime.Now;
             if (filterId != 0)
@@ -173,8 +167,8 @@ namespace BP.WebUI.Controllers
         {
             if (Request.Form["save"] != null)
                 SaveFilter(model);
-            var neededSkills = model.Skills.Where(x => x.Include).Select(x => new BalUserSkill { Skill = x.Skill.Skill, Level = x.Skill.Level });
-            var users = userService.Get(neededSkills).Skip(page*usersPerPage).Take(usersPerPage).Cast<BalProgrammer>();
+            var neededSkills = model.Skills.Where(x => x.Include).Select(x => new BllUserSkill { Skill = x.Skill.Skill, Level = x.Skill.Level });
+            var users = userService.Get(neededSkills).Skip(page*usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
             BrowseViewModel browseModel = new BrowseViewModel
             {
                 Filter = model,
@@ -184,7 +178,7 @@ namespace BP.WebUI.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        private FilterViewModel ExtractSkills(BalFilter filter)
+        private FilterViewModel ExtractSkills(BllFilter filter)
         {
             var allSkills = skillService.GetAll().Select(x => x.ToMvc()).ToList();
             foreach (var skill in filter.Skills)
@@ -206,9 +200,9 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Manager")]
         private void SaveFilter(FilterViewModel model)
         {
-            BalManager user = (BalManager)userService.Find(User.Identity.Name);
-            BalFilter filter = model.ToBal();
-            BalFilter userfilter = user.Filters.FirstOrDefault(x => x.Id == filter.Id);
+            BllManager user = (BllManager)userService.Find(User.Identity.Name);
+            BllFilter filter = model.ToBal();
+            BllFilter userfilter = user.Filters.FirstOrDefault(x => x.Id == filter.Id);
 
             if (userfilter == null)
                 user.Filters.Add(filter);

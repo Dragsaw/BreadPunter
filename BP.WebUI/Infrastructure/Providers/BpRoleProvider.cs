@@ -48,7 +48,7 @@ namespace BP.WebUI.Infrastructure.Providers
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            BalUser user = userService.Find(username);
+            BllUser user = userService.Find(username);
             if (user != null && user.Role.Name == roleName)
                 return true;
             return false;

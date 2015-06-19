@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BP.BLL.Interface
+namespace BP.BLL.Interface.Entities.Users
 {
-    public interface IBalEntity
+    public class BllAdmin : BllUser
     {
-        int Id { get; }
     }
 }

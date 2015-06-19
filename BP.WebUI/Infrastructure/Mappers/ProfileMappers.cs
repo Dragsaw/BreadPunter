@@ -9,7 +9,7 @@ namespace BP.WebUI.Infrastructure.Mappers
 {
     public static class ProfileMappers
     {
-        public static FilterSkillViewModel ToMvc(this BalSkill skill, int level = 0, bool include = false)
+        public static FilterSkillViewModel ToMvc(this BllSkill skill, int level = 0, bool include = false)
         {
             return new FilterSkillViewModel
             {
@@ -18,9 +18,9 @@ namespace BP.WebUI.Infrastructure.Mappers
             };
         }
 
-        public static BalFilter ToBal(this FilterViewModel filter)
+        public static BllFilter ToBal(this FilterViewModel filter)
         {
-            return new BalFilter
+            return new BllFilter
             {
                 Id = filter.Id,
                 LastViewed = filter.LastViewed,

@@ -30,14 +30,14 @@ namespace BP.BLL.Concrete
             this.filterRepo = uow.GetRepository<DalFilter>();
         }
 
-        public BalUser Find(int id)
+        public BllUser Find(int id)
         {
             DalUser user = userRepo.Find(id);
             FillAdditionalProperties(user);
             return user.ToBal();
         }
 
-        public BalUser Find(string uniqueKey)
+        public BllUser Find(string uniqueKey)
         {
             if (uniqueKey == null)
                 return null;
@@ -47,9 +47,9 @@ namespace BP.BLL.Concrete
             return user.ToBal();
         }
 
-        public IEnumerable<BalUser> Get(IEnumerable<BalUserSkill> skills)
+        public IEnumerable<BllUser> Get(IEnumerable<BllUserSkill> skills)
         {
-            List<BalUser> result = new List<BalUser>();
+            List<BllUser> result = new List<BllUser>();
 
             List<DalUserSkill> userSkills = new List<DalUserSkill>();
 
@@ -61,32 +61,32 @@ namespace BP.BLL.Concrete
             return userSkills.GroupBy(k => k.User.Id).Where(d => d.Count() == skills.Count()).Select(d => Find(d.Key));
         }
 
-        public IEnumerable<BalUser> GetAll()
+        public IEnumerable<BllUser> GetAll()
         {
             return userRepo.GetAll().Select(d => d.ToBal());
         }
 
-        public void Create(BalUser entity)
+        public void Create(BllUser entity)
         {
             entity.Password = Crypto.HashPassword(entity.Password);
             userRepo.Create(entity.ToDal());
             uow.Save();
         }
 
-        public void Create(string email, string password, BalRole role)
+        public void Create(string email, string password, BllRole role)
         {
-            Create(new BalUser { Email = email, Password = password, Role = role });
+            Create(new BllUser { Email = email, Password = password, Role = role });
         }
 
-        public void Update(BalUser entity)
+        public void Update(BllUser entity)
         {
-            if (entity is BalProgrammer)
+            if (entity is BllProgrammer)
             {
-                UpdateUserSkills((BalProgrammer)entity);
+                UpdateUserSkills((BllProgrammer)entity);
             }
-            else if (entity is BalManager)
+            else if (entity is BllManager)
             {
-                UpdateFilters((BalManager)entity);
+                UpdateFilters((BllManager)entity);
             }
 
             userRepo.Update(entity.ToDal());
@@ -95,7 +95,7 @@ namespace BP.BLL.Concrete
 
         public bool Remove(int id)
         {
-            BalUser user = Find(id);
+            BllUser user = Find(id);
             if (user == null)
                 return false;
             userRepo.Remove(user.Id);
@@ -103,7 +103,7 @@ namespace BP.BLL.Concrete
             return true;
         }
 
-        public bool Remove(BalUser entity)
+        public bool Remove(BllUser entity)
         {
             if (entity != null)
                 return Remove(entity.Id);
@@ -117,7 +117,7 @@ namespace BP.BLL.Concrete
 
         public bool Exists(string email, string password)
         {
-            BalUser user = Find(email);
+            BllUser user = Find(email);
             if (user == null)
                 return false;
 
@@ -136,7 +136,7 @@ namespace BP.BLL.Concrete
             }
         }
 
-        private void UpdateFilters(BalManager balManager)
+        private void UpdateFilters(BllManager balManager)
         {
             var dbFilters = filterRepo.Get(x => x.UserId == balManager.Id);
             foreach (var filter in balManager.Filters)
@@ -153,7 +153,7 @@ namespace BP.BLL.Concrete
             }
         }
 
-        private void UpdateUserSkills(BalProgrammer balProgrammer)
+        private void UpdateUserSkills(BllProgrammer balProgrammer)
         {
             var dbUserSkills = userSkillRepo.Get(x => x.User.Id == balProgrammer.Id);
             foreach (var skill in balProgrammer.Skills)

@@ -13,7 +13,7 @@ namespace BP.BLL.Mappers
     public static class Mappers
     {
         #region BAL to DAL mappers
-        public static DalUser ToDal(this BalUser user)
+        public static DalUser ToDal(this BllUser user)
         {
             if (user == null)
                 return null;
@@ -27,7 +27,7 @@ namespace BP.BLL.Mappers
             return dalUser;
         }
 
-        public static DalRole ToDal(this BalRole role)
+        public static DalRole ToDal(this BllRole role)
         {
             if (role == null)
                 return null;
@@ -39,7 +39,7 @@ namespace BP.BLL.Mappers
             };
         }
 
-        public static DalSkill ToDal(this BalSkill skill)
+        public static DalSkill ToDal(this BllSkill skill)
         {
             if (skill == null)
                 return null;
@@ -51,7 +51,7 @@ namespace BP.BLL.Mappers
             };
         }
 
-        public static DalFilter ToDal(this BalFilter filter, int userId)
+        public static DalFilter ToDal(this BllFilter filter, int userId)
         {
             if (filter == null)
                 return null;
@@ -65,7 +65,7 @@ namespace BP.BLL.Mappers
             };
         }
 
-        public static DalUserSkill ToDal(this BalUserSkill userSkill)
+        public static DalUserSkill ToDal(this BllUserSkill userSkill)
         {
             if (userSkill == null)
                 return null;
@@ -80,12 +80,12 @@ namespace BP.BLL.Mappers
         #endregion
 
         #region DAL to BAL mappers
-        public static BalUser ToBal(this DalUser user)
+        public static BllUser ToBal(this DalUser user)
         {
             if (user == null)
                 return null;
 
-            BalUser balUser = InitializeBalUserProperties(user);
+            BllUser balUser = InitializeBalUserProperties(user);
             balUser.Id = user.Id;
             balUser.Email = user.Email;
             balUser.Password = user.Password;
@@ -94,27 +94,27 @@ namespace BP.BLL.Mappers
             return balUser;
         }
 
-        public static BalRole ToBal(this DalRole role)
+        public static BllRole ToBal(this DalRole role)
         {
-            return new BalRole
+            return new BllRole
             {
                 Id = role.Id,
                 Name = role.Name
             };
         }
 
-        public static BalSkill ToBal(this DalSkill skill)
+        public static BllSkill ToBal(this DalSkill skill)
         {
-            return new BalSkill
+            return new BllSkill
             {
                 Id = skill.Id,
                 Name = skill.Name
             };
         }
 
-        public static BalFilter ToBal(this DalFilter filter)
+        public static BllFilter ToBal(this DalFilter filter)
         {
-            return new BalFilter
+            return new BllFilter
             {
                 Id = filter.Id,
                 Skills = filter.Skills.ToDictionary(k => k.Key.ToBal(), v => v.Value),
@@ -122,27 +122,27 @@ namespace BP.BLL.Mappers
             };
         }
 
-        public static BalUserSkill ToBal(this DalUserSkill skill)
+        public static BllUserSkill ToBal(this DalUserSkill skill)
         {
-            return new BalUserSkill
+            return new BllUserSkill
             {
                 Skill = skill.Skill.ToBal(),
-                User = (BalProgrammer)skill.User.ToBal(),
+                User = (BllProgrammer)skill.User.ToBal(),
                 Level = skill.Level
             };
         }
         #endregion
 
-        private static BalUser InitializeBalUserProperties(DalUser user)
+        private static BllUser InitializeBalUserProperties(DalUser user)
         {
-            BalUser balUser;
+            BllUser balUser;
             if (user is DalAdmin)
-                balUser = new BalAdmin();
+                balUser = new BllAdmin();
             else if (user is DalProgrammer)
             {
                 DalProgrammer dalProgrammer = (DalProgrammer)user;
                 var skillsDict = dalProgrammer.Skills.ToDictionary(k => k.Skill.ToBal(), v => v.Level);
-                balUser = new BalProgrammer()
+                balUser = new BllProgrammer()
                 {
                     Name = dalProgrammer.Name,
                     About = dalProgrammer.About,
@@ -153,23 +153,23 @@ namespace BP.BLL.Mappers
                 };
             }
             else if (user is DalManager)
-                balUser = new BalManager
+                balUser = new BllManager
                 {
                     Filters = ((DalManager)user).Filters.Select(f => f.ToBal()).ToList()
                 };
-            else balUser = new BalUser();
+            else balUser = new BllUser();
 
             return balUser;
         }
 
-        private static DalUser InitializeDalUserProperties(BalUser user)
+        private static DalUser InitializeDalUserProperties(BllUser user)
         {
             DalUser dalUser;
-            if (user is BalAdmin)
+            if (user is BllAdmin)
                 dalUser = new DalAdmin();
-            else if (user is BalProgrammer)
+            else if (user is BllProgrammer)
             {
-                BalProgrammer programmer = (BalProgrammer)user;
+                BllProgrammer programmer = (BllProgrammer)user;
                 DalProgrammer dalProgrammer = new DalProgrammer();
                 dalProgrammer.Name = programmer.Name;
                 dalProgrammer.About = programmer.About;
@@ -184,10 +184,10 @@ namespace BP.BLL.Mappers
                 });
                 dalUser = dalProgrammer;
             }
-            else if (user is BalManager)
+            else if (user is BllManager)
                 dalUser = new DalManager()
                 {
-                    Filters = ((BalManager)user).Filters.Select(f => f.ToDal(user.Id))
+                    Filters = ((BllManager)user).Filters.Select(f => f.ToDal(user.Id))
                 };
             else dalUser = new DalUser();
 

@@ -11,7 +11,7 @@ using BP.BLL.Mappers;
 
 namespace BP.BLL.Concrete
 {
-    public class SkillService : IService<BalSkill>
+    public class SkillService : IService<BllSkill>
     {
         private readonly IUnitOfWork uow;
         private readonly IRepository<DalSkill> repository;
@@ -22,27 +22,27 @@ namespace BP.BLL.Concrete
             this.repository = repository;
         }
 
-        public BalSkill Find(int id)
+        public BllSkill Find(int id)
         {
             return repository.Find(id).ToBal();
         }
 
-        public BalSkill Find(string uniqueKey)
+        public BllSkill Find(string uniqueKey)
         {
             return repository.Find(x => x.Name == uniqueKey).ToBal();
         }
 
-        public IEnumerable<BalSkill> GetAll()
+        public IEnumerable<BllSkill> GetAll()
         {
             return repository.GetAll().Select(x => x.ToBal());
         }
 
-        public void Create(BalSkill entity)
+        public void Create(BllSkill entity)
         {
             repository.Create(entity.ToDal());
         }
 
-        public void Update(BalSkill entity)
+        public void Update(BllSkill entity)
         {
             repository.Update(entity.ToDal());
         }
@@ -52,14 +52,14 @@ namespace BP.BLL.Concrete
             return Remove(repository.Find(id));
         }
 
-        public bool Remove(BalSkill entity)
+        public bool Remove(BllSkill entity)
         {
             return Remove(entity.Id);
         }
 
         public bool Remove(string uniqueKey)
         {
-            BalSkill skill = Find(uniqueKey);
+            BllSkill skill = Find(uniqueKey);
             if (skill == null)
                 return false;
             return Remove(skill.ToDal());

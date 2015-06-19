@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BP.BLL.Interface.Services
 {
-    public interface IRoleService : IService<BalRole>
+    public interface IRoleService : IService<BllRole>
     {
         void Create(string name);
     }
