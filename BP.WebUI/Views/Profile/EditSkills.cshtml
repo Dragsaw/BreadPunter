@@ -8,24 +8,41 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">@Resources.Resource.Skills</div>
-            @using (Html.BeginForm())
-            {
-                <div class="panel-body">
-                    @Html.HiddenFor(x => x.Id)
-                    <div class="row">
-                        @for (int i = 0; i < Model.Skills.Count; i++)
-                        {
-                            <div class="col-sm-3">
-                                @Html.HiddenFor(x => x.Skills[i].Skill.Id)
-                                @Html.HiddenFor(x => x.Skills[i].Skill.Name)
-                                <h3>@Model.Skills[i].Skill.Name</h3>
-                                @Html.TextBoxFor(x => x.Skills[i].Level)
-                            </div>
-                        }
+    @using (Html.BeginForm())
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.Id)
+            <div class="row">
+                @for (int i = 0; i < Model.Skills.Count; i++)
+                {
+                    <div class="col-sm-4">
+                        @Html.HiddenFor(x => x.Skills[i].Skill.Id)
+                        @Html.HiddenFor(x => x.Skills[i].Skill.Name)
+                        <h3>@Model.Skills[i].Skill.Name</h3>
+                        @Html.TextBoxFor(x => x.Skills[i].Level, new { @class = "rt", type = "number" })
                     </div>
-                </div>
-                <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
-                </div>
+                }
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(".rt").rating({
+            'min': 0, 'max': 4, 'step': 1, 'size': 'sm', 'stars': 4,
+            'clearCaption': "@Resources.Resource.NotRated",
+            'starCaptions': {
+                0: "@Resources.Resource.NotRated",
+                1: "@Resources.Resource.Novice",
+                2: "@Resources.Resource.Intermediate",
+                3: "@Resources.Resource.Advanced",
+                4: "@Resources.Resource.Expert"
             }
-    </div>
+        });
+    </script>
+}

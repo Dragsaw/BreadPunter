@@ -24,7 +24,31 @@
                     <img src="@Url.Action("GetPhoto", new { id = user.Id })" alt="" class="img-rounded" style="max-height: 100%; max-width: 100%; margin: 0 auto;" />
                 </div>
                 <h4>@Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })</h4>
+                @foreach (var skill in user.Skills.Where(x => Model.IncludedSkillsId.Contains(x.Key.Id)))
+                {
+                    <div class="col-md-3">
+                        <h5>@skill.Key.Name</h5>
+                        <input class="rt" type="number" value="@skill.Value" data-disabled="true" data-show-caption="false" data-show-clear="false" data-size="sm"/>
+                    </div>
+                }
             </div>
         }
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(".rt").rating({
+            'min': 0, 'max': 4, 'step': 1, 'stars': 4,
+            'clearCaption': "@Resources.Resource.NotRated",
+            'starCaptions': {
+                0: "@Resources.Resource.NotRated",
+                1: "@Resources.Resource.Novice",
+                2: "@Resources.Resource.Intermediate",
+                3: "@Resources.Resource.Advanced",
+                4: "@Resources.Resource.Expert"
+            }
+        });
+    </script>
+}

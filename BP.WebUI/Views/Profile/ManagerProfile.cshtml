@@ -1,4 +1,4 @@
-﻿@model BP.BLL.Interface.Entities.Users.BalManager
+﻿@model BP.BLL.Interface.Entities.Users.BllManager
 
 @{
     ViewBag.Title = Resources.Resource.Profile;
@@ -13,24 +13,28 @@
         {
             using (Html.BeginForm("DeleteFilter", "Profile"))
             {
-                <div class="container">
+                <div class="container well">
                     @Html.Hidden("filterId", filter.Id)
                     <h3>
                         @Resources.Resource.LastViewed:
                         @(filter.LastViewed != null ? ((DateTime)filter.LastViewed).ToString()
                     : Resources.Resource.Never)
                     </h3>
-                    @foreach (var skill in filter.Skills)
-                    {
-                        <div class="col-sm-3">
-                            <p>@skill.Key.Name</p>
-                            <p>@skill.Value</p>
+                    <div class="col-md-9">
+                        @foreach (var skill in filter.Skills)
+                        {
+                            <div class="col-sm-4">
+                                <h4>@skill.Key.Name</h4>
+                                <input class="rt" value="@skill.Value" data-show-clear="false" data-disabled="true" />
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <p>@Html.ActionLink(Resources.Resource.ButtonView, "Browse", new { filterId = filter.Id }, new { @class = "btn btn-primary" })</p>
+                        <div class="btn-group">
+                            @Html.ActionLink(Resources.Resource.ButtonEdit, "EditFilter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
+                            <button type="submit" class="btn btn-danger">@Resources.Resource.ButtonDelete</button>
                         </div>
-                    }
-                    <div class="btn-group pull-right">
-                        @Html.ActionLink(Resources.Resource.ButtonView, "Browse", new { filterId = filter.Id }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink(Resources.Resource.ButtonEdit, "EditFilter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
-                        <button type="submit" class="btn btn-danger">@Resources.Resource.ButtonDelete</button>
                     </div>
                 </div>
             }
@@ -40,3 +44,20 @@
         @Html.ActionLink(Resources.Resource.ButtonCreateFilter, "Filter", "Profile", null, new { @class = "btn btn-success" })
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(".rt").rating({
+            'min': 0, 'max': 4, 'step': 1, 'size': 'sm', 'stars': 4,
+            'clearCaption': "@Resources.Resource.NotRated",
+            'starCaptions': {
+                0: "@Resources.Resource.NotRated",
+                1: "@Resources.Resource.Novice",
+                2: "@Resources.Resource.Intermediate",
+                3: "@Resources.Resource.Advanced",
+                4: "@Resources.Resource.Expert"
+            }
+        });
+    </script>
+}

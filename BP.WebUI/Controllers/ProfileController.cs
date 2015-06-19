@@ -165,6 +165,7 @@ namespace BP.WebUI.Controllers
         [Authorize(Roles = "Manager")]
         public ActionResult Browse(FilterViewModel model, int page = 0)
         {
+            model.LastViewed = DateTime.Now;
             if (Request.Form["save"] != null)
                 SaveFilter(model);
             var neededSkills = model.Skills.Where(x => x.Include).Select(x => new BllUserSkill { Skill = x.Skill.Skill, Level = x.Skill.Level });

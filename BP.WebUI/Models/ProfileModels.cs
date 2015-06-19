@@ -71,5 +71,12 @@ namespace BP.WebUI.Models
     {
         public FilterViewModel Filter { get; set; }
         public List<BllProgrammer> Users { get; set; }
+        public IEnumerable<int> IncludedSkillsId
+        {
+            get
+            {
+                return Filter.Skills.Where(x => x.Include).Select(x => x.Skill.Skill.Id);
+            }
+        }
     }
 }

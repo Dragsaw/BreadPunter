@@ -117,8 +117,110 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RequiredField" xml:space="preserve">
-    <value>Поле "{0}" должно быть заполнено.</value>
+  <data name="AboutMe" xml:space="preserve">
+    <value>Обо мне</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Продвинутый</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>День рождения</value>
+  </data>
+  <data name="ButtonCreateFilter" xml:space="preserve">
+    <value>Создать фильтр</value>
+  </data>
+  <data name="ButtonDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="ButtonEdit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="ButtonManagerRegister" xml:space="preserve">
+    <value>Регистрация для менеджеров</value>
+  </data>
+  <data name="ButtonProgrammerRegister" xml:space="preserve">
+    <value>Регистрация для программистов</value>
+  </data>
+  <data name="ButtonSignIn" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="ButtonSignOut" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="ButtonSubmit" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="ButtonView" xml:space="preserve">
+    <value>Просмотреть</value>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>У Вас ещё нет аккаунта? Зарегистрируйтесь бесплатно!</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Эксперт</value>
+  </data>
+  <data name="FilterCreation" xml:space="preserve">
+    <value>Создание фильтра</value>
+  </data>
+  <data name="Intermediate" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="LastViewed" xml:space="preserve">
+    <value>Просматривался</value>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>никогда</value>
+  </data>
+  <data name="NoSkills" xml:space="preserve">
+    <value>Нет навыков для  отображения.</value>
+  </data>
+  <data name="NotRated" xml:space="preserve">
+    <value>Нет оценки</value>
+  </data>
+  <data name="NotSpecified" xml:space="preserve">
+    <value>Не указан</value>
+  </data>
+  <data name="Novice" xml:space="preserve">
+    <value>Новичок</value>
+  </data>
+  <data name="NoWhiteSpaces" xml:space="preserve">
+    <value>Пароль не должен содержать пробелы.</value>
+  </data>
+  <data name="PageRegister" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PasswordMinimalLength" xml:space="preserve">
+    <value>Пароль должен содержать минимум 5 символов.</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Пароли не совпадают.</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Зарегистрироваться</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомнить</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>Пвторите пароль</value>
+  </data>
+  <data name="RequiredEmail" xml:space="preserve">
+    <value>Поле Email не должно быть пустым.</value>
+  </data>
+  <data name="RequiredPassword" xml:space="preserve">
+    <value>Поле пароля не должно быть пустым.</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>Навыки</value>
   </data>
   <data name="UserAlreadyExists" xml:space="preserve">
     <value>Пользователь с e-mail {0} уже зарегистрирован.</value>

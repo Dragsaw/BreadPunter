@@ -19,7 +19,7 @@
                         @Model.Skills[i].Skill.Skill.Name
                     </label>
                     <br />
-                    @Html.TextBoxFor(x => x.Skills[i].Skill.Level, new { @class = "from-control" })
+                    @Html.TextBoxFor(x => x.Skills[i].Skill.Level, new { @class = "rt", type="number" })
                     @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Id)
                     @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Name)
                 </div>
@@ -27,4 +27,21 @@
         }
     </div>
     <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(".rt").rating({
+            'min': 0, 'max': 4, 'step': 1, 'size': 'sm', 'stars': 4,
+            'clearCaption': "@Resources.Resource.NotRated",
+            'starCaptions': {
+                0: "@Resources.Resource.NotRated",
+                1: "@Resources.Resource.Novice",
+                2: "@Resources.Resource.Intermediate",
+                3: "@Resources.Resource.Advanced",
+                4: "@Resources.Resource.Expert"
+            }
+        });
+    </script>
 }

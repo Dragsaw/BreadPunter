@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string Advanced {
+            get {
+                return ResourceManager.GetString("Advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthday.
         /// </summary>
         public static string Birthday {
@@ -178,11 +187,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expert.
+        /// </summary>
+        public static string Expert {
+            get {
+                return ResourceManager.GetString("Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter creation.
         /// </summary>
         public static string FilterCreation {
             get {
                 return ResourceManager.GetString("FilterCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intermediate.
+        /// </summary>
+        public static string Intermediate {
+            get {
+                return ResourceManager.GetString("Intermediate", resourceCulture);
             }
         }
         
@@ -214,11 +241,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Rated.
+        /// </summary>
+        public static string NotRated {
+            get {
+                return ResourceManager.GetString("NotRated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not specified.
         /// </summary>
         public static string NotSpecified {
             get {
                 return ResourceManager.GetString("NotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Novice.
+        /// </summary>
+        public static string Novice {
+            get {
+                return ResourceManager.GetString("Novice", resourceCulture);
             }
         }
         

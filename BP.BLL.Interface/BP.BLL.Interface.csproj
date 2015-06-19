@@ -40,15 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\IBalEntity.cs" />
-    <Compile Include="Entities\BalFilter.cs" />
-    <Compile Include="Entities\BalRole.cs" />
-    <Compile Include="Entities\BalSkill.cs" />
-    <Compile Include="Entities\BalUserSkill.cs" />
-    <Compile Include="Entities\Users\BalAdmin.cs" />
-    <Compile Include="Entities\Users\BalManager.cs" />
-    <Compile Include="Entities\Users\BalProgrammer.cs" />
-    <Compile Include="Entities\Users\BalUser.cs" />
+    <Compile Include="Entities\IBllEntity.cs" />
+    <Compile Include="Entities\BllFilter.cs" />
+    <Compile Include="Entities\BllRole.cs" />
+    <Compile Include="Entities\BllSkill.cs" />
+    <Compile Include="Entities\BllUserSkill.cs" />
+    <Compile Include="Entities\Users\BllAdmin.cs" />
+    <Compile Include="Entities\Users\BllManager.cs" />
+    <Compile Include="Entities\Users\BllProgrammer.cs" />
+    <Compile Include="Entities\Users\BllUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\IUserService.cs" />

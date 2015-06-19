@@ -213,4 +213,19 @@
   <data name="NoSkills" xml:space="preserve">
     <value>There's no skills to show.</value>
   </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Expert</value>
+  </data>
+  <data name="Intermediate" xml:space="preserve">
+    <value>Intermediate</value>
+  </data>
+  <data name="NotRated" xml:space="preserve">
+    <value>Not Rated</value>
+  </data>
+  <data name="Novice" xml:space="preserve">
+    <value>Novice</value>
+  </data>
 </root>
