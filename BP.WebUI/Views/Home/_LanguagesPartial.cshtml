@@ -1,0 +1,13 @@
+﻿@model BP.WebUI.Models.LanguagesViewModel
+
+@foreach (var lang in Model.Languages)
+{
+    if (lang.NativeName == Model.Current)
+    {
+        <p class="btn btn-primary btn-xs">@lang.NativeName.ToLower()</p>
+    }
+    else
+    {
+        @Html.ActionLink(lang.NativeName.ToLower(), "ChangeLanguage", new { lang = lang.Name, returnUrl = Request.Url.PathAndQuery })
+    }
+}

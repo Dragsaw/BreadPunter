@@ -10,12 +10,14 @@ namespace BP.WebUI.Infrastructure.Filters
 {
     public class CultureAttribute : FilterAttribute, IActionFilter
     {
+        private static List<string> customCultures = new List<string> { "en", "ru" };
+        public static List<string> Cultures { get { return customCultures; } }
         private readonly string defaultCulture = "en";
 
         static CultureAttribute()
         {
-            CultureInfo.CreateSpecificCulture("en");
-            CultureInfo.CreateSpecificCulture("ru");
+            foreach (var lang in customCultures)
+                CultureInfo.CreateSpecificCulture(lang);
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
@@ -26,12 +28,12 @@ namespace BP.WebUI.Infrastructure.Filters
                 culture = cookie.Value;
             else culture = defaultCulture;
 
-            try
+            if (customCultures.Contains(culture))
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
             }
-            catch (CultureNotFoundException)
+            else
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(defaultCulture);
             }
