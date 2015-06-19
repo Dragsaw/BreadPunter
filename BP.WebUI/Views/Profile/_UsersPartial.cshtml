@@ -1,0 +1,101 @@
+﻿@model BP.WebUI.Models.BrowseViewModel
+
+<div class="modal fade" role="dialog" id="wait" aria-labelledby="waitModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Please, wait...</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="users">
+    <div class="col-md-9">
+        @foreach (var user in Model.Users)
+        {
+            <div class="container well">
+                <div style="height: 20vh; width: 30%; float: left;">
+                    <img src="@Url.Action("GetPhoto", new { id = user.Id })" alt="" class="img-rounded" style="max-height: 100%; max-width: 100%; margin: 0 auto;" />
+                </div>
+                <h4>@Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })</h4>
+                @foreach (var skill in user.Skills.Where(x => Model.IncludedSkillsId.Contains(x.Key.Id)))
+                {
+                    <div class="col-md-3">
+                        <h5>@skill.Key.Name</h5>
+                        <input class="rt" type="number" value="@skill.Value" data-disabled="true"
+                               data-show-caption="false" data-show-clear="false" data-size="sm" />
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <nav style="margin: auto; text-align:center;">
+        <ul class="pagination">
+            @if (Model.Page > 0)
+            {
+                <li>
+                    @Ajax.ActionLink("«", "GetUsers", new { model = Model.Filter, page = Model.Page - 1 },
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    UpdateTargetId = "users",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "RefreshRatings",
+                    OnBegin = "$('#wait').modal('toggle')",
+                    OnComplete = "$('#wait').modal('toggle')"
+
+                })
+                </li>
+            }
+            else
+            {
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            }
+            @for (int i = 0; i <= Model.PageCount; i++)
+            {
+                if (i == Model.Page)
+                {
+                    <li class="active"><a href="#">@((i + 1).ToString())</a></li>
+                }
+                else
+                {
+                    <li>
+                        @Ajax.ActionLink((i + 1).ToString(), "GetUsers", new { model = Model.Filter, page = i },
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    UpdateTargetId = "users",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "RefreshRatings",
+                    OnBegin = "$('#wait').modal('toggle')",
+                    OnComplete = "$('#wait').modal('toggle')"
+
+                })
+                    </li>
+                }
+            }
+            @if (Model.Page < Model.PageCount)
+            {
+                <li>
+                    @Ajax.ActionLink("»", "GetUsers", new { model = Model.Filter, page = Model.Page + 1 },
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    UpdateTargetId = "users",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "RefreshRatings",
+                    OnBegin = "$('#wait').modal('toggle')",
+                    OnComplete = "$('#wait').modal('toggle')"
+
+                })
+                </li>
+            }
+            else
+            {
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            }
+        </ul>
+    </nav>
+</div>

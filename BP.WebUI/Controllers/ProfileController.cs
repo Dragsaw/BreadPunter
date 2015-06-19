@@ -16,7 +16,7 @@ namespace BP.WebUI.Controllers
     [Culture]
     public class ProfileController : Controller
     {
-        private int usersPerPage = 15;
+        private int usersPerPage = 2;
         private IService<BllSkill> skillService;
         private readonly IUserService userService;
         private readonly string defaultImagePath = @"~/Content/Images/User.png";
@@ -42,6 +42,8 @@ namespace BP.WebUI.Controllers
             else return RedirectToAction("Index", "Home");
         }
 
+        #region Programmer specific
+
         public FileResult GetPhoto(int id)
         {
             BllProgrammer user = (BllProgrammer)userService.Find(id);
@@ -50,7 +52,7 @@ namespace BP.WebUI.Controllers
             else return File(Server.MapPath(defaultImagePath), defaultImageType);
         }
 
-        [Authorize(Roles="Programmer")]
+        [Authorize(Roles = "Programmer")]
         public ActionResult EditInfo()
         {
             BllProgrammer user = (BllProgrammer)userService.Find(User.Identity.Name);
@@ -96,15 +98,25 @@ namespace BP.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
+
         #region Manager specific
 
-        [Authorize(Roles="Manager")]
-        public ActionResult Filter()
+        [Authorize(Roles = "Manager")]
+        public ActionResult Filter(int filterId = 0)
         {
-            return View("Filter", new FilterViewModel
+            BllFilter filter = null;
+            FilterViewModel filterModel;
+
+            if (filterId != 0)
             {
-                Skills = skillService.GetAll().Select(x => x.ToMvc()).ToList()
-            });
+                BllManager user = (BllManager)userService.Find(User.Identity.Name);
+                filter = user.Filters.FirstOrDefault(x => x.Id == filterId);
+            }
+
+            filterModel = ExtractSkills(filter);
+
+            return View("Filter", filterModel);
         }
 
         [HttpPost]
@@ -114,20 +126,6 @@ namespace BP.WebUI.Controllers
             SaveFilter(model);
 
             return RedirectToAction("Index");
-        }
-
-        [Authorize(Roles = "Manager")]
-        public ActionResult EditFilter(int filterID)
-        {
-            BllManager user = (BllManager)userService.Find(User.Identity.Name);
-            BllFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterID);
-
-            if (filter != null)
-            {
-                FilterViewModel filterViewModel = ExtractSkills(filter);
-                return View("Filter", filterViewModel);
-            }
-            return HttpNotFound();
         }
 
         [HttpPost]
@@ -145,53 +143,73 @@ namespace BP.WebUI.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        public ActionResult Browse(int filterId = 0)
+        public ActionResult Browse(int Id)
         {
             BllFilter filter;
-            if (filterId != 0)
+            if (Id != 0)
             {
                 BllManager manager = (BllManager)userService.Find(User.Identity.Name);
-                filter = manager.Filters.FirstOrDefault(x => x.Id == filterId);
+                filter = manager.Filters.FirstOrDefault(x => x.Id == Id);
             }
             else filter = new BllFilter();
             FilterViewModel filterViewModel = ExtractSkills(filter);
             filterViewModel.LastViewed = DateTime.Now;
-            if (filterId != 0)
+            if (Id != 0)
                 SaveFilter(filterViewModel);
             return Browse(filterViewModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        public ActionResult Browse(FilterViewModel model, int page = 0)
+        public ActionResult Browse(FilterViewModel model)
         {
-            model.LastViewed = DateTime.Now;
             if (Request.Form["save"] != null)
+            {
+                model.LastViewed = DateTime.Now;
                 SaveFilter(model);
+            }
+            TempData["filter"] = model;
+            return View(model);
+        }
+
+        public ActionResult GetUsers(int page = 0)
+        {
+            FilterViewModel model = (FilterViewModel)TempData["filter"];
+            TempData["filter"] = model;
+
             var neededSkills = model.Skills.Where(x => x.Include).Select(x => new BllUserSkill { Skill = x.Skill.Skill, Level = x.Skill.Level });
-            var users = userService.Get(neededSkills).Skip(page*usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
+            var users = userService.Get(neededSkills);
+            var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
             BrowseViewModel browseModel = new BrowseViewModel
             {
                 Filter = model,
-                Users = users.ToList()
+                Users = usersForPage.ToList(),
+                Page = page,
+                PageCount = users.Count() / usersPerPage
             };
-            return View(browseModel);
+
+            return PartialView("_UsersPartial", browseModel);
         }
 
         [Authorize(Roles = "Manager")]
         private FilterViewModel ExtractSkills(BllFilter filter)
         {
+            int id = filter != null ? filter.Id : 0;
             var allSkills = skillService.GetAll().Select(x => x.ToMvc()).ToList();
-            foreach (var skill in filter.Skills)
+
+            if (filter != null)
             {
-                FilterSkillViewModel fsvm = allSkills.First(x => x.Skill.Skill.Id == skill.Key.Id);
-                fsvm.Skill.Level = skill.Value;
-                fsvm.Include = true;
+                foreach (var skill in filter.Skills)
+                {
+                    FilterSkillViewModel fsvm = allSkills.First(x => x.Skill.Skill.Id == skill.Key.Id);
+                    fsvm.Skill.Level = skill.Value;
+                    fsvm.Include = true;
+                }
             }
 
             FilterViewModel filterViewModel = new FilterViewModel
             {
-                Id = filter.Id,
+                Id = id,
                 Skills = allSkills
             };
 

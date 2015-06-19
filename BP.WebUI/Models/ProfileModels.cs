@@ -71,6 +71,8 @@ namespace BP.WebUI.Models
     {
         public FilterViewModel Filter { get; set; }
         public List<BllProgrammer> Users { get; set; }
+        public int PageCount { get; set; }
+        public int Page { get; set; }
         public IEnumerable<int> IncludedSkillsId
         {
             get

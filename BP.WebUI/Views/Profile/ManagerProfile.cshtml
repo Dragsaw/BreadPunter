@@ -30,9 +30,9 @@
                         }
                     </div>
                     <div class="col-md-3">
-                        <p>@Html.ActionLink(Resources.Resource.ButtonView, "Browse", new { filterId = filter.Id }, new { @class = "btn btn-primary" })</p>
+                        <p>@Html.ActionLink(Resources.Resource.ButtonView, "Browse", new { Id = filter.Id }, new { @class = "btn btn-primary" })</p>
                         <div class="btn-group">
-                            @Html.ActionLink(Resources.Resource.ButtonEdit, "EditFilter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink(Resources.Resource.ButtonEdit, "Filter", new { filterId = filter.Id }, new { @class = "btn btn-warning" })
                             <button type="submit" class="btn btn-danger">@Resources.Resource.ButtonDelete</button>
                         </div>
                     </div>

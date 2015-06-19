@@ -22,7 +22,7 @@
                     <h4>@Resources.Resource.Birthday:</h4>
                     <p class="text-left">@(Model.BirthDate.HasValue ? ((DateTime)Model.BirthDate).ToShortDateString() : Resources.Resource.NotSpecified)</p>
                     <h4>@Resources.Resource.AboutMe:</h4>
-                    <p class="text-left">@(Model.About ?? Resources.Resource.NotSpecified)</p>
+                    <p class="text-left" style="white-space: pre-line">@(Model.About ?? Resources.Resource.NotSpecified)</p>
                 </div>
             </div>
         </div>

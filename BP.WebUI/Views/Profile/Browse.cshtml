@@ -1,4 +1,4 @@
-﻿@model BP.WebUI.Models.BrowseViewModel
+﻿@model BP.WebUI.Models.FilterViewModel
 
 @{
     ViewBag.Title = "Browse";
@@ -10,45 +10,44 @@
     <div class="col-md-3">
         @using (Html.BeginForm())
         {
-            <div>@Html.Hidden("Id", Model.Filter.Id)</div>
-            Html.RenderPartial("_UserSkillsPartial", Model.Filter);
+            <div>@Html.Hidden("Id", Model.Id)</div>
+            for (int i = 0; i < Model.Skills.Count; i++)
+            {
+                <div class="form-group">
+                    <label>
+                        @Html.CheckBoxFor(x => x.Skills[i].Include)
+                        @Model.Skills[i].Skill.Skill.Name
+                    </label>
+                    <br />
+                    @Html.TextBoxFor(x => x.Skills[i].Skill.Level, new { @class = "rt", type = "number", data_size = "xs" })
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Id)
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Name)
+                </div>
+            }
             <button class="btn btn-primary" name="browse" type="submit">@Resources.Resource.ButtonSubmit</button>
             <button class="btn btn-success" name="save" type="submit">Save</button>
         }
     </div>
-    <div class="col-md-9">
-        @foreach (var user in Model.Users)
-        {
-            <div class="container well">
-                <div style="height: 20vh; width: 30%; float: left;">
-                    <img src="@Url.Action("GetPhoto", new { id = user.Id })" alt="" class="img-rounded" style="max-height: 100%; max-width: 100%; margin: 0 auto;" />
-                </div>
-                <h4>@Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })</h4>
-                @foreach (var skill in user.Skills.Where(x => Model.IncludedSkillsId.Contains(x.Key.Id)))
-                {
-                    <div class="col-md-3">
-                        <h5>@skill.Key.Name</h5>
-                        <input class="rt" type="number" value="@skill.Value" data-disabled="true" data-show-caption="false" data-show-clear="false" data-size="sm"/>
-                    </div>
-                }
-            </div>
-        }
-    </div>
+    @Html.Action("GetUsers")
 </div>
 
 @section Scripts
 {
     <script type="text/javascript">
-        $(".rt").rating({
-            'min': 0, 'max': 4, 'step': 1, 'stars': 4,
-            'clearCaption': "@Resources.Resource.NotRated",
-            'starCaptions': {
-                0: "@Resources.Resource.NotRated",
-                1: "@Resources.Resource.Novice",
-                2: "@Resources.Resource.Intermediate",
-                3: "@Resources.Resource.Advanced",
-                4: "@Resources.Resource.Expert"
-            }
-        });
+        function RefreshRatings() {
+            $(".rt").rating({
+                'min': 0, 'max': 4, 'step': 1, 'stars': 4,
+                'clearCaption': "@Resources.Resource.NotRated",
+                'starCaptions': {
+                    0: "@Resources.Resource.NotRated",
+                    1: "@Resources.Resource.Novice",
+                    2: "@Resources.Resource.Intermediate",
+                    3: "@Resources.Resource.Advanced",
+                    4: "@Resources.Resource.Expert"
+                }
+            });
+        }
+        RefreshRatings();
     </script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }
