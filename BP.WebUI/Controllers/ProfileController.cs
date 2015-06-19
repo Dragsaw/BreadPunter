@@ -17,10 +17,10 @@ namespace BP.WebUI.Controllers
     public class ProfileController : Controller
     {
         private int usersPerPage = 15;
+        private IService<BalSkill> skillService;
         private readonly IUserService userService;
         private readonly string defaultImagePath = @"~/Content/Images/User.png";
         private readonly string defaultImageType = ".png";
-        private IService<BalSkill> skillService;
 
         public ProfileController(IUserService userService, IService<BalSkill> skillService)
         {
@@ -104,6 +104,7 @@ namespace BP.WebUI.Controllers
 
         #region Manager specific
 
+        [Authorize(Roles="Manager")]
         public ActionResult Filter()
         {
             return View("Filter", new FilterViewModel
@@ -113,6 +114,7 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Filter(FilterViewModel model)
         {
             SaveFilter(model);
@@ -120,6 +122,7 @@ namespace BP.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult EditFilter(int filterID)
         {
             BalManager user = (BalManager)userService.Find(User.Identity.Name);
@@ -134,6 +137,7 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult DeleteFilter(int filterId)
         {
             BalManager user = (BalManager)userService.Find(User.Identity.Name);
@@ -146,6 +150,7 @@ namespace BP.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Browse(int filterId = 0)
         {
             BalFilter filter;
@@ -163,6 +168,7 @@ namespace BP.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Browse(FilterViewModel model, int page = 0)
         {
             if (Request.Form["save"] != null)
@@ -177,6 +183,7 @@ namespace BP.WebUI.Controllers
             return View(browseModel);
         }
 
+        [Authorize(Roles = "Manager")]
         private FilterViewModel ExtractSkills(BalFilter filter)
         {
             var allSkills = skillService.GetAll().Select(x => x.ToMvc()).ToList();
@@ -196,6 +203,7 @@ namespace BP.WebUI.Controllers
             return filterViewModel;
         }
 
+        [Authorize(Roles = "Manager")]
         private void SaveFilter(FilterViewModel model)
         {
             BalManager user = (BalManager)userService.Find(User.Identity.Name);
@@ -213,5 +221,12 @@ namespace BP.WebUI.Controllers
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            skillService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

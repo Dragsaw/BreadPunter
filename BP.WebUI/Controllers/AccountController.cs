@@ -79,5 +79,12 @@ namespace BP.WebUI.Controllers
             }
             return View(model);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            userService.Dispose();
+            roleService.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

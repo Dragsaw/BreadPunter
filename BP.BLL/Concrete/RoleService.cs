@@ -81,5 +81,10 @@ namespace BP.BLL.Concrete
         {
             return Remove(Find(uniqueKey));
         }
+
+        public void Dispose()
+        {
+            uow.Dispose();
+        }
     }
 }

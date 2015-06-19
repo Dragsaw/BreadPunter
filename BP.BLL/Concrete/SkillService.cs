@@ -75,5 +75,10 @@ namespace BP.BLL.Concrete
 
             return false;
         }
+
+        public void Dispose()
+        {
+            uow.Dispose();
+        }
     }
 }
