@@ -13,13 +13,21 @@ namespace BP.WebUI.Infrastructure.Providers
 {
     public class BpRoleProvider : RoleProvider
     {
-        private IRoleService roleService;
-        private IUserService userService;
-
-        public BpRoleProvider()
+        public IRoleService roleService
         {
-            this.roleService = System.Web.Mvc.DependencyResolver.Current.GetService<IRoleService>();
-            this.userService = System.Web.Mvc.DependencyResolver.Current.GetService<IUserService>();
+            get
+            {
+                return System.Web.Mvc.DependencyResolver.Current.GetService<IRoleService>();
+            }
+            set { }
+        }
+        public IUserService userService
+        {
+            get
+            {
+                return System.Web.Mvc.DependencyResolver.Current.GetService<IUserService>();
+            }
+            set { }
         }
 
         public override void CreateRole(string roleName)

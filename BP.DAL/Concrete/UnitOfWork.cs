@@ -31,8 +31,7 @@ namespace BP.DAL.Concrete
         {
             object repo;
             if (!repos.TryGetValue(typeof(T), out repo))
-                repos.Add(typeof(T), repo = kernel.Get<IRepository<T>>(
-                    new Parameter("context", context, true)));
+                repos.Add(typeof(T), repo = kernel.Get<IRepository<T>>());
 
             return repo as IRepository<T>;
         }
