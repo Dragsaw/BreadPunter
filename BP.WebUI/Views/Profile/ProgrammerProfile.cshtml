@@ -11,7 +11,7 @@
     <div class="panel-body">
         <div class="container">
             <div class="row">
-                <img src="@Url.Action("GetPhoto", new { id = Model.Id})" alt="" class="pull-left" style="max-width: 40%; max-height: 30vh;" />
+                <img src="@Url.Action("GetPhoto", new { id = Model.Id})" alt="" class="img-thumbnail img-rounded pull-left" style="max-width: 40%; max-height: 30vh;" />
                 <div class="col-md-8">
                     <h3 style="display : inline">@Model.Name </h3>
                     @if (User.Identity.Name == Model.Email)

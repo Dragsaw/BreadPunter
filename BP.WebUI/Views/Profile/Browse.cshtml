@@ -27,7 +27,7 @@
             <button class="btn btn-success" name="save" type="submit">Save</button>
         }
     </div>
-    @Html.Action("GetUsers", new { obj = Model })
+    @Html.Action("GetUsers", new { filter = BP.WebUI.Models.FilterViewModel.ToJson(Model) })
 </div>
 
 @section Scripts

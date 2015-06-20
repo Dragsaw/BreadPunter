@@ -5,6 +5,8 @@ using System.Web;
 using BP.BLL.Interface.Entities;
 using BP.BLL.Interface.Entities.Users;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace BP.WebUI.Models
 {
@@ -13,6 +15,18 @@ namespace BP.WebUI.Models
         public int Id { get; set; }
         public List<UserSkillViewModel> Skills { get; set; }
         public DateTime? LastViewed { get; set; }
+
+        public static string ToJson(FilterViewModel obj)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Serialize(obj);
+        }
+
+        public static FilterViewModel ToObject(string json)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Deserialize<FilterViewModel>(json);
+        }
     }
 
     public class UserSkillViewModel

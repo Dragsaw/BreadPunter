@@ -168,21 +168,20 @@ namespace BP.WebUI.Controllers
                 model.LastViewed = DateTime.Now;
                 SaveFilter(model);
             }
-            TempData["filter"] = model;
             return View(model);
         }
 
-        public ActionResult GetUsers(int page = 0)
+        public ActionResult GetUsers(string filter, int page = 0)
         {
-            FilterViewModel model = (FilterViewModel)TempData["filter"];
-            TempData["filter"] = model;
-
+            FilterViewModel obj = FilterViewModel.ToObject(filter);
+            
             var neededSkills = obj.Skills.Where(x => x.Level > 0).Select(x => new BllUserSkill { Skill = x.Skill, Level = x.Level });
             var users = userService.Get(neededSkills);
             var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
+            
             BrowseViewModel browseModel = new BrowseViewModel
             {
-                Filter = model,
+                Filter = obj,
                 Users = usersForPage.ToList(),
                 Page = page,
                 PageCount = users.Count() / usersPerPage

@@ -1,4 +1,18 @@
-﻿@model BP.WebUI.Models.BrowseViewModel
+﻿@using BP.WebUI.Models
+@model BrowseViewModel
+
+@{
+    string json = FilterViewModel.ToJson(Model.Filter);
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "users",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "RefreshRatings",
+        OnBegin = "$('#wait').modal('toggle')",
+        OnComplete = "$('#wait').modal('toggle')"
+    };
+}
 
 <div class="modal fade" role="dialog" id="wait" aria-labelledby="waitModalLabel">
     <div class="modal-dialog modal-sm">
@@ -36,17 +50,7 @@
             @if (Model.Page > 0)
             {
                 <li>
-                    @Ajax.ActionLink("«", "GetUsers", new { model = Model.Filter, page = Model.Page - 1 },
-                new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    UpdateTargetId = "users",
-                    InsertionMode = InsertionMode.Replace,
-                    OnSuccess = "RefreshRatings",
-                    OnBegin = "$('#wait').modal('toggle')",
-                    OnComplete = "$('#wait').modal('toggle')"
-
-                })
+                    @Ajax.ActionLink("«", "GetUsers", new { filter = json, page = Model.Page - 1 }, options)
                 </li>
             }
             else
@@ -62,34 +66,14 @@
                 else
                 {
                     <li>
-                        @Ajax.ActionLink((i + 1).ToString(), "GetUsers", new { model = Model.Filter, page = i },
-                new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    UpdateTargetId = "users",
-                    InsertionMode = InsertionMode.Replace,
-                    OnSuccess = "RefreshRatings",
-                    OnBegin = "$('#wait').modal('toggle')",
-                    OnComplete = "$('#wait').modal('toggle')"
-
-                })
+                        @Ajax.ActionLink((i + 1).ToString(), "GetUsers", new { filter = json, page = i }, options)
                     </li>
                 }
             }
             @if (Model.Page < Model.PageCount)
             {
                 <li>
-                    @Ajax.ActionLink("»", "GetUsers", new { model = Model.Filter, page = Model.Page + 1 },
-                new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    UpdateTargetId = "users",
-                    InsertionMode = InsertionMode.Replace,
-                    OnSuccess = "RefreshRatings",
-                    OnBegin = "$('#wait').modal('toggle')",
-                    OnComplete = "$('#wait').modal('toggle')"
-
-                })
+                    @Ajax.ActionLink("»", "GetUsers", new { filter = json, page = Model.Page + 1 }, options)
                 </li>
             }
             else
