@@ -8,16 +8,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BP.WebUI.Models
 {
-    public class FilterSkillViewModel
-    {
-        public UserSkillViewModel Skill { get; set; }
-        public bool Include { get; set; }
-    }
-
     public class FilterViewModel
     {
         public int Id { get; set; }
-        public List<FilterSkillViewModel> Skills { get; set; }
+        public List<UserSkillViewModel> Skills { get; set; }
         public DateTime? LastViewed { get; set; }
     }
 
@@ -77,7 +71,7 @@ namespace BP.WebUI.Models
         {
             get
             {
-                return Filter.Skills.Where(x => x.Include).Select(x => x.Skill.Skill.Id);
+                return Filter.Skills.Where(x => x.Level > 0).Select(x => x.Skill.Id);
             }
         }
     }

@@ -9,12 +9,12 @@ namespace BP.WebUI.Infrastructure.Mappers
 {
     public static class ProfileMappers
     {
-        public static FilterSkillViewModel ToMvc(this BllSkill skill, int level = 0, bool include = false)
+        public static UserSkillViewModel ToMvc(this BllSkill skill, int level = 0, bool include = false)
         {
-            return new FilterSkillViewModel
+            return new UserSkillViewModel
             {
-                Skill = new UserSkillViewModel { Skill = skill, Level = level },
-                Include = include
+                Skill = skill,
+                Level = level
             };
         }
 
@@ -24,7 +24,7 @@ namespace BP.WebUI.Infrastructure.Mappers
             {
                 Id = filter.Id,
                 LastViewed = filter.LastViewed,
-                Skills = filter.Skills.Where(x => x.Include).ToDictionary(k => k.Skill.Skill, v => v.Skill.Level)
+                Skills = filter.Skills.Where(x => x.Level > 0).ToDictionary(k => k.Skill, v => v.Level)
             };
         }
     }

@@ -15,13 +15,12 @@
                 @Html.HiddenFor(x => x.Id)
                 <div class="form-group">
                     <label>
-                        @Html.CheckBoxFor(x => x.Skills[i].Include)
-                        @Model.Skills[i].Skill.Skill.Name
+                        @Model.Skills[i].Skill.Name
                     </label>
                     <br />
-                    @Html.TextBoxFor(x => x.Skills[i].Skill.Level, new { @class = "rt", type="number" })
-                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Id)
-                    @Html.HiddenFor(x => x.Skills[i].Skill.Skill.Name)
+                    @Html.TextBoxFor(x => x.Skills[i].Level, new { @class = "rt", type = "number" })
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Id)
+                    @Html.HiddenFor(x => x.Skills[i].Skill.Name)
                 </div>
             </div>
         }

@@ -177,7 +177,7 @@ namespace BP.WebUI.Controllers
             FilterViewModel model = (FilterViewModel)TempData["filter"];
             TempData["filter"] = model;
 
-            var neededSkills = model.Skills.Where(x => x.Include).Select(x => new BllUserSkill { Skill = x.Skill.Skill, Level = x.Skill.Level });
+            var neededSkills = obj.Skills.Where(x => x.Level > 0).Select(x => new BllUserSkill { Skill = x.Skill, Level = x.Level });
             var users = userService.Get(neededSkills);
             var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
             BrowseViewModel browseModel = new BrowseViewModel
@@ -201,9 +201,8 @@ namespace BP.WebUI.Controllers
             {
                 foreach (var skill in filter.Skills)
                 {
-                    FilterSkillViewModel fsvm = allSkills.First(x => x.Skill.Skill.Id == skill.Key.Id);
-                    fsvm.Skill.Level = skill.Value;
-                    fsvm.Include = true;
+                    UserSkillViewModel fsvm = allSkills.First(x => x.Skill.Id == skill.Key.Id);
+                    fsvm.Level = skill.Value;
                 }
             }
 
