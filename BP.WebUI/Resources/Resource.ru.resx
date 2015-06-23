@@ -228,4 +228,10 @@
   <data name="WrongEmailOrPassword" xml:space="preserve">
     <value>Неправильный e-mail или пароль.</value>
   </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>дд/мм/гггг</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Указана неправильная дата.</value>
+  </data>
 </root>

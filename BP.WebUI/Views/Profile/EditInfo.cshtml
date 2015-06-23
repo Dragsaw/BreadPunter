@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "EditInfo";
+    string lang = Request.Cookies["lang"] == null ? "en" : Request.Cookies["lang"].Value;
 }
 
 <h2>@User.Identity.Name</h2>
@@ -13,11 +14,19 @@
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        <label>Birthday</label>
-        @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control" })
+        <label>@Resources.Resource.Birthday</label>
+        @Html.TextBoxFor(x => x.BirthDate, new
+   {
+       @class = "form-control",
+       data_provide = "datepicker",
+       data_date_language = lang,
+       data_date_end_date = DateTime.Now.ToShortDateString(),
+       data_date_start_view = 2,
+       placeholder = Resources.Resource.DateFormat
+   })
     </div>
     <div class="form-group">
-        <label>About me</label>
+        <label>@Resources.Resource.AboutMe</label>
         @Html.TextAreaFor(x => x.About, new { @class = "form-control" })
     </div>
     <div class="form-group">
@@ -32,4 +41,13 @@
         <img class="img-thumbnail" src="@Url.Action("GetImage", new { photo = Model.Photo, imageType = Model.ImageType })" />
     }
     <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    @if (lang == "ru")
+    {
+    <script src="~/Scripts/bootstrap-datepicker.ru.min.js"></script>
+    }
 }

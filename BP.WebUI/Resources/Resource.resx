@@ -228,4 +228,10 @@
   <data name="Novice" xml:space="preserve">
     <value>Novice</value>
   </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>mm/dd/yyyy</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Invalid date.</value>
+  </data>
 </root>

@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mm/dd/yyyy.
+        /// </summary>
+        public static string DateFormat {
+            get {
+                return ResourceManager.GetString("DateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have account yet? Sign up for free!.
         /// </summary>
         public static string DontHaveAccount {
@@ -210,6 +219,15 @@ namespace Resources {
         public static string Intermediate {
             get {
                 return ResourceManager.GetString("Intermediate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid date..
+        /// </summary>
+        public static string InvalidDate {
+            get {
+                return ResourceManager.GetString("InvalidDate", resourceCulture);
             }
         }
         

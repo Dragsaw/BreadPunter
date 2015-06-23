@@ -22,6 +22,10 @@ namespace BP.WebUI.Infrastructure.Filters
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
+        }
+
+        public void OnActionExecuting(ActionExecutingContext filterContext)
+        {
             string culture;
             HttpCookie cookie = filterContext.HttpContext.Request.Cookies["lang"];
             if (cookie != null)
@@ -37,10 +41,6 @@ namespace BP.WebUI.Infrastructure.Filters
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(defaultCulture);
             }
-        }
-
-        public void OnActionExecuting(ActionExecutingContext filterContext)
-        {
         }
     }
 }

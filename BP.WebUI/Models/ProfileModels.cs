@@ -7,6 +7,7 @@ using BP.BLL.Interface.Entities.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Globalization;
 
 namespace BP.WebUI.Models
 {
@@ -64,8 +65,6 @@ namespace BP.WebUI.Models
         {
             user.Name = Name;
             user.About = About;
-            if (BirthDate != null)
-                user.BirthDate = DateTime.Parse(BirthDate);
             if (Image != null)
             {
                 user.ImageType = Image.ContentType;

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using BP.WebUI.Infrastructure.Mappers;
 using BP.WebUI.Models;
+using System.Globalization;
 
 namespace BP.WebUI.Controllers
 {
@@ -66,6 +67,22 @@ namespace BP.WebUI.Controllers
         public ActionResult EditInfo(UserInfoViewModel userInfo)
         {
             BllProgrammer user = (BllProgrammer)userService.Find(User.Identity.Name);
+            DateTime birthday = new DateTime();
+
+            if (!string.IsNullOrEmpty(userInfo.BirthDate) && !DateTime.TryParse(userInfo.BirthDate,
+                CultureInfo.CurrentCulture.DateTimeFormat, DateTimeStyles.None, out birthday))
+            {
+                ModelState.AddModelError("", Resources.Resource.InvalidDate);
+                return View(userInfo);
+
+            }
+            else
+            {
+                if (birthday == new DateTime())
+                    user.BirthDate = null;
+                else user.BirthDate = birthday;
+            }
+
             userInfo.SetUserInfo(user);
             userService.Update(user);
 
@@ -174,11 +191,11 @@ namespace BP.WebUI.Controllers
         public ActionResult GetUsers(string filter, int page = 0)
         {
             FilterViewModel obj = FilterViewModel.ToObject(filter);
-            
+
             var neededSkills = obj.Skills.Where(x => x.Level > 0).Select(x => new BllUserSkill { Skill = x.Skill, Level = x.Level });
             var users = userService.Get(neededSkills);
             var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
-            
+
             BrowseViewModel browseModel = new BrowseViewModel
             {
                 Filter = obj,
