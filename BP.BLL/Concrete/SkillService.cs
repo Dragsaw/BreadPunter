@@ -40,11 +40,13 @@ namespace BP.BLL.Concrete
         public void Create(BllSkill entity)
         {
             repository.Create(entity.ToDal());
+            uow.Save();
         }
 
         public void Update(BllSkill entity)
         {
             repository.Update(entity.ToDal());
+            uow.Save();
         }
 
         public bool Remove(int id)
@@ -70,6 +72,7 @@ namespace BP.BLL.Concrete
             if (skill != null)
             {
                 repository.Remove(skill);
+                uow.Save();
                 return true;
             }
 

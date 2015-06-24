@@ -97,11 +97,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ButtonCancel {
+            get {
+                return ResourceManager.GetString("ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create filter.
         /// </summary>
         public static string ButtonCreateFilter {
             get {
                 return ResourceManager.GetString("ButtonCreateFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create role.
+        /// </summary>
+        public static string ButtonCreateRole {
+            get {
+                return ResourceManager.GetString("ButtonCreateRole", resourceCulture);
             }
         }
         
@@ -178,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create skill.
+        /// </summary>
+        public static string CreateSkill {
+            get {
+                return ResourceManager.GetString("CreateSkill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mm/dd/yyyy.
         /// </summary>
         public static string DateFormat {
@@ -250,6 +277,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to never.
         /// </summary>
         public static string Never {
@@ -264,6 +300,15 @@ namespace Resources {
         public static string NoSkills {
             get {
                 return ResourceManager.GetString("NoSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: not found..
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
         

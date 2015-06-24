@@ -246,4 +246,19 @@
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать на Bread Punter!</value>
   </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ButtonCreateSkill" xml:space="preserve">
+    <value>Добавить навык</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Ошибка: не найдено.</value>
+  </data>
+  <data name="ButtonCreateRole" xml:space="preserve">
+    <value>Добавить роль</value>
+  </data>
 </root>

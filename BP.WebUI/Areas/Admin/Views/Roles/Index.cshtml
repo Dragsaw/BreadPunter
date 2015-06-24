@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BP.BLL.Interface.Entities.BllRole>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <p class="panel-title">Skills</p>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th style="text-align:center">Id</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@role.Id</td>
+                    <td>@role.Name</td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Roles", new { id = role.Id }))
+                        {
+                            @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = role.Id }, new { @class = "btn btn-xs btn-warning" })
+                            <button type="submit" class="btn btn-xs btn-danger">@Resources.Resource.ButtonDelete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        @using (Html.BeginForm("Edit", "Roles"))
+        {
+            <input type="text" style="max-width:55%;" name="Name" required />
+            <button type="submit" class="btn btn-success">@Resources.Resource.ButtonCreateRole</button>
+        }
+    </div>
+</div>

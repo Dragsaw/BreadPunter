@@ -1,0 +1,19 @@
+﻿@model BP.BLL.Interface.Entities.BllRole
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.HiddenFor(x => x.Id)
+        <label>@Resources.Resource.Name</label>
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+    @Html.ActionLink(Resources.Resource.ButtonCancel, "Index", null, new { @class = "btn btn-default" })
+}
+

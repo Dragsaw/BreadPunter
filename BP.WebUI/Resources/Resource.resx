@@ -246,4 +246,19 @@
   <data name="Welcome" xml:space="preserve">
     <value>Welcome to Bread Punter!</value>
   </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CreateSkill" xml:space="preserve">
+    <value>Create skill</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Error: not found.</value>
+  </data>
+  <data name="ButtonCreateRole" xml:space="preserve">
+    <value>Create role</value>
+  </data>
 </root>

@@ -96,6 +96,9 @@ namespace BP.BLL.Mappers
 
         public static BllRole ToBal(this DalRole role)
         {
+            if (role == null)
+                return null;
+
             return new BllRole
             {
                 Id = role.Id,
@@ -105,6 +108,9 @@ namespace BP.BLL.Mappers
 
         public static BllSkill ToBal(this DalSkill skill)
         {
+            if (skill == null)
+                return null;
+
             return new BllSkill
             {
                 Id = skill.Id,
