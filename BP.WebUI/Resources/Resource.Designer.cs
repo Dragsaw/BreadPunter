@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bread Puner is a professional network service for tough people working in the field of information technology. Here you will be able to find people with neccessary for you skills or to be found by people who will value your skills and knowledge..
+        /// </summary>
+        public static string BPDescription {
+            get {
+                return ResourceManager.GetString("BPDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create filter.
         /// </summary>
         public static string ButtonCreateFilter {
@@ -295,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to or register if you don&apos;t have an account..
+        /// </summary>
+        public static string OrRegister {
+            get {
+                return ResourceManager.GetString("OrRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration.
         /// </summary>
         public static string PageRegister {
@@ -385,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sign in.
+        /// </summary>
+        public static string SignIn {
+            get {
+                return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skills.
         /// </summary>
         public static string Skills {
@@ -399,6 +426,15 @@ namespace Resources {
         public static string UserAlreadyExists {
             get {
                 return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Bread Punter!.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
         

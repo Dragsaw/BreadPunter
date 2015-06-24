@@ -234,4 +234,16 @@
   <data name="InvalidDate" xml:space="preserve">
     <value>Invalid date.</value>
   </data>
+  <data name="BPDescription" xml:space="preserve">
+    <value>Bread Puner is a professional network service for tough people working in the field of information technology. Here you will be able to find people with neccessary for you skills or to be found by people who will value your skills and knowledge.</value>
+  </data>
+  <data name="OrRegister" xml:space="preserve">
+    <value>or register if you don't have an account.</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to Bread Punter!</value>
+  </data>
 </root>

@@ -234,4 +234,16 @@
   <data name="InvalidDate" xml:space="preserve">
     <value>Указана неправильная дата.</value>
   </data>
+  <data name="BPDescription" xml:space="preserve">
+    <value>Bread Punter - это сервис для суровых профессионалов, работающих в сфере информационных технологий. Здесь Вы сможете отыскать людей с нужным уровнем определённых навыков, если Вы собираете команду, или найти людей, которым нужны именно Вы.</value>
+  </data>
+  <data name="OrRegister" xml:space="preserve">
+    <value>или зарегистрируйтесь, если у Вас ещё нету аккаунта.</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Войдите</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Добро пожаловать на Bread Punter!</value>
+  </data>
 </root>

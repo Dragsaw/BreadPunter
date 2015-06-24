@@ -2,7 +2,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<br />
 
-@Html.ActionLink("Register", "Register", "Account", new { role = "Programmer" }, null)
-@Html.ActionLink("Profile", "Index", "Profile")
+<div class="jumbotron" style="background: url('../../Content/Images/punter.jpg') right top;background-color:blueviolet;min-height:74vh;background-size:cover;">
+    <div class="jumbotron" style="background-color:white; opacity: 0.95;padding-top: 1em;">
+        <p style="font-size:7vh;">@Resources.Resource.Welcome</p>
+        <p>@Resources.Resource.BPDescription</p>
+        <p>@Html.ActionLink(Resources.Resource.SignIn, "Login", "Account") @Resources.Resource.OrRegister</p>
+        <div class="btn-group">
+            @Html.ActionLink(Resources.Resource.ButtonProgrammerRegister, "Register", "Account", new { role = "Programmer" }, new { @class = "btn btn-lg btn-primary" })
+            @Html.ActionLink(Resources.Resource.ButtonManagerRegister, "Register", "Account", new { role = "Manager" }, new { @class = "btn btn-lg btn-default" })
+        </div>
+    </div>
+</div>

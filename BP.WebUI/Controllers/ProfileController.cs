@@ -160,7 +160,7 @@ namespace BP.WebUI.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        public ActionResult Browse(int Id)
+        public ActionResult Browse(int Id = 0)
         {
             BllFilter filter;
             if (Id != 0)
@@ -193,7 +193,13 @@ namespace BP.WebUI.Controllers
             FilterViewModel obj = FilterViewModel.ToObject(filter);
 
             var neededSkills = obj.Skills.Where(x => x.Level > 0).Select(x => new BllUserSkill { Skill = x.Skill, Level = x.Level });
-            var users = userService.Get(neededSkills);
+            IEnumerable<BllUser> users;
+
+            if (neededSkills.Count() < 1)
+                users = userService.GetAll();
+            else
+                users = userService.Get(neededSkills);
+
             var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
 
             BrowseViewModel browseModel = new BrowseViewModel
