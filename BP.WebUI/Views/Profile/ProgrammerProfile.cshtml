@@ -13,11 +13,13 @@
             <div class="row">
                 <img src="@Url.Action("GetPhoto", new { id = Model.Id})" alt="" class="img-thumbnail img-rounded pull-left" style="max-width: 40%; max-height: 30vh;" />
                 <div class="col-md-8">
-                    <h3 style="display : inline">@Model.Name </h3>
-                    @if (User.Identity.Name == Model.Email)
-                    {
-                        <span>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditInfo")]</span>
-                    }
+                    <h3>
+                        @Model.Name
+                        @if (User.Identity.Name == Model.Email)
+                        {
+                            <small>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditInfo")]</small>
+                        }
+                    </h3>
                     <hr />
                     <h4>@Resources.Resource.Birthday:</h4>
                     <p class="text-left">@(Model.BirthDate.HasValue ? ((DateTime)Model.BirthDate).ToShortDateString() : Resources.Resource.NotSpecified)</p>
@@ -27,26 +29,28 @@
             </div>
         </div>
         <br />
-        <h3 style="display : inline">@Resources.Resource.Skills </h3>
+        <h3>
+            @Resources.Resource.Skills
         @if (User.Identity.Name == Model.Email)
         {
-            <span>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditSkills")]</span>
+            <small>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditSkills")]</small>
         }
-        <hr />
-        <div class="row">
-            @foreach (var skill in Model.Skills)
-            {
-                <div class="col-md-4">
-                    <h4>@skill.Key.Name</h4>
-                    <input type="number" class="rt" value="@skill.Value" data-disabled="true" data-show-clear="false"/>
-                </div>
-            }
-            @if (Model.Skills.Count == null)
-            {
-                @Resources.Resource.NoSkills
-            }
-        </div>
+    </h3>
+    <hr />
+    <div class="row">
+        @foreach (var skill in Model.Skills)
+        {
+            <div class="col-md-4">
+                <h4>@skill.Key.Name</h4>
+                <input type="number" class="rt" value="@skill.Value" data-disabled="true" data-show-clear="false" />
+            </div>
+        }
+        @if (Model.Skills.Count == null)
+        {
+            @Resources.Resource.NoSkills
+        }
     </div>
+</div>
 </div>
 
 @section Scripts

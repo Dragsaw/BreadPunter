@@ -12,7 +12,7 @@ namespace BP.WebUI.Areas.Admin.Controllers
     public abstract class GenericController<T> : Controller
         where T : class, IBllEntity
     {
-        private readonly IService<T> service;
+        protected readonly IService<T> service;
 
         protected GenericController(IService<T> service)
         {
@@ -25,18 +25,17 @@ namespace BP.WebUI.Areas.Admin.Controllers
             return View(objects);
         }
 
-        public ActionResult Edit(int id)
+        public virtual ActionResult Edit(int id = 0)
         {
             T obj = service.Find(id);
             if (obj != null)
                 return View(obj);
-            else ModelState.AddModelError("", Resources.Resource.NotFound);
 
-            return View("Index");
+            return View();
         }
 
         [HttpPost]
-        public ActionResult Edit(T obj)
+        public virtual ActionResult Edit(T obj)
         {
             if (service.Find(obj.Id) != null)
                 service.Update(obj);

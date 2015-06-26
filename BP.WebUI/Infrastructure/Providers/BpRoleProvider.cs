@@ -54,6 +54,11 @@ namespace BP.WebUI.Infrastructure.Providers
             return false;
         }
 
+        public override string[] GetAllRoles()
+        {
+            return roleService.GetAll().Select(x => x.Name).ToArray();
+        }
+
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -87,11 +92,6 @@ namespace BP.WebUI.Infrastructure.Providers
         }
 
         public override string[] FindUsersInRole(string roleName, string usernameToMatch)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string[] GetAllRoles()
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@
         InsertionMode = InsertionMode.Replace,
         OnSuccess = "RefreshRatings",
         OnBegin = "$('#wait').modal('toggle')",
-        OnComplete = "$('#wait').modal('toggle')"
+        OnComplete = "$('#wait').modal('toggle');$(location).attr('href','#');"
     };
 }
 
@@ -47,7 +47,7 @@
 
     <nav style="margin: auto; text-align:center;">
         <ul class="pagination">
-            @if (Model.Page > 0)
+            @if (Model.Page > 1)
             {
                 <li>
                     @Ajax.ActionLink("«", "GetUsers", new { filter = json, page = Model.Page - 1 }, options)
@@ -57,23 +57,23 @@
             {
                 <li class="disabled"><a href="#">&laquo;</a></li>
             }
-            @for (int i = 0; i <= Model.PageCount; i++)
+            @for (int i = 1; i <= Model.PageCount; i++)
             {
                 if (i == Model.Page)
                 {
-                    <li class="active"><a href="#">@((i + 1).ToString())</a></li>
+                    <li class="active"><a href="#">@i.ToString()</a></li>
                 }
                 else
                 {
                     <li>
-                        @Ajax.ActionLink((i + 1).ToString(), "GetUsers", new { filter = json, page = i }, options)
+                        @Ajax.ActionLink(i.ToString(), "GetUsers", new { page = i, filter = json }, options)
                     </li>
                 }
             }
             @if (Model.Page < Model.PageCount)
             {
                 <li>
-                    @Ajax.ActionLink("»", "GetUsers", new { filter = json, page = Model.Page + 1 }, options)
+                    @Ajax.ActionLink("»", "GetUsers", new { page = Model.Page + 1, filter = json }, options)
                 </li>
             }
             else

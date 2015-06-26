@@ -8,10 +8,20 @@
     <div class="jumbotron" style="background-color:white; opacity: 0.95;padding-top: 1em;">
         <p style="font-size:7vh;">@Resources.Resource.Welcome</p>
         <p>@Resources.Resource.BPDescription</p>
-        <p>@Html.ActionLink(Resources.Resource.SignIn, "Login", "Account") @Resources.Resource.OrRegister</p>
-        <div class="btn-group">
-            @Html.ActionLink(Resources.Resource.ButtonProgrammerRegister, "Register", "Account", new { role = "Programmer" }, new { @class = "btn btn-lg btn-primary" })
-            @Html.ActionLink(Resources.Resource.ButtonManagerRegister, "Register", "Account", new { role = "Manager" }, new { @class = "btn btn-lg btn-default" })
-        </div>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <p>@Html.ActionLink(Resources.Resource.SignIn, "Login", "Account") @Resources.Resource.OrRegister</p>
+            <div class="btn-group">
+                @Html.ActionLink(Resources.Resource.ButtonProgrammerRegister, "Register", "Account", new { role = "Programmer" }, new { @class = "btn btn-lg btn-primary" })
+                @Html.ActionLink(Resources.Resource.ButtonManagerRegister, "Register", "Account", new { role = "Manager" }, new { @class = "btn btn-lg btn-default" })
+            </div>
+        }
+        else
+        {
+            <p>
+                Go to your profile and do things!
+                @Html.ActionLink(Resources.Resource.Profile, "Index", "Profile", new { @class = "btn btn-lg btn-success" })
+            </p>
+        }
     </div>
 </div>

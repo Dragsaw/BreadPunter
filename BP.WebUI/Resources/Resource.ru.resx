@@ -261,4 +261,7 @@
   <data name="ButtonCreateRole" xml:space="preserve">
     <value>Добавить роль</value>
   </data>
+  <data name="ButtonCreateUser" xml:space="preserve">
+    <value>Создать пользователя</value>
+  </data>
 </root>

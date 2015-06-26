@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BP.BLL.Interface.Entities.Users.BllUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="container">
+            <div class="panel-title pull-left">Skills</div>
+            <div class="pull-right">@Html.ActionLink(Resources.Resource.ButtonCreateUser, "Edit", null, new { @class = "btn btn-xs btn-success" })</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th style="text-align:center">Id</th>
+                <th>Login</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@user.Id</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role.Name</td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Users", new { id = user.Id }))
+                        {
+                            @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = user.Id }, new { @class = "btn btn-xs btn-warning" })
+                            <button type="submit" class="btn btn-xs btn-danger">@Resources.Resource.ButtonDelete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
