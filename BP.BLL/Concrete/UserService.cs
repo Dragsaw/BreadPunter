@@ -47,10 +47,18 @@ namespace BP.BLL.Concrete
             return user.ToBal();
         }
 
+        public IEnumerable<BllUser> UsersInRole(int roleId)
+        {
+            var users = userRepo.Get(x => x.Role.Id == roleId).ToList();
+            foreach (var user in users)
+            {
+                FillAdditionalProperties(user);
+            }
+            return users.Select(x => x.ToBal());
+        }
+
         public IEnumerable<BllUser> Get(IEnumerable<BllUserSkill> skills)
         {
-            List<BllUser> result = new List<BllUser>();
-
             List<DalUserSkill> userSkills = new List<DalUserSkill>();
 
             foreach (var item in skills.Where(s => s != null))
@@ -80,14 +88,15 @@ namespace BP.BLL.Concrete
 
         public void Update(BllUser entity)
         {
+            BllUser user = Find(entity.Id);
+
             if (entity is BllProgrammer)
-            {
                 UpdateUserSkills((BllProgrammer)entity);
-            }
             else if (entity is BllManager)
-            {
                 UpdateFilters((BllManager)entity);
-            }
+
+            if (entity.Password != user.Password)
+                entity.Password = Crypto.HashPassword(entity.Password);
 
             userRepo.Update(entity.ToDal());
             uow.Save();

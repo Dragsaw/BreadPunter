@@ -10,6 +10,7 @@ namespace BP.BLL.Interface.Services
 {
     public interface IUserService : IService<BllUser>
     {
+        IEnumerable<BllUser> UsersInRole(int roleId);
         IEnumerable<BllUser> Get(IEnumerable<BllUserSkill> skills);
         void Create(string email, string password, BllRole role);
         bool Exists(string email, string password);

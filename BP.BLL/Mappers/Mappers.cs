@@ -147,7 +147,9 @@ namespace BP.BLL.Mappers
             else if (user is DalProgrammer)
             {
                 DalProgrammer dalProgrammer = (DalProgrammer)user;
-                var skillsDict = dalProgrammer.Skills.ToDictionary(k => k.Skill.ToBal(), v => v.Level);
+                Dictionary<BllSkill, int> skillsDict = null;
+                if (dalProgrammer.Skills != null)
+                    skillsDict = dalProgrammer.Skills.ToDictionary(k => k.Skill.ToBal(), v => v.Level);
                 balUser = new BllProgrammer()
                 {
                     Name = dalProgrammer.Name,
@@ -158,7 +160,7 @@ namespace BP.BLL.Mappers
                     Skills = skillsDict
                 };
             }
-            else if (user is DalManager)
+            else if (user is DalManager && ((DalManager)user).Filters != null)
                 balUser = new BllManager
                 {
                     Filters = ((DalManager)user).Filters.Select(f => f.ToBal()).ToList()

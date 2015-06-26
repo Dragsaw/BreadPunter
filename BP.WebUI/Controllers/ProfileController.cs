@@ -17,16 +17,20 @@ namespace BP.WebUI.Controllers
     [Culture]
     public class ProfileController : Controller
     {
-        private int usersPerPage = 2;
+        private static readonly string programmerRole = "Programmer";
+        private int usersPerPage = 5;
         private IService<BllSkill> skillService;
+        private IService<BllRole> roleService;
         private readonly IUserService userService;
         private readonly string defaultImagePath = @"~/Content/Images/User.png";
         private readonly string defaultImageType = ".png";
 
-        public ProfileController(IUserService userService, IService<BllSkill> skillService)
+        public ProfileController(IUserService userService, IService<BllSkill> skillService,
+            IService<BllRole> roleService)
         {
             this.userService = userService;
             this.skillService = skillService;
+            this.roleService = roleService;
         }
 
         public ActionResult Index(int? id = null)
@@ -188,7 +192,7 @@ namespace BP.WebUI.Controllers
             return View(model);
         }
 
-        public ActionResult GetUsers(string filter, int page = 0)
+        public ActionResult GetUsers(string filter, int page = 1)
         {
             FilterViewModel obj = FilterViewModel.ToObject(filter);
 
@@ -196,18 +200,18 @@ namespace BP.WebUI.Controllers
             IEnumerable<BllUser> users;
 
             if (neededSkills.Count() < 1)
-                users = userService.GetAll();
+                users = userService.UsersInRole(roleService.Find(programmerRole).Id);
             else
                 users = userService.Get(neededSkills);
 
-            var usersForPage = users.Skip(page * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
+            var usersForPage = users.Skip((page - 1) * usersPerPage).Take(usersPerPage).Cast<BllProgrammer>();
 
             BrowseViewModel browseModel = new BrowseViewModel
             {
                 Filter = obj,
                 Users = usersForPage.ToList(),
                 Page = page,
-                PageCount = users.Count() / usersPerPage
+                PageCount = (int)Math.Ceiling((double)users.Count() / usersPerPage)
             };
 
             return PartialView("_UsersPartial", browseModel);
@@ -219,7 +223,7 @@ namespace BP.WebUI.Controllers
             int id = filter != null ? filter.Id : 0;
             var allSkills = skillService.GetAll().Select(x => x.ToMvc()).ToList();
 
-            if (filter != null)
+            if (filter != null && filter.Skills != null)
             {
                 foreach (var skill in filter.Skills)
                 {

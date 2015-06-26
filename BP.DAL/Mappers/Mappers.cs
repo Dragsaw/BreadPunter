@@ -52,8 +52,7 @@ namespace BP.DAL.Mappers
             propertyMap.Map(d => d.Id, e => e.Id)
                 .Map(d => d.Email, e => e.Email)
                 .Map(d => d.Password, e => e.Password)
-                .Map(d => d.Role.Id, e => e.RoleId)
-                .Map(d => d.Role.Name, e => e.Role.Name);
+                .Map(d => d.Role.Id, e => e.RoleId);
         }
 
         public override void CopyFields(DalUser dalFrom, User dbTo)
