@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Captcha.cs" />
     <Compile Include="Infrastructure\Filters\CultureAttribute.cs" />
     <Compile Include="Infrastructure\Mappers\ProfileMappers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />

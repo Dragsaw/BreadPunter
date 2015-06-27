@@ -264,4 +264,19 @@
   <data name="ButtonCreateUser" xml:space="preserve">
     <value>Создать пользователя</value>
   </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="GoToProfile" xml:space="preserve">
+    <value>Перейдите в свой профиль,чтобы заняться делом!</value>
+  </data>
+  <data name="InvalidCaptcha" xml:space="preserve">
+    <value>Неправильный код капчи</value>
+  </data>
+  <data name="EnterCaptcha" xml:space="preserve">
+    <value>Введите код</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
 </root>

@@ -19,8 +19,8 @@
         else
         {
             <p>
-                Go to your profile and do things!
-                @Html.ActionLink(Resources.Resource.Profile, "Index", "Profile", new { @class = "btn btn-lg btn-success" })
+                @Resources.Resource.GoToProfile
+                @Html.ActionLink(Resources.Resource.Profile, "Index", "Profile", null, new { @class = "btn btn-lg btn-success" })
             </p>
         }
     </div>

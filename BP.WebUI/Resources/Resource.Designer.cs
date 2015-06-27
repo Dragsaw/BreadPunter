@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string ButtonCancel {
@@ -241,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter captcha.
+        /// </summary>
+        public static string EnterCaptcha {
+            get {
+                return ResourceManager.GetString("EnterCaptcha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expert.
         /// </summary>
         public static string Expert {
@@ -259,11 +277,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go to your profile and do things!.
+        /// </summary>
+        public static string GoToProfile {
+            get {
+                return ResourceManager.GetString("GoToProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intermediate.
         /// </summary>
         public static string Intermediate {
             get {
                 return ResourceManager.GetString("Intermediate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid captcha.
+        /// </summary>
+        public static string InvalidCaptcha {
+            get {
+                return ResourceManager.GetString("InvalidCaptcha", resourceCulture);
             }
         }
         
@@ -408,6 +444,15 @@ namespace Resources {
         public static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
             }
         }
         

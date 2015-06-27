@@ -1,5 +1,6 @@
 ﻿using BP.BLL.Interface.Entities;
 using BP.BLL.Interface.Services;
+using BP.WebUI.Infrastructure;
 using BP.WebUI.Infrastructure.Filters;
 using BP.WebUI.Models;
 using System;
@@ -78,6 +79,11 @@ namespace BP.WebUI.Controllers
                 else ModelState.AddModelError("", string.Format(Resources.Resource.UserAlreadyExists, model.Email));
             }
             return View(model);
+        }
+
+        public FileContentResult GetCaptcha()
+        {
+            return File(Captcha.Generate(), "image/png");
         }
 
         protected override void Dispose(bool disposing)

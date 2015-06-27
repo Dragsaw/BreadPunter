@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace BP.WebUI.Models
 {
@@ -16,10 +17,13 @@ namespace BP.WebUI.Models
         public string Password { get; set; }
         public string RepeatPassword { get; set; }
         public string Role { get; set; }
+        public string Captcha { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> result = new List<ValidationResult>();
+            if (Captcha != (string)HttpContext.Current.Session["captcha"])
+                result.Add(new ValidationResult(Resources.Resource.InvalidCaptcha));
             if (Password != null && Password != RepeatPassword)
                 result.Add(new ValidationResult(Resources.Resource.PasswordsDoNotMatch));
             else if (Password.Any(c => char.IsWhiteSpace(c)))

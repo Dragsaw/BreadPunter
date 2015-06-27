@@ -264,4 +264,19 @@
   <data name="ButtonCreateUser" xml:space="preserve">
     <value>Create user</value>
   </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="GoToProfile" xml:space="preserve">
+    <value>Go to your profile and do things!</value>
+  </data>
+  <data name="InvalidCaptcha" xml:space="preserve">
+    <value>Invalid captcha</value>
+  </data>
+  <data name="EnterCaptcha" xml:space="preserve">
+    <value>Enter captcha</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
 </root>
