@@ -52,5 +52,11 @@ namespace BP.WebUI.Areas.Admin.Controllers
             else ModelState.AddModelError("", Resources.Resource.NotFound);
             return RedirectToAction("Index");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            service.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

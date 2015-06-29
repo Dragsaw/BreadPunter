@@ -26,6 +26,8 @@ namespace BP.WebUI.Models
                 result.Add(new ValidationResult(Resources.Resource.InvalidCaptcha));
             if (Password != null && Password != RepeatPassword)
                 result.Add(new ValidationResult(Resources.Resource.PasswordsDoNotMatch));
+            if (Role == "Admin")
+                throw new HttpException(404, "Page Not Found");
             else if (Password.Any(c => char.IsWhiteSpace(c)))
                 result.Add(new ValidationResult(Resources.Resource.NoWhiteSpaces));
             return result;
