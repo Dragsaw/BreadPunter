@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+    var userList = (IEnumerable<BP.BLL.Interface.Entities.Users.BllProgrammer>)ViewData["users"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Report</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table style="margin: 0 auto;">
+        <thead>Report @DateTime.Now</thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date of birth</th>
+            <th>About</th>
+            <th>Skills</th>
+        </tr>
+        @foreach (var user in userList)
+        {
+            <tr>
+                <td>@(user.Name ?? user.Id.ToString())</td>
+                <td>@user.Email</td>
+                <td>@(user.BirthDate.HasValue ? @Resources.Resource.NotSpecified : user.BirthDate.Value.ToShortDateString())</td>
+                <td>@(user.About ?? @Resources.Resource.NotSpecified)</td>
+                <td>
+                    @foreach (var skill in user.Skills)
+                    {
+                        <h4>@skill.Key.Name <small>- @skill.Value</small></h4>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <footer>
+        <h4><a href="@Url.Action("Index", "Home")">Bread Punter</a> report.</h4>
+    </footer>
+</body>
+</html>

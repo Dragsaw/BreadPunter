@@ -192,6 +192,7 @@ namespace BP.WebUI.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult GetUsers(string filter, int page = 1)
         {
             FilterViewModel obj = FilterViewModel.ToObject(filter);
@@ -217,7 +218,6 @@ namespace BP.WebUI.Controllers
             return PartialView("_UsersPartial", browseModel);
         }
 
-        [Authorize(Roles = "Manager")]
         private FilterViewModel ExtractSkills(BllFilter filter)
         {
             int id = filter != null ? filter.Id : 0;
@@ -241,7 +241,6 @@ namespace BP.WebUI.Controllers
             return filterViewModel;
         }
 
-        [Authorize(Roles = "Manager")]
         private void SaveFilter(FilterViewModel model)
         {
             BllManager user = (BllManager)userService.Find(User.Identity.Name);

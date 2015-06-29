@@ -2,12 +2,23 @@
 
 @{
     ViewBag.Title = Resources.Resource.Profile;
+    IEnumerable<string> report = ((IEnumerable<string>)Session["report"]);
 }
 
 <h2>@Resources.Resource.Profile</h2>
 
 <div class="panel panel-primary">
-    <div class="panel-heading">@Model.Name (<a href="mailto:@Model.Email" style="color:white;">@Model.Email</a>)</div>
+    <div class="panel-heading">
+        @Model.Name (<a href="mailto:@Model.Email" style="color:white;">@Model.Email</a>)
+        @if (User.IsInRole("Manager"))
+        {
+            <small class="pull-right">
+                Include in report
+                <input type="checkbox" onclick='UpdateReport("@Model.Email");'
+                       checked="@(report != null && report.Contains(Model.Email))" />
+            </small>
+        }
+    </div>
     <div class="panel-body">
         <div class="container">
             <div class="row">
@@ -31,26 +42,26 @@
         <br />
         <h3>
             @Resources.Resource.Skills
-        @if (User.Identity.Name == Model.Email)
-        {
-            <small>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditSkills")]</small>
-        }
-    </h3>
-    <hr />
-    <div class="row">
-        @foreach (var skill in Model.Skills)
-        {
-            <div class="col-md-4">
-                <h4>@skill.Key.Name</h4>
-                <input type="number" class="rt" value="@skill.Value" data-disabled="true" data-show-clear="false" />
-            </div>
-        }
-        @if (Model.Skills.Count == null)
-        {
-            @Resources.Resource.NoSkills
-        }
+            @if (User.Identity.Name == Model.Email)
+            {
+                <small>[@Html.ActionLink(Resources.Resource.ButtonEdit, "EditSkills")]</small>
+            }
+        </h3>
+        <hr />
+        <div class="row">
+            @foreach (var skill in Model.Skills)
+            {
+                <div class="col-md-4">
+                    <h4>@skill.Key.Name</h4>
+                    <input type="number" class="rt" value="@skill.Value" data-disabled="true" data-show-clear="false" />
+                </div>
+            }
+            @if (Model.Skills.Count == null)
+            {
+                @Resources.Resource.NoSkills
+            }
+        </div>
     </div>
-</div>
 </div>
 
 @section Scripts
@@ -67,5 +78,11 @@
                 4: "@Resources.Resource.Expert"
             }
         });
+        function UpdateReport(email) {
+            $.ajax({
+                url: "@Url.Action("UpdateReport", "Report")?" + $.param({ "email": email }),
+                type: "get"
+            });
+        };
     </script>
 }

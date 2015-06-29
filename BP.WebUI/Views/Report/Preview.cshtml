@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BP.BLL.Interface.Entities.Users.BllProgrammer>
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">Users included in report</div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", "Profile", new { id = user.Id }, null)</td>
+                    <td>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.Hidden("email", user.Email)
+                            <button type="submit" class="btn btn-xs btn-danger">@Resources.Resource.ButtonDelete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -35,12 +35,12 @@
 @section Scripts
 {
     <script type="text/javascript">
-    $(document).ready(function () {
-        $("#Captcha").val("");
-    });
-    function GetCaptcha() {
-        $.ajax({
-            url: "@Url.Action("GetCaptcha")",
+        $(document).ready(function () {
+            $("#Captcha").val("");
+        });
+        function GetCaptcha() {
+            $.ajax({
+                url: "@Url.Action("GetCaptcha")",
                 type: "get",
                 contentType: "image/png",
                 success: function () { $('#captcha').attr('src', "@Url.Action("GetCaptcha")"); }

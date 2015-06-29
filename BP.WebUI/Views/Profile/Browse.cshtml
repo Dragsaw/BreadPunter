@@ -47,6 +47,12 @@
             });
         }
         RefreshRatings();
+        function UpdateReport(email) {
+            $.ajax({
+                url: "@Url.Action("UpdateReport", "Report")?" + $.param({ "email": email }),
+                type: "get"
+            });
+        };
     </script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }

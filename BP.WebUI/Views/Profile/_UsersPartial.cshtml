@@ -3,6 +3,7 @@
 
 @{
     string json = FilterViewModel.ToJson(Model.Filter);
+    IEnumerable<string> report = ((IEnumerable<string>)Session["report"]);
     AjaxOptions options = new AjaxOptions
     {
         HttpMethod = "GET",
@@ -29,10 +30,18 @@
         @foreach (var user in Model.Users)
         {
             <div class="container well">
-                <div style="height: 20vh; width: 30%; float: left;">
-                    <img src="@Url.Action("GetPhoto", new { id = user.Id })" alt="" class="img-rounded" style="max-height: 100%; max-width: 100%; margin: 0 auto;" />
+                <div style="height: 20vh; width: 25%; float: left;padding-right: 19px;">
+                    <img src="@Url.Action("GetPhoto", new { id = user.Id })" alt="User photo" class="img-rounded"
+                         style="display:block;max-height: 100%;max-width: 100%;margin: 0 auto;" />
                 </div>
-                <h4>@Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })</h4>
+                <h4>
+                    @Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })
+                    <small class="pull-right">
+                        Include in report
+                        <input type="checkbox" onclick='UpdateReport("@user.Email");'
+                               checked="@(report != null && report.Contains(user.Email))" />
+                    </small>
+                </h4>
                 @foreach (var skill in user.Skills.Where(x => Model.IncludedSkillsId.Contains(x.Key.Id)))
                 {
                     <div class="col-md-3">
