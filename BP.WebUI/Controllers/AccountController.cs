@@ -63,7 +63,7 @@ namespace BP.WebUI.Controllers
                     return View();
                 }
             }
-            return HttpNotFound();
+            throw new HttpException(404, "PageNotFound");
         }
 
         [HttpPost]

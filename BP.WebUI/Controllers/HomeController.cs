@@ -42,5 +42,12 @@ namespace BP.WebUI.Controllers
             }
             return Redirect(returnUrl);
         }
+
+        public ActionResult Error(int statusCode = 0)
+        {
+            if (statusCode == 404)
+                return View("Error404");
+            return View();
+        }
     }
 }

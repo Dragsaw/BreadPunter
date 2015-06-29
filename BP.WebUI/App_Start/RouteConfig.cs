@@ -14,6 +14,12 @@ namespace BP.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Error",
+                url: "Home/Error/{statusCode}",
+                defaults: new { controller = "Home", action = "Error", statusCode = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Profile",
                 url: "{controller}/{action}/",
                 defaults: new { controller = "Home", action = "Index" }

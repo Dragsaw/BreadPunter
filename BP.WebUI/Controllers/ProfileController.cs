@@ -44,7 +44,7 @@ namespace BP.WebUI.Controllers
                 return View("ProgrammerProfile", (BllProgrammer)user);
             else if (user is BllManager)
                 return View("ManagerProfile", (BllManager)user);
-            else return RedirectToAction("Index", "Home");
+            else throw new HttpException(404, "Page Not Found");
         }
 
         #region Programmer specific
@@ -156,7 +156,7 @@ namespace BP.WebUI.Controllers
             BllManager user = (BllManager)userService.Find(User.Identity.Name);
             BllFilter filter = user.Filters.FirstOrDefault(x => x.Id == filterId);
             if (filter == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Page Not Found");
 
             user.Filters.Remove(filter);
             userService.Update(user);

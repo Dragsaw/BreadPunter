@@ -208,6 +208,8 @@
     <Content Include="Views\Profile\_UsersPartial.cshtml" />
     <Content Include="Views\Report\Preview.cshtml" />
     <Content Include="Views\Report\Report.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
