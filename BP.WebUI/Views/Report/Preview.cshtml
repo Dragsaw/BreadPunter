@@ -1,20 +1,23 @@
 ﻿@model IEnumerable<BP.BLL.Interface.Entities.Users.BllProgrammer>
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = Resources.Resource.Report;
 }
 
-<h2>View</h2>
+<h2>@Resources.Resource.Report</h2>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <div class="panel-title">Users included in report</div>
+        <div class="panel-title">
+            @Resources.Resource.UsersInReport
+            <span class="pull-right">@Html.ActionLink(Resources.Resource.Download, "Download", null, new { @class = "btn btn-xs btn-success" })</span>
+        </div>
     </div>
     <div class="panel-body">
         <table class="table table-striped">
             <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Action</th>
+                <th>@Resources.Resource.Email</th>
+                <th>@Resources.Resource.UserName</th>
+                <th>@Resources.Resource.Action</th>
             </tr>
             @foreach (var user in Model)
             {

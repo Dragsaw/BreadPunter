@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced.
         /// </summary>
         public static string Advanced {
@@ -178,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ButtonSave {
+            get {
+                return ResourceManager.GetString("ButtonSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign In.
         /// </summary>
         public static string ButtonSignIn {
@@ -241,6 +259,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download PDF.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user information.
+        /// </summary>
+        public static string EditInfo {
+            get {
+                return ResourceManager.GetString("EditInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user skills.
+        /// </summary>
+        public static string EditSkills {
+            get {
+                return ResourceManager.GetString("EditSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
         public static string Email {
@@ -282,6 +327,15 @@ namespace Resources {
         public static string GoToProfile {
             get {
                 return ResourceManager.GetString("GoToProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include in report.
+        /// </summary>
+        public static string IncludeInReport {
+            get {
+                return ResourceManager.GetString("IncludeInReport", resourceCulture);
             }
         }
         
@@ -439,6 +493,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Photo.
+        /// </summary>
+        public static string Photo {
+            get {
+                return ResourceManager.GetString("Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
@@ -484,6 +547,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Report {
+            get {
+                return ResourceManager.GetString("Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email field is required..
         /// </summary>
         public static string RequiredEmail {
@@ -525,6 +597,24 @@ namespace Resources {
         public static string UserAlreadyExists {
             get {
                 return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users included in report.
+        /// </summary>
+        public static string UsersInReport {
+            get {
+                return ResourceManager.GetString("UsersInReport", resourceCulture);
             }
         }
         

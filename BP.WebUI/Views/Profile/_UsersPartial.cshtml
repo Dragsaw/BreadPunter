@@ -37,7 +37,7 @@
                 <h4>
                     @Html.ActionLink(user.Name ?? user.Id.ToString(), "Index", new { id = user.Id })
                     <small class="pull-right">
-                        Include in report
+                        @Resources.Resource.IncludeInReport
                         <input type="checkbox" onclick='UpdateReport("@user.Email");'
                                checked="@(report != null && report.Contains(user.Email))" />
                     </small>

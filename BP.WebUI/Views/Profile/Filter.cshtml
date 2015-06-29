@@ -1,7 +1,7 @@
 ﻿@model BP.WebUI.Models.FilterViewModel
 
 @{
-    ViewBag.Title = "CreateFilter";
+    ViewBag.Title = Resources.Resource.FilterCreation;
 }
 
 <h2>@Resources.Resource.FilterCreation</h2>
@@ -26,6 +26,7 @@
         }
     </div>
     <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+    @Html.ActionLink(Resources.Resource.ButtonCancel, "Index", "Profile")
 }
 
 @section Scripts

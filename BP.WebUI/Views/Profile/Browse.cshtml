@@ -1,10 +1,10 @@
 ﻿@model BP.WebUI.Models.FilterViewModel
 
 @{
-    ViewBag.Title = "Browse";
+    ViewBag.Title = @Resources.Resource.Browse;
 }
 
-<h2>Browse</h2>
+<h2>@Resources.Resource.Browse</h2>
 
 <div class="row">
     <div class="col-md-3">
@@ -24,7 +24,7 @@
                 </div>
             }
             <button class="btn btn-primary" name="browse" type="submit">@Resources.Resource.ButtonSubmit</button>
-            <button class="btn btn-success" name="save" type="submit">Save</button>
+            <button class="btn btn-success" name="save" type="submit">@Resources.Resource.ButtonSave</button>
         }
     </div>
     @Html.Action("GetUsers", new { filter = BP.WebUI.Models.FilterViewModel.ToJson(Model) })

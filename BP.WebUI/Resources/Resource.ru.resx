@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutMe" xml:space="preserve">
-    <value>Обо мне</value>
+    <value>О себе</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Продвинутый</value>
@@ -278,5 +278,35 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Обновить</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Скачать PDF</value>
+  </data>
+  <data name="EditInfo" xml:space="preserve">
+    <value>Редактирование информации</value>
+  </data>
+  <data name="EditSkills" xml:space="preserve">
+    <value>Редактирование навыков</value>
+  </data>
+  <data name="IncludeInReport" xml:space="preserve">
+    <value>Добавить в отчёт</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Фотография</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Отчёт</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="UsersInReport" xml:space="preserve">
+    <value>Пользователи, включенные в отчёт</value>
   </data>
 </root>

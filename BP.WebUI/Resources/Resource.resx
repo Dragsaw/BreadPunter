@@ -279,4 +279,34 @@
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ButtonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download PDF</value>
+  </data>
+  <data name="EditInfo" xml:space="preserve">
+    <value>Edit user information</value>
+  </data>
+  <data name="EditSkills" xml:space="preserve">
+    <value>Edit user skills</value>
+  </data>
+  <data name="IncludeInReport" xml:space="preserve">
+    <value>Include in report</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UsersInReport" xml:space="preserve">
+    <value>Users included in report</value>
+  </data>
 </root>

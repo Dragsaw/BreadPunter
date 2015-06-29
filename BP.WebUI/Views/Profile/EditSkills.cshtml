@@ -1,7 +1,7 @@
 ﻿@model BP.WebUI.Models.EditUserSkillsViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Resources.Resource.EditSkills;
 }
 
 <h2>Edit</h2>
@@ -26,6 +26,7 @@
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+            @Html.ActionLink(Resources.Resource.ButtonCancel, "Index", "Profile", null, new { @class = "btn btn-default" })
         </div>
     }
 </div>

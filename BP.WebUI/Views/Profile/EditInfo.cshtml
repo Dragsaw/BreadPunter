@@ -1,7 +1,7 @@
 ﻿@model BP.WebUI.Models.UserInfoViewModel
 
 @{
-    ViewBag.Title = "EditInfo";
+    ViewBag.Title = Resources.Resource.EditInfo;
     string lang = Request.Cookies["lang"] == null ? "en" : Request.Cookies["lang"].Value;
 }
 
@@ -10,7 +10,7 @@
 @using (Html.BeginForm("EditInfo", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
-        <label>Name</label>
+        <label>@Resources.Resource.UserName</label>
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
@@ -30,7 +30,7 @@
         @Html.TextAreaFor(x => x.About, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        <label>Photo</label>
+        <label>@Resources.Resource.Photo</label>
         <a href="javascript:;">
             <input type="file" name="Image" class="btn btn-default" onchange="$('#upload-file-info').html($(this).val());" />
         </a>
@@ -41,6 +41,7 @@
         <img class="img-thumbnail" src="@Url.Action("GetImage", new { photo = Model.Photo, imageType = Model.ImageType })" />
     }
     <button type="submit" class="btn btn-primary">@Resources.Resource.ButtonSubmit</button>
+    @Html.ActionLink(Resources.Resource.ButtonCancel, "Index", "Profile", null, new { @class = "btn btn-default" })
 }
 
 @section Scripts
@@ -48,6 +49,6 @@
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     @if (lang == "ru")
     {
-    <script src="~/Scripts/bootstrap-datepicker.ru.min.js"></script>
+        <script src="~/Scripts/bootstrap-datepicker.ru.min.js"></script>
     }
 }

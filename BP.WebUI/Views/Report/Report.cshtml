@@ -17,13 +17,13 @@
 </head>
 <body>
     <table style="margin: 0 auto;">
-        <thead>Report @DateTime.Now</thead>
+        <thead>@Resources.Resource.Report @DateTime.Now</thead>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date of birth</th>
-            <th>About</th>
-            <th>Skills</th>
+            <th>@Resources.Resource.UserName</th>
+            <th>@Resources.Resource.Email</th>
+            <th>@Resources.Resource.Birthday</th>
+            <th>@Resources.Resource.AboutMe</th>
+            <th>@Resources.Resource.Skills</th>
         </tr>
         @foreach (var user in userList)
         {
