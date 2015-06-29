@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<BP.BLL.Interface.Entities.BllRole>
 
-@{
-    ViewBag.Title = "Index";
-}
-
 <div class="panel panel-primary">
     <div class="panel-heading">
         <p class="panel-title">Skills</p>
@@ -21,7 +17,7 @@
                     <td style="text-align:center">@role.Id</td>
                     <td>@role.Name</td>
                     <td>
-                        @using (Html.BeginForm("Delete", "Users", new { id = role.Id }))
+                        @using (Html.BeginForm("Delete", "Roles", new { id = role.Id }))
                         {
                             @Html.ActionLink(@Resources.Resource.ButtonEdit, "Edit", new { id = role.Id }, new { @class = "btn btn-xs btn-warning" })
                             <button type="submit" class="btn btn-xs btn-danger">@Resources.Resource.ButtonDelete</button>

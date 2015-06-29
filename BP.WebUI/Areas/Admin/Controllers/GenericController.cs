@@ -22,7 +22,9 @@ namespace BP.WebUI.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var objects = service.GetAll();
-            return View(objects);
+            if (Request.IsAjaxRequest())
+                return PartialView(objects);
+            else return View(objects);
         }
 
         public virtual ActionResult Edit(int id = 0)
@@ -48,7 +50,7 @@ namespace BP.WebUI.Areas.Admin.Controllers
             if (service.Remove(id))
                 return RedirectToAction("Index");
             else ModelState.AddModelError("", Resources.Resource.NotFound);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

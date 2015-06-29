@@ -1,24 +1,47 @@
-﻿<!DOCTYPE html>
+﻿@{
+    AjaxOptions options = new AjaxOptions
+    {
+        UpdateTargetId = "body",
+        HttpMethod = "get",
+        InsertionMode = InsertionMode.Replace
+    };
+    var htmlAttr = new { role = "tab", data_toggle = "tab" };
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Admin area Bread Punter</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" onclick="UpdateTabs(this);">@Ajax.ActionLink("Users", "Index", "Users", null, options, htmlAttr)</li>
+            <li role="presentation" onclick="UpdateTabs(this);">@Ajax.ActionLink("Roles", "Index", "Roles", null, options, htmlAttr)</li>
+            <li role="presentation" onclick="UpdateTabs(this);">@Ajax.ActionLink("Skills", "Index", "Skills", null, options, htmlAttr)</li>
+        </ul>
+        <br />
+        <div class="container body-content">
+            <div class="tab-content">
+                <div class="tab-pane active" role="tabpanel" id="body">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
     </div>
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function UpdateTabs(item) {
+            $('li').each(function (index, element) { $(this).removeClass('active'); });
+            $(item).addClass('active');
+        };
+    </script>
 </body>
 </html>
