@@ -7,10 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using SelectPdf;
+using BP.WebUI.Infrastructure.Filters;
 
 namespace BP.WebUI.Controllers
 {
     [Authorize(Roles = "Manager")]
+    [Culture]
     public class ReportController : Controller
     {
         private readonly IService<BllUser> service;

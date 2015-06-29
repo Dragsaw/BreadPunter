@@ -11,7 +11,7 @@
     <div class="form-group">
         @Html.HiddenFor(x => x.Id)
         <label>@Resources.Resource.Email</label>
-        @if (string.IsNullOrEmpty(Model.Email))
+        @if (Model.Id == 0)
         {
             <div>
                 @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
